@@ -1,0 +1,64 @@
+/* === Boa (Ultra) ===
+Special: Life — Revive a fallen ally at 50% max HP (or heal 50% if alive) and grant +100% ATK (5t). Once per stage.
+Sprite strips expected at:
+  /static/images/units/boa/idle.png
+  /static/images/units/boa/attack.png
+  /static/images/units/boa/death.png
+  /static/images/units/boa/revive.png
+  /static/images/units/boa/skill.png
+Add @2x variants for retina: idle@2x.png, etc.
+*/
+
+/* Base: set per-unit frame size */
+.sprite-unit.boa { --w: 128px; --h: 128px; }
+
+/* IDLE */
+.sprite-unit.boa.idle {
+  --frames: 6; --fps: 10;
+  background-image: image-set(
+    url("/static/images/units/boa/idle.png") 1x,
+    url("/static/images/units/boa/idle@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* ATTACK */
+.sprite-unit.boa.attack {
+  --frames: 10; --fps: 16;
+  background-image: image-set(
+    url("/static/images/units/boa/attack.png") 1x,
+    url("/static/images/units/boa/attack@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* DEATH (one-shot) */
+.sprite-unit.boa.death {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/boa/death.png") 1x,
+    url("/static/images/units/boa/death@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* REVIVE (one-shot) */
+.sprite-unit.boa.revive {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/boa/revive.png") 1x,
+    url("/static/images/units/boa/revive@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* SPECIAL SKILL (one-shot) */
+.sprite-unit.boa.skill {
+  --frames: 16; --fps: 18; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/boa/skill.png") 1x,
+    url("/static/images/units/boa/skill@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+

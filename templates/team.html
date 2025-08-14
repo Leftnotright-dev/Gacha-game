@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>S.W.C.A – Team / Upgrades</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root { --glass: rgba(0,0,0,.35); }
+    body { background:#101520; color:#fff; font-family:Arial, sans-serif; margin:0; }
+    a { color: inherit; text-decoration: none; }
+
+    /* Top bar */
+    header { padding:12px; background:#1a2033; display:flex; gap:12px; align-items:center; position:sticky; top:0; z-index:5; }
+    header input { padding:8px 10px; border-radius:8px; border:0; min-width:180px; }
+    header .spacer { flex:1 1 auto; }
+    header .pill { background:#223154; border:1px solid #2d3b5f; padding:6px 10px; border-radius:999px; font-weight:700; }
+    header .vol { display:inline-flex; align-items:center; gap:8px; }
+    header .vol input[type="range"] { width:140px; accent-color:#6aa8ff; }
+    header nav a { background:#243357; padding:8px 12px; border-radius:8px; font-weight:700; }
+    header nav a:hover { background:#304578; }
+
+    /* Layout */
+    .wrap { width:min(1200px, 95vw); margin:14px auto; display:grid; gap:14px;
+            grid-template-columns: 1fr 1.4fr; align-items:start; }
+
+    /* Panels */
+    .panel { background:var(--glass); border:1px solid #2d3b5f; border-radius:12px; overflow:hidden; }
+    .panel header { background:#182238; padding:10px 12px; display:flex; align-items:center; justify-content:space-between; position:unset; }
+    .panel .content { padding:10px 12px; }
+
+    /* Team selector */
+    #teamGrid { display:flex; flex-wrap:wrap; gap:10px; }
+    .slot { width:190px; background:#1c253a; border:1px solid #2e3b5c; border-radius:10px; padding:10px; }
+    .slot .name { font-weight:700; }
+    .slot .sub { font-size:12px; opacity:.8; }
+    .slot .btns { display:flex; gap:6px; margin-top:8px; flex-wrap:wrap; }
+    .saveRow { display:flex; gap:10px; align-items:center; justify-content:flex-end; margin-top:10px; }
+    .btn { padding:8px 10px; border-radius:8px; border:0; cursor:pointer; font-weight:700; }
+    .btn.primary { background:#6aa8ff; color:#0e1320; }
+    .btn.ghost { background:#243357; color:#fff; }
+    .btn.warn { background:#ffb347; color:#0e1320; }
+    .btn.danger { background:#ff6b6b; color:#0e1320; }
+    .muted { opacity:.75; font-size:12px; }
+
+    /* Backpack */
+    .tools { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+    .tools input, .tools select { padding:8px 10px; border-radius:8px; border:0; }
+    #bpList { display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap:10px; }
+    .card { background:#1c253a; border:1px solid #2e3b5c; border-radius:10px; padding:10px; display:flex; gap:10px; }
+    .card .meta { flex:1 1 auto; }
+    .card .name { font-weight:700; }
+    .card .sub { font-size:12px; opacity:.85; }
+    .card .row { display:flex; gap:6px; margin-top:8px; flex-wrap:wrap; }
+    .tag { background:#223154; border:1px solid #2d3b5f; border-radius:999px; padding:2px 8px; font-size:12px; }
+    .check { display:flex; align-items:center; gap:6px; }
+    .gold-glow{color:gold;-webkit-text-stroke:.2px black;text-shadow:0 0 3px rgba(218,165,32,.6),0 0 6px rgba(218,165,32,.5),0 0 10px rgba(218,165,32,.4);font-weight:bold}
+    .equipped { background: rgba(255,255,255,.04); }
+
+    /* Toast */
+    #toast { position:fixed; bottom:16px; left:50%; transform:translateX(-50%); background:#0e1320; border:1px solid #2d3b5f; padding:8px 12px; border-radius:10px; display:none; z-index:9999; }
+  </style>
+  <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32.png') }}">
+</head>
+<body>
+  <!-- Top bar -->
+  <header>
+    <strong>S.W.C.A — Team / Upgrades</strong>
+    <input id="username" placeholder="Username">
+    <nav>
+      <a href="{{ url_for('index') }}">🎯 Summon</a>
+      <a href="{{ url_for('play_page') }}">▶️ Play</a>
+    </nav>
+    <span class="spacer"></span>
+
+    <label class="vol">
+      🔊 <input id="musicVol" type="range" min="0" max="100" step="1">
+    </label>
+    <span id="coins" class="pill">🪙 —</span>
+    <span id="gems"  class="pill">💎 —</span>
+  </header>
+
+  <div class="wrap">
+    <!-- Left: Team Builder -->
+    <section class="panel">
+      <header>
+        <span>🛠️ Team (pick up to 3)</span>
+        <div>
+          <button id="btnClear" class="btn ghost">Clear</button>
+          <button id="btnSave" class="btn primary">Save Team</button>
+        </div>
+      </header>
+      <div class="content">
+        <div id="teamGrid"></div>
+        <div class="saveRow">
+          <span class="muted">Tip: Saving also updates an open <b>Play</b> tab automatically.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: Backpack Manager -->
+    <section class="panel">
+      <header>
+        <span>🎒 Backpack & Upgrades</span>
+        <div class="muted" id="shardSummary">Shards —</div>
+      </header>
+      <div class="content">
+        <div class="tools">
+          <input id="q" placeholder="Search by name…">
+          <select id="fRarity">
+            <option value="All">All Rarities</option>
+            <option>Common</option><option>Rare</option><option>Ultra</option>
+            <option>Mythical</option><option>Secret</option><option>Celestial</option>
+          </select>
+          <label class="check"><input id="fShiny" type="checkbox"> Shiny only</label>
+          <button id="sellSelected" class="btn warn">Sell Selected</button>
+          <button id="dismantleSelected" class="btn danger">Dismantle Selected</button>
+        </div>
+
+        <div id="bpList"></div>
+      </div>
+    </section>
+  </div>
+
+  <div id="toast"></div>
+
+  <!-- Music -->
+  <script src="{{ url_for('static', filename='js/music.js') }}"></script>
+
+  <script>
+  /* ==== tiny helpers ==== */
+  const $ = id => document.getElementById(id);
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  function toast(msg){ const t=$('toast'); t.textContent=msg; t.style.display='block'; setTimeout(()=>t.style.display='none', 1500); }
+  function rememberUser(){
+  const inp = $('username');
+  const saved = localStorage.getItem('swca_username');
+  if (saved) inp.value = saved;
+
+  const persist = () => localStorage.setItem('swca_username', inp.value.trim());
+  inp.addEventListener('input', persist);   // save on every keystroke
+  inp.addEventListener('change', persist);
+  window.addEventListener('beforeunload', persist);
+  // if user clicks a nav link before blur, still persist
+  document.querySelectorAll('header nav a').forEach(a => a.addEventListener('click', persist));
+}
+  function uname(){ return ($('username').value || localStorage.getItem('swca_username') || '').trim(); }
+
+  async function api(path, payload = {}){
+    const u = uname(); if (!u) { alert('Enter a username'); throw new Error('no username'); }
+    const res = await fetch(path, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ username:u, ...payload })});
+    const data = await res.json(); if (!res.ok) throw new Error(data.error || 'Request failed'); return data;
+  }
+
+  /* ==== state ==== */
+  let BACKPACK = [];
+  let TEAM_IDS = [];
+  let SHARDS = {};
+  const RAR_EMO = { Common:'⚪', Rare:'🔷', Ultra:'🟣', Mythical:'🟠', Secret:'🖤', Celestial:'🌟' };
+
+  /* ==== stat calc (mirrors play page) ==== */
+  const BASE_STATS = {
+    Common:{hp:240, atk:36, def:16, spd:90},
+    Rare:{hp:300, atk:46, def:20, spd:100},
+    Ultra:{hp:360, atk:58, def:24, spd:110},
+    Mythical:{hp:420, atk:70, def:28, spd:115},
+    Secret:{hp:480, atk:84, def:32, spd:120},
+    Celestial:{hp:540, atk:100,def:36, spd:125}
+  };
+  function levelMult(level){ return 1 + 0.035 * Math.max(0, (level||1) - 1); }
+  function ascMult(asc){ const T=[1,1.10,1.22,1.37,1.55,1.76]; return T[Math.min(asc||0,5)] || 1; }
+  function buildStats(rarity, level=1, asc=0, shiny=false, celestial=false){
+    const b = BASE_STATS[rarity] || BASE_STATS.Common;
+    const sm = shiny ? 1.05 : 1;
+    const cm = celestial ? 1.10 : 1;
+    const mul = sm * cm * levelMult(level) * ascMult(asc);
+    return {
+      hp:  Math.round(b.hp  * mul),
+      atk: Math.round(b.atk * mul),
+      def: Math.round(b.def * mul),
+      spd: Math.round(b.spd * (shiny?1.02:1) * (celestial?1.02:1)),
+    };
+  }
+  function statLine(inst){
+    const s = buildStats(inst.rarity, inst.level||1, inst.ascension||0, !!inst.shiny, !!inst.celestial);
+    return `HP ${s.hp} • ATK ${s.atk} • DEF ${s.def} • SPD ${s.spd}`;
+  }
+
+  /* ==== load + render ==== */
+  async function loadAll(){
+    const prof = await api('/profile');
+    $('gems').textContent = `💎 ${prof.gems}`;
+    $('coins').textContent = `🪙 ${prof.coins}`;
+
+    const inv = await api('/inventory');
+    BACKPACK = inv.backpack || [];
+    SHARDS = inv.shards || {};
+    renderShardSummary();
+
+    const t = await api('/team/get');
+    TEAM_IDS = t.team || [];
+
+    renderTeam();
+    renderBackpack();
+  }
+
+  function renderShardSummary(){
+    const total = Object.values(SHARDS).reduce((a,b)=>a+b,0);
+    $('shardSummary').textContent = `Shards: ${total.toLocaleString()}`;
+  }
+
+  function renderTeam(){
+    const wrap = $('teamGrid');
+    wrap.innerHTML = '';
+    const selected = new Set(TEAM_IDS);
+    const chosen = BACKPACK.filter(i => selected.has(i.id)).slice(0,3);
+
+    for (let s = 0; s < 3; s++){
+      const inst = chosen[s];
+      const div = document.createElement('div'); div.className = 'slot';
+      if (!inst){
+        div.innerHTML = `<div class="name" style="opacity:.7">Empty Slot</div><div class="sub">Click “Add to Team” on a unit below.</div>`;
+      } else {
+        const tags = `${inst.rarity}${inst.shiny?' ✨':''}${inst.celestial?' 🌟':''}`;
+        const stats = statLine(inst);
+        div.innerHTML = `
+          <div class="name">${RAR_EMO[inst.rarity]||''} ${inst.unit_name}</div>
+          <div class="sub">${tags} — Lv.${inst.level} • Asc ${inst.ascension}</div>
+          <div class="sub" style="margin-top:4px;opacity:.85">${stats}</div>
+          <div class="btns">
+            <button class="btn ghost" onclick="removeFromTeam('${inst.id}')">Remove</button>
+          </div>
+        `;
+      }
+      wrap.appendChild(div);
+    }
+  }
+
+  function removeFromTeam(id){
+    TEAM_IDS = TEAM_IDS.filter(x => x !== id);
+    renderTeam();
+    renderBackpack();
+  }
+
+  function toggleOnTeam(id){
+    const has = TEAM_IDS.includes(id);
+    if (has){
+      TEAM_IDS = TEAM_IDS.filter(x => x !== id);
+    } else {
+      if (TEAM_IDS.length >= 3) { toast('Max 3 on team'); return; }
+      TEAM_IDS.push(id);
+    }
+    renderTeam();
+    renderBackpack();
+  }
+
+  function toggleOnTeam(id){
+    const has = TEAM_IDS.includes(id);
+    if (has){
+      TEAM_IDS = TEAM_IDS.filter(x => x !== id);
+    } else {
+      if (TEAM_IDS.length >= 3) { toast('Max 3 on team'); return; }
+      const inst = BACKPACK.find(i => i.id === id);
+      const namesOnTeam = BACKPACK.filter(i => TEAM_IDS.includes(i.id)).map(i => i.unit_name);
+      if (inst && namesOnTeam.includes(inst.unit_name)) { toast('Cannot add duplicate units'); return; }
+      TEAM_IDS.push(id);
+    }
+    renderTeam();
+    renderBackpack();
+  }
+
+  function renderBackpack(){
+    const list = $('bpList');
+    list.innerHTML = '';
+
+    const q = ($('q').value || '').toLowerCase().trim();
+    const r = $('fRarity').value || 'All';
+    const shinyOnly = $('fShiny').checked;
+
+    const selected = new Set(TEAM_IDS);
+
+    const filtered = BACKPACK.filter(inst => {
+      if (r !== 'All' && inst.rarity !== r) return false;
+      if (shinyOnly && !inst.shiny && !inst.celestial) return false;
+      if (q && !String(inst.unit_name).toLowerCase().includes(q)) return false;
+      return true;
+    });
+
+    filtered.slice().reverse().forEach(inst => {
+      const c = document.createElement('div'); c.className = 'card' + (selected.has(inst.id) ? ' equipped' : '');
+
+      // selection checkbox
+      const left = document.createElement('div');
+      left.innerHTML = `<input type="checkbox" class="unit-check" value="${inst.id}">`;
+      c.appendChild(left);
+
+      // meta
+      const meta = document.createElement('div'); meta.className = 'meta';
+      const tags = `${inst.rarity}${inst.shiny?' ✨':''}${inst.celestial?' 🌟':''}`;
+      const stats = statLine(inst);
+      meta.innerHTML = `
+        <div class="name">${RAR_EMO[inst.rarity]||''} ${inst.unit_name}</div>
+        <div class="sub">${tags} — Lv.${inst.level} • Asc ${inst.ascension}
+          ${inst.celestial ? `<span class="tag gold-glow">Celestial</span>` : ''}
+        </div>
+        <div class="sub" style="margin-top:4px;opacity:.85">${stats}</div>
+        <div class="row" style="margin-top:6px">
+          <span class="tag">Shards for ${inst.unit_name}: ${SHARDS[inst.unit_name] || 0}</span>
+          ${selected.has(inst.id) ? '<span class="tag">On Team</span>' : ''}
+        </div>
+        <div class="row">
+          <button class="btn ghost" onclick="toggleOnTeam('${inst.id}')">${selected.has(inst.id) ? 'Remove from Team' : 'Add to Team'}</button>
+          <button class="btn" onclick="levelUp('${inst.id}', ${inst.level||1})">Level Up</button>
+          <button class="btn" onclick="ascend('${inst.id}', ${inst.ascension||0})">Ascend</button>
+          <button class="btn warn" onclick="sellUnit('${inst.id}')">Sell</button>
+          <button class="btn danger" onclick="dismantleUnit('${inst.id}')">Dismantle</button>
+        </div>
+      `;
+      c.appendChild(meta);
+
+      list.appendChild(c);
+    });
+  }
+
+  /* ==== bulk helpers/actions ==== */
+  function getSelectedIds(){
+    return Array.from(document.querySelectorAll('.unit-check:checked')).map(cb => cb.value);
+  }
+
+  async function getTeamSet(){
+    const t = await api('/team/get');
+    return new Set(t.team || []);
+  }
+
+  async function sellSelected(){
+    const ids = getSelectedIds();
+    if (!ids.length) return alert('Select at least one unit.');
+    const teamSet = await getTeamSet();
+    const equipped = ids.filter(id => teamSet.has(id));
+    if (equipped.length) {
+      const ok = confirm(`${equipped.length} selected unit(s) are on your team. Remove them from the team and sell?`);
+      if (!ok) return;
+      const newTeam = TEAM_IDS.filter(id => !equipped.includes(id));
+      await api('/team/set', { team_ids: newTeam });
+      TEAM_IDS = newTeam; renderTeam();
+    }
+    try{
+      const r = await api('/inventory/sell', { instance_ids: ids });
+      toast(`Sold ${ids.length} units (+${r.coins_gained ?? 0} coins)`);
+      BACKPACK = r.backpack ?? BACKPACK;
+      $('coins').textContent = `🪙 ${r.coins ?? 0}`;
+      renderTeam(); renderBackpack();
+    }catch(e){ alert(e.message); }
+  }
+
+  async function dismantleSelected(){
+    const ids = getSelectedIds();
+    if (!ids.length) return alert('Select at least one unit.');
+    const teamSet = await getTeamSet();
+    const equipped = ids.filter(id => teamSet.has(id));
+    if (equipped.length) {
+      const ok = confirm(`${equipped.length} selected unit(s) are on your team. Remove them and dismantle?`);
+      if (!ok) return;
+      const newTeam = TEAM_IDS.filter(id => !equipped.includes(id));
+      await api('/team/set', { team_ids: newTeam });
+      TEAM_IDS = newTeam; renderTeam();
+    }
+    try{
+      const before = Object.values(SHARDS).reduce((a,b)=>a+b,0);
+      const r = await api('/inventory/dismantle_selected', { instance_ids: ids });
+      const after = Object.values(r.shards || {}).reduce((a,b)=>a+b,0);
+      const gained = Math.max(0, (after - before));
+      toast(`Dismantled ${ids.length} unit(s) → +${gained} shards`);
+      BACKPACK = r.backpack ?? BACKPACK;
+      SHARDS   = r.shards ?? SHARDS;
+      renderTeam(); renderBackpack(); renderShardSummary();
+    }catch(e){ alert(e.message); }
+  }
+
+  /* ==== single-item actions (removes from team first if needed) ==== */
+  async function sellUnit(id){
+    if (!confirm('Sell this unit for coins?')) return;
+    const teamSet = await getTeamSet();
+    if (teamSet.has(id)){
+      const ok = confirm('This unit is on your team. Remove it and sell?');
+      if (!ok) return;
+      const newTeam = TEAM_IDS.filter(x => x !== id);
+      await api('/team/set', { team_ids: newTeam });
+      TEAM_IDS = newTeam; renderTeam();
+    }
+    try{
+      const r = await api('/inventory/sell', { instance_ids: [id] });
+      toast(`Sold (+${r.coins_gained ?? 0} coins)`);
+      BACKPACK = r.backpack ?? BACKPACK;
+      $('coins').textContent = `🪙 ${r.coins ?? 0}`;
+      renderTeam(); renderBackpack();
+    }catch(e){ alert(e.message); }
+  }
+
+  async function dismantleUnit(id){
+    if (!confirm('Dismantle for shards? This removes the unit.')) return;
+    const teamSet = await getTeamSet();
+    if (teamSet.has(id)){
+      const ok = confirm('This unit is on your team. Remove it and dismantle?');
+      if (!ok) return;
+      const newTeam = TEAM_IDS.filter(x => x !== id);
+      await api('/team/set', { team_ids: newTeam });
+      TEAM_IDS = newTeam; renderTeam();
+    }
+    try{
+      const before = Object.values(SHARDS).reduce((a,b)=>a+b,0);
+      const r = await api('/inventory/dismantle', { instance_id: id });
+      const after = Object.values(r.shards || {}).reduce((a,b)=>a+b,0);
+      const gained = Math.max(0, (after - before));
+      toast(`Dismantled → +${gained} shards`);
+      BACKPACK = r.backpack || BACKPACK; SHARDS = r.shards || SHARDS;
+      renderTeam(); renderBackpack(); renderShardSummary();
+    }catch(e){ alert(e.message); }
+  }
+
+  async function levelUp(id, curLevel){
+    try{
+      const r = await api('/upgrade/level', { instance_id: id });
+      toast(`Level ${curLevel} → ${r.inst?.level ?? curLevel+1}`);
+      $('coins').textContent = `🪙 ${r.coins}`;
+      const idx = BACKPACK.findIndex(x => x.id === id); if (idx >= 0) BACKPACK[idx] = r.inst;
+      renderTeam(); renderBackpack();
+    }catch(e){ alert(e.message); }
+  }
+
+  async function ascend(id, curAsc){
+    try{
+      const r = await api('/upgrade/ascend', { instance_id: id });
+      toast(`Ascension ${curAsc} → ${r.inst?.ascension ?? curAsc+1}`);
+      SHARDS = r.shards; renderShardSummary();
+      const idx = BACKPACK.findIndex(x => x.id === id); if (idx >= 0) BACKPACK[idx] = r.inst;
+      renderTeam(); renderBackpack();
+    }catch(e){ alert(e.message); }
+  }
+
+  async function saveTeam(){
+    localStorage.setItem('swca_username', uname());
+    try{
+      await api('/team/set', { team_ids: TEAM_IDS.slice(0,3) });
+      localStorage.setItem('swca_team_updated', String(Date.now()));
+      try { new BroadcastChannel('swca').postMessage({type:'team-updated', t:Date.now()}); } catch {}
+      toast('Team saved!');
+      const prof = await api('/profile'); $('gems').textContent = `💎 ${prof.gems}`; $('coins').textContent = `🪙 ${prof.coins}`;
+    }catch(e){ alert(e.message); }
+  }
+
+  /* ==== events ==== */
+  $('btnSave').addEventListener('click', saveTeam);
+  $('btnClear').addEventListener('click', () => { TEAM_IDS = []; renderTeam(); renderBackpack(); });
+
+  $('q').addEventListener('input', renderBackpack);
+  $('fRarity').addEventListener('change', renderBackpack);
+  $('fShiny').addEventListener('change', renderBackpack);
+
+  $('sellSelected').addEventListener('click', sellSelected);
+  $('dismantleSelected').addEventListener('click', dismantleSelected);
+
+  // Music
+  document.addEventListener('DOMContentLoaded', () => {
+    rememberUser();
+    if (window.SWCA_Music) {
+      SWCA_Music.ensureUnlocked();
+      const vol = $('musicVol');
+      if (vol) {
+        vol.value = Math.round((SWCA_Music.volume ?? 0.5) * 100);
+        vol.addEventListener('input', e => SWCA_Music.setVolume(Math.max(0, Math.min(100, +e.target.value)) / 100));
+      }
+      SWCA_Music.play('menu');
+    }
+    loadAll().catch(err => console.error(err));
+  });
+
+  // expose for inline buttons
+  window.toggleOnTeam = toggleOnTeam;
+  window.removeFromTeam = removeFromTeam;
+  window.sellUnit = sellUnit;
+  window.dismantleUnit = dismantleUnit;
+  window.levelUp = levelUp;
+  window.ascend = ascend;
+  </script>
+</body>
+</html>

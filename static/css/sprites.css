@@ -1,0 +1,22 @@
+/* === Base sprite animation helpers (drop into static/css/sprites.css) === */
+.sprite-unit {
+  --w: 96px;
+  --h: 96px;
+  --frames: 6;
+  --fps: 12;
+  --play: infinite;
+  width: var(--w);
+  height: var(--h);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+  image-rendering: pixelated;
+  animation: sprite-play steps(var(--frames)) var(--play);
+  animation-duration: calc(var(--frames) / var(--fps) * 1s);
+}
+@keyframes sprite-play {
+  from { background-position-x: 0; }
+  to   { background-position-x: calc(-1 * var(--w) * var(--frames)); }
+}
+.sprite-unit.once { animation-iteration-count: 1; }
+.sprite-unit.debug-pause:hover { animation-play-state: paused; }

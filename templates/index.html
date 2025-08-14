@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>S.W.C.A – Summon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background:#0e1320; color:#fff; font-family:Arial, sans-serif; margin:0; }
+    .hud { padding:12px; display:flex; gap:10px; background:rgba(0,0,0,0.35); backdrop-filter:blur(6px); position:sticky; top:0; z-index:5; align-items:center; }
+    .hud input { padding:8px; border-radius:8px; border:0; min-width:180px; }
+    .hud button { padding:8px 12px; border-radius:8px; border:0; cursor:pointer; font-weight:bold; }
+    #gems { font-weight:700; margin-left:auto; }
+
+    #pullResults { margin:16px auto; width:min(1100px, 92vw); display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; }
+    .card { background:#1b2236; border:1px solid #2d3b5f; border-radius:10px; padding:10px; }
+    .rarity { font-size:12px; opacity:0.85; }
+    .special-skill { margin-top:6px; font-size:12px; color:#ffd700; }
+
+    /* Rates panel */
+    #ratesContainer { display:none; width:min(1100px,92vw); margin:14px auto 0; background:#121a31; border:1px solid #2d3b5f; border-radius:10px; padding:12px; }
+    .rates-table { width:100%; border-collapse:collapse; font-size:14px; }
+    .rates-table th, .rates-table td { padding:6px 8px; border-bottom:1px solid rgba(255,255,255,.08); }
+    .rates-table th { text-align:left; opacity:.9; }
+    .rates-table td.num { text-align:right; opacity:.9; }
+
+    /* Index panel */
+    #unitIndexPanel { display:none; width:min(1100px,92vw); margin:14px auto; }
+    .index-header { display:flex; justify-content:space-between; align-items:center; background:#182238; border:1px solid #2d3b5f; border-radius:10px; padding:8px 12px; font-weight:700; }
+    .index-toggle .tab { background:#243357; border:0; color:#fff; padding:6px 10px; margin-left:8px; border-radius:8px; cursor:pointer; font-weight:700; }
+    .index-toggle .tab.active { background:#fff; color:#182238; }
+    .index-wrapper { background:#121a31; border:1px solid #2d3b5f; border-radius:10px; padding:12px; }
+    .summary { display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:flex-start; margin:10px 0; }
+    .chip { padding:4px 10px; border-radius:999px; background:#1b2236; border:1px solid #2d3b5f; font-size:12px; }
+    .summary-bar { height:10px; width:260px; background:#1b2236; border:1px solid #2d3b5f; border-radius:999px; overflow:hidden; }
+    .summary-bar .bar { height:100%; width:0%; background:#32d27a; transition: width 300ms ease; }
+
+    .rarity-section { background:#0f172b; border:1px solid #2d3b5f; border-radius:10px; padding:10px; margin-bottom:12px; }
+    .rarity-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+    .rarity-title { margin:0; }
+    .progress-wrap { display:flex; align-items:center; gap:8px; }
+    .progress { height:8px; width:160px; background:#1b2236; border-radius:999px; overflow:hidden; border:1px solid #2d3b5f; }
+    .progress .bar { height:100%; width:0%; background:#6aa8ff; transition: width 300ms ease; }
+    .progress-label { font-size:12px; opacity:.85; min-width:48px; text-align:right; }
+
+    .unit-grid { display:flex; flex-wrap:wrap; gap:10px; }
+    .unit-badge {
+      width:56px; height:56px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center; position:relative;
+      background:#223154; color:#dfe7ff; font-weight:800; letter-spacing:.3px;
+      border:2px solid #2d3b5f; user-select:none;
+    }
+    .unit-badge.owned { background:#1a3a2a; border-color:#2f7150; color:#c7ffdd; }
+    .unit-badge.unknown { background:#1b2236; border-color:#2d3b5f; color:#8899bb; }
+    .unit-badge .tiny { font-size:12px; line-height:1.1; text-align:center; padding:4px; }
+    .unit-badge .corner { position:absolute; right:-4px; top:-4px; font-size:14px; }
+    .unit-badge.shiny { box-shadow: 0 0 8px rgba(255,105,180,.45); }
+
+    /* rainbow / gold / mono effects */
+    .rainbow-text { background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; animation: rainbow 3s linear infinite; background-size: 200% 100%; }
+    @keyframes rainbow { 0%{background-position:0% 50%} 100%{background-position:100% 50%} }
+    .mono-rainbow-text { background-image: linear-gradient(to right, #000, #444, #888, #bbb, #fff, #bbb, #888, #444, #000);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; animation: monoRainbow 4.5s linear infinite; background-size: 200% 100%; }
+    @keyframes monoRainbow { 0%{background-position:0% 50%} 100%{background-position:100% 50%} }
+    .gold-glow { color: gold; -webkit-text-stroke: 0.2px black; text-shadow:
+      0 0 3px rgba(218,165,32,.6), 0 0 6px rgba(218,165,32,.5), 0 0 10px rgba(218,165,32,.4); font-weight: bold; }
+    .vol input[type="range"] { accent-color: #6aa8ff; }
+  </style>
+  <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32.png') }}">
+</head>
+<body>
+
+  <div class="hud">
+    <input id="username" placeholder="Username">
+    <button id="pull1">🎯 Summon 1 (100💎)</button>
+    <button id="pull10">🎯 Summon 10 (1000💎)</button>
+    <a href="{{ url_for('play_page') }}"><button>▶️ Play</button></a>
+    <a href="{{ url_for('team_page') }}"><button>🛠️ Team</button></a>
+    <button id="showRatesBtn" onclick="toggleRates()">Show Rates</button>
+    <button id="toggleIndexBtn" onclick="toggleIndex()">Show Index</button>
+
+    <!-- music slider -->
+    <label class="vol" style="display:inline-flex;align-items:center;gap:8px;">
+      🔊
+      <input id="musicVol" type="range" min="0" max="100" step="1" style="width:140px;">
+    </label>
+    <div id="gems">💎 —</div>
+  </div>
+
+  <!-- Rates -->
+  <div id="ratesContainer">
+    <h4>Summon Rates</h4>
+    <table id="ratesTable" class="rates-table">
+      <thead>
+        <tr>
+          <th>Rarity</th>
+          <th class="num">Base %</th>
+          <th class="num">Base 1 in X</th>
+          <th class="num">Shiny %</th>
+          <th class="num">Shiny 1 in X</th>
+        </tr>
+      </thead>
+      <tbody id="ratesTbody"></tbody>
+    </table>
+    <p style="margin-top:10px; font-style: italic; font-size:14px;">
+      ✨ <span class="rainbow-text" style="font-weight:bold;">Shiny</span> can appear on
+      <b>Common, Rare, Ultra, Mythical, Celestial</b> at 1 in 4000 (0.025%).<br>
+      🌟 <span class="gold-glow" style="font-weight:bold;">Celestial</span> uses a gold glow that overrides shiny visuals if shiny occurs.<br>
+      🖤 <span class="mono-rainbow-text" style="font-weight:bold;">Secret</span> has a black-and-white animated effect and cannot be shiny.
+    </p>
+  </div>
+
+  <!-- Unit Index -->
+  <div id="unitIndexPanel">
+    <div class="index-header">
+      <span>Unit Index</span>
+      <div class="index-toggle">
+        <button id="viewNormalBtn" class="tab active" onclick="setIndexView('normal')">Normal</button>
+        <button id="viewShinyBtn" class="tab" onclick="setIndexView('shiny')">Shiny</button>
+      </div>
+    </div>
+    <div id="indexSummary" class="summary"></div>
+    <div id="unitIndex" class="index-wrapper"></div>
+  </div>
+
+  <div id="pullResults"></div>
+
+  <!-- 1) music system (shared) -->
+  <script src="{{ url_for('static', filename='js/music.js') }}"></script>
+  <script>
+    // slider wiring (0–100 UI -> 0–1 engine)
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.SWCA_Music) {
+        try {
+          SWCA_Music.ensureUnlocked();
+          const vol = document.getElementById('musicVol');
+          if (vol) {
+            vol.value = Math.round((SWCA_Music.volume ?? 0.5) * 100);
+            vol.addEventListener('input', e => {
+              const v = Math.max(0, Math.min(100, Number(e.target.value || 0)));
+              SWCA_Music.setVolume(v / 100);
+            });
+          }
+          SWCA_Music.play('menu');
+        } catch(e) {
+          console.warn('[music] init failed:', e);
+        }
+      }
+    });
+  </script>
+
+  <!-- 2) page logic -->
+  <script>
+    const $ = id => document.getElementById(id);
+    let specials = {};
+    let indexDataCache = null;
+    let metaChancesCache = null;
+    let INDEX_VIEW = 'normal';
+
+    function rememberUser() {
+      const uEl = $('username');
+      const saved = localStorage.getItem('swca_username');
+      if (saved && uEl) uEl.value = saved;
+      uEl?.addEventListener('change', () => {
+        localStorage.setItem('swca_username', (uEl.value || '').trim());
+        loadSpecials(true);
+      });
+    }
+
+    async function api(path, payload={}) {
+      const u = ($('username')?.value || '').trim();
+      if (!u) { alert('Enter a username'); throw new Error('no username'); }
+      const res = await fetch(path, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ username: u, ...payload })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Request failed');
+      return data;
+    }
+
+    async function loadSpecials(refreshIndex=false) {
+      try {
+        const data = await api('/index_data');
+        specials = data.specials || {};
+        indexDataCache = data;
+        metaChancesCache = data.chances || null;
+
+        const indexPanel = $('unitIndexPanel');
+        const rates = $('ratesContainer');
+
+        if (refreshIndex && indexPanel && getComputedStyle(indexPanel).display !== 'none') {
+          renderUnitIndex(indexDataCache);
+        }
+        if (rates && getComputedStyle(rates).display !== 'none') {
+          fillRates(metaChancesCache, indexDataCache?.shinyChance ?? (1/4000));
+        }
+      } catch(e) {
+        console.error('loadSpecials', e);
+      }
+    }
+
+    async function pullOnce() {
+      try {
+        const data = await api('/pull');
+        updateGems(data.gems_left);
+        const indexPanel = $('unitIndexPanel');
+        await loadSpecials(!!indexPanel && getComputedStyle(indexPanel).display !== 'none');
+        renderPulls([{unit: data.unit, rarity: data.rarity, shiny: data.shiny, celestial: data.celestial}]);
+      } catch(e) { alert(e.message); }
+    }
+
+    async function pullTen() {
+      try {
+        const data = await api('/pull10');
+        updateGems(data.gems_left);
+        const indexPanel = $('unitIndexPanel');
+        await loadSpecials(!!indexPanel && getComputedStyle(indexPanel).display !== 'none');
+        renderPulls(data.pulls);
+      } catch(e) { alert(e.message); }
+    }
+
+    function updateGems(gems) { const gEl=$('gems'); if (gEl) gEl.textContent = `💎 ${gems}`; }
+
+    function styleLine(p) {
+      const name = p.unit;
+      if (p.celestial) return `<span class="gold-glow">${name}</span> 🌟`;
+      if (p.rarity === 'Secret') return `<span class="mono-rainbow-text">${name}</span> 🖤`;
+      if (p.shiny) return `<span class="rainbow-text">${name}</span> ✨`;
+      return name;
+    }
+
+    function renderPulls(pulls) {
+      const cont = $('pullResults'); if (!cont) return;
+      cont.innerHTML = '';
+      pulls.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div><strong>${styleLine(p)}</strong></div>
+          <div class="rarity">${p.rarity}${p.shiny ? ' ✨' : ''}${p.celestial ? ' 🌟' : ''}</div>
+          ${specials[p.unit] ? `<div class="special-skill">Special: ${escapeHtml(specials[p.unit])}</div>` : ''}
+        `;
+        cont.appendChild(card);
+      });
+    }
+
+    function toggleRates() {
+      const rc = $('ratesContainer'); if (!rc) return;
+      const isHidden = getComputedStyle(rc).display === 'none';
+      rc.style.display = isHidden ? 'block' : 'none';
+      if (isHidden) {
+        if (metaChancesCache) {
+          fillRates(metaChancesCache, indexDataCache?.shinyChance ?? (1/4000));
+        } else {
+          loadSpecials(true);
+        }
+      }
+    }
+
+    function fillRates(chances, shinyChance) {
+      if (!chances) return;
+      const order = ["Common","Rare","Ultra","Mythical","Secret","Celestial"];
+      const shinyEligible = new Set(["Common","Rare","Ultra","Mythical","Celestial"]);
+      const badge = { "Common":"⚪","Rare":"🔷","Ultra":"🟣","Mythical":"🟠","Secret":"🖤","Celestial":"🌟" };
+
+      const tbody = $('ratesTbody'); if (!tbody) return;
+      tbody.innerHTML = "";
+
+      order.forEach(r => {
+        if (!(r in chances)) return;
+        const baseP = chances[r];
+        const basePct = baseP * 100;
+        const shinyOk = shinyEligible.has(r);
+        const shinyP = shinyOk ? baseP * shinyChance : 0;
+        const shinyPct = shinyP * 100;
+
+        const tr = document.createElement("tr");
+
+        const tdR = document.createElement("td");
+        tdR.innerHTML = `<span class="rarity-badge">${badge[r] || ""} ${r}</span>`;
+
+        const tdBpct = document.createElement("td"); tdBpct.className = "num"; tdBpct.textContent = basePct.toFixed(4) + "%";
+        const tdB1in = document.createElement("td"); tdB1in.className = "num"; tdB1in.textContent = fmtOneIn(baseP);
+        const tdSpct = document.createElement("td"); tdSpct.className = "num"; tdSpct.textContent = shinyOk ? shinyPct.toFixed(6) + "%" : "—";
+        const tdS1in = document.createElement("td"); tdS1in.className = "num"; tdS1in.textContent = shinyOk ? fmtOneIn(shinyP) : "—";
+
+        tr.appendChild(tdR); tr.appendChild(tdBpct); tr.appendChild(tdB1in); tr.appendChild(tdSpct); tr.appendChild(tdS1in);
+        tbody.appendChild(tr);
+      });
+    }
+
+    function fmtOneIn(p) {
+      if (!p || p <= 0) return "—";
+      const x = 1 / p;
+      if (x >= 1000) return "1 in " + Math.round(x).toLocaleString();
+      return "1 in " + Math.round(x);
+    }
+
+    function toggleIndex() {
+      const panel = $('unitIndexPanel'); if (!panel) return;
+      const isHidden = getComputedStyle(panel).display === 'none';
+      panel.style.display = isHidden ? 'block' : 'none';
+      if (isHidden && indexDataCache) {
+        renderUnitIndex(indexDataCache);
+      } else if (isHidden) {
+        loadSpecials(true);
+      }
+    }
+
+    function setIndexView(view) {
+      INDEX_VIEW = view;
+      $('viewNormalBtn')?.classList.toggle('active', view === 'normal');
+      $('viewShinyBtn')?.classList.toggle('active', view === 'shiny');
+      if (indexDataCache) renderUnitIndex(indexDataCache);
+    }
+
+    const rarityBarColor = {
+      "Common":   "#9db0c6",
+      "Rare":     "#6aa8ff",
+      "Ultra":    "#b27bff",
+      "Mythical": "#ff7bd7",
+      "Secret":   "#000000",
+      "Celestial":"#ffd700"
+    };
+
+    function renderUnitIndex(data) {
+      const wrapper = $('unitIndex');
+      const summary = $('indexSummary');
+      if (!wrapper || !summary) return;
+      wrapper.innerHTML = ""; summary.innerHTML = "";
+
+      const order = data.order || Object.keys(data.rarities);
+
+      let overallOwned = 0, overallTotal = 0;
+      const perRarityCounts = [];
+
+      order.forEach(rarity => {
+        const list = data.rarities[rarity] || [];
+        const total = list.length;
+        const ownedCount = list.reduce((acc, u) => {
+          const owned = (INDEX_VIEW === "shiny") ? u.owned_shiny : u.owned_normal;
+          return acc + (owned ? 1 : 0);
+        }, 0);
+        perRarityCounts.push({ rarity, total, owned: ownedCount });
+        overallOwned += ownedCount; overallTotal += total;
+      });
+
+      const overallPct = overallTotal ? Math.round((overallOwned / overallTotal) * 100) : 0;
+      const overallChip = document.createElement("div");
+      overallChip.className = "chip";
+      overallChip.textContent = `Overall: ${overallOwned} / ${overallTotal} (${overallPct}%)`;
+      summary.appendChild(overallChip);
+
+      const overallBarWrap = document.createElement("div");
+      overallBarWrap.className = "summary-bar";
+      const overallBar = document.createElement("div");
+      overallBar.className = "bar";
+      overallBar.style.width = `${overallPct}%`;
+      overallBarWrap.appendChild(overallBar);
+      summary.appendChild(overallBarWrap);
+
+      perRarityCounts.forEach(({rarity, total, owned}) => {
+        const chip = document.createElement("div");
+        chip.className = "chip";
+        chip.textContent = `${rarity}: ${owned}/${total}`;
+        summary.appendChild(chip);
+      });
+
+      order.forEach(rarity => {
+        const list = data.rarities[rarity] || [];
+
+        const total = list.length;
+        const ownedCount = list.reduce((acc, u) => (acc + ((INDEX_VIEW === "shiny") ? (u.owned_shiny ? 1 : 0) : (u.owned_normal ? 1 : 0))), 0);
+        const pct = total ? Math.round((ownedCount / total) * 100) : 0;
+
+        const sec = document.createElement("div");
+        sec.className = "rarity-section";
+
+        const header = document.createElement("div");
+        header.className = "rarity-header";
+
+        const title = document.createElement("h3");
+        title.className = "rarity-title";
+        title.textContent = rarity;
+
+        const progWrap = document.createElement("div");
+        progWrap.className = "progress-wrap";
+        const prog = document.createElement("div");
+        prog.className = "progress";
+        const bar = document.createElement("div");
+        bar.className = "bar";
+        bar.style.width = `${pct}%`;
+        bar.style.background = rarityBarColor[rarity] || "#32d27a";
+        prog.appendChild(bar);
+
+        const progLabel = document.createElement("div");
+        progLabel.className = "progress-label";
+        progLabel.textContent = `${ownedCount} / ${total}`;
+
+        progWrap.appendChild(prog); progWrap.appendChild(progLabel);
+        header.appendChild(title); header.appendChild(progWrap);
+        sec.appendChild(header);
+
+        const grid = document.createElement("div");
+        grid.className = "unit-grid";
+
+        list.forEach(u => {
+          const badge = document.createElement("div");
+          const isUnknown = !u.owned;
+          badge.className = "unit-badge" + (u.owned ? " owned" : " unknown") + (u.owned_shiny ? " shiny" : "");
+
+          const span = document.createElement("span");
+          span.className = "tiny";
+          span.textContent = isUnknown ? "??" : initials(u.name);
+
+          const showOwnedInView = (INDEX_VIEW === "shiny") ? u.owned_shiny : u.owned_normal;
+          if (!showOwnedInView) {
+            badge.style.filter = "grayscale(100%) brightness(0.9)";
+            badge.style.opacity = "0.6";
+          }
+
+          const specialDesc = specials[u.name];
+          if (!isUnknown) {
+            if (specialDesc) {
+              badge.title = `${u.name} — ${specialDesc}`;
+              const info = document.createElement('span');
+              info.className = 'corner';
+              info.textContent = 'ℹ️';
+              info.style.fontSize = '13px';
+              badge.appendChild(info);
+            } else {
+              badge.title = `${u.name} ${u.owned_shiny ? "(Shiny owned)" : u.owned ? "(Owned)" : ""}`.trim();
+            }
+          } else {
+            badge.title = "Unknown (not discovered)";
+          }
+
+          badge.appendChild(span);
+          grid.appendChild(badge);
+        });
+
+        sec.appendChild(grid);
+        wrapper.appendChild(sec);
+      });
+    }
+
+    function initials(name) {
+      const parts = String(name||"").split(/\s+/).filter(Boolean);
+      if (!parts.length) return "?";
+      if (parts.length === 1) return parts[0].slice(0,2).toUpperCase();
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+
+    function escapeHtml(unsafe) {
+      return String(unsafe ?? '')
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    async function init() {
+      rememberUser();
+      await loadSpecials();
+      try {
+        const prof = await api('/profile');
+        updateGems(prof.gems);
+      } catch {}
+      const rates = $('ratesContainer'); if (rates) rates.style.display = 'none';
+      const panel = $('unitIndexPanel'); if (panel) panel.style.display = 'none';
+    }
+
+    $('pull1')?.addEventListener('click', pullOnce);
+    $('pull10')?.addEventListener('click', pullTen);
+
+    init();
+  </script>
+</body>
+</html>
+

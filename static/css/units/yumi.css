@@ -1,0 +1,64 @@
+/* === Yumi (Common) ===
+Special: (none specified)
+Sprite strips expected at:
+  /static/images/units/yumi/idle.png
+  /static/images/units/yumi/attack.png
+  /static/images/units/yumi/death.png
+  /static/images/units/yumi/revive.png
+  /static/images/units/yumi/skill.png
+Add @2x variants for retina: idle@2x.png, etc.
+*/
+
+/* Base: set per-unit frame size */
+.sprite-unit.yumi { --w: 96px; --h: 96px; }
+
+/* IDLE */
+.sprite-unit.yumi.idle {
+  --frames: 6; --fps: 10;
+  background-image: image-set(
+    url("/static/images/units/yumi/idle.png") 1x,
+    url("/static/images/units/yumi/idle@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* ATTACK */
+.sprite-unit.yumi.attack {
+  --frames: 10; --fps: 16;
+  background-image: image-set(
+    url("/static/images/units/yumi/attack.png") 1x,
+    url("/static/images/units/yumi/attack@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* DEATH (one-shot) */
+.sprite-unit.yumi.death {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/yumi/death.png") 1x,
+    url("/static/images/units/yumi/death@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* REVIVE (one-shot) */
+.sprite-unit.yumi.revive {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/yumi/revive.png") 1x,
+    url("/static/images/units/yumi/revive@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* SPECIAL SKILL (one-shot) */
+.sprite-unit.yumi.skill {
+  --frames: 16; --fps: 18; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/yumi/skill.png") 1x,
+    url("/static/images/units/yumi/skill@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+

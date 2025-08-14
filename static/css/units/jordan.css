@@ -1,0 +1,64 @@
+/* === Jordan (Rare) ===
+Special: (none specified)
+Sprite strips expected at:
+  /static/images/units/jordan/idle.png
+  /static/images/units/jordan/attack.png
+  /static/images/units/jordan/death.png
+  /static/images/units/jordan/revive.png
+  /static/images/units/jordan/skill.png
+Add @2x variants for retina: idle@2x.png, etc.
+*/
+
+/* Base: set per-unit frame size */
+.sprite-unit.jordan { --w: 96px; --h: 96px; }
+
+/* IDLE */
+.sprite-unit.jordan.idle {
+  --frames: 6; --fps: 10;
+  background-image: image-set(
+    url("/static/images/units/jordan/idle.png") 1x,
+    url("/static/images/units/jordan/idle@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* ATTACK */
+.sprite-unit.jordan.attack {
+  --frames: 10; --fps: 16;
+  background-image: image-set(
+    url("/static/images/units/jordan/attack.png") 1x,
+    url("/static/images/units/jordan/attack@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* DEATH (one-shot) */
+.sprite-unit.jordan.death {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/jordan/death.png") 1x,
+    url("/static/images/units/jordan/death@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* REVIVE (one-shot) */
+.sprite-unit.jordan.revive {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/jordan/revive.png") 1x,
+    url("/static/images/units/jordan/revive@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* SPECIAL SKILL (one-shot) */
+.sprite-unit.jordan.skill {
+  --frames: 16; --fps: 18; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/jordan/skill.png") 1x,
+    url("/static/images/units/jordan/skill@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+

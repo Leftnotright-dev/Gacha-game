@@ -1,0 +1,64 @@
+/* === Nva (Common) ===
+Special: (none specified)
+Sprite strips expected at:
+  /static/images/units/nva/idle.png
+  /static/images/units/nva/attack.png
+  /static/images/units/nva/death.png
+  /static/images/units/nva/revive.png
+  /static/images/units/nva/skill.png
+Add @2x variants for retina: idle@2x.png, etc.
+*/
+
+/* Base: set per-unit frame size */
+.sprite-unit.nva { --w: 96px; --h: 96px; }
+
+/* IDLE */
+.sprite-unit.nva.idle {
+  --frames: 6; --fps: 10;
+  background-image: image-set(
+    url("/static/images/units/nva/idle.png") 1x,
+    url("/static/images/units/nva/idle@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* ATTACK */
+.sprite-unit.nva.attack {
+  --frames: 10; --fps: 16;
+  background-image: image-set(
+    url("/static/images/units/nva/attack.png") 1x,
+    url("/static/images/units/nva/attack@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* DEATH (one-shot) */
+.sprite-unit.nva.death {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/nva/death.png") 1x,
+    url("/static/images/units/nva/death@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* REVIVE (one-shot) */
+.sprite-unit.nva.revive {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/nva/revive.png") 1x,
+    url("/static/images/units/nva/revive@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* SPECIAL SKILL (one-shot) */
+.sprite-unit.nva.skill {
+  --frames: 16; --fps: 18; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/nva/skill.png") 1x,
+    url("/static/images/units/nva/skill@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+

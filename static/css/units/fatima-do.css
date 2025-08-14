@@ -1,0 +1,64 @@
+/* === Fatima Do (Ultra) ===
+Special: Florish — Heal all allies for 50% of their max HP. CD 15.
+Sprite strips expected at:
+  /static/images/units/fatima-do/idle.png
+  /static/images/units/fatima-do/attack.png
+  /static/images/units/fatima-do/death.png
+  /static/images/units/fatima-do/revive.png
+  /static/images/units/fatima-do/skill.png
+Add @2x variants for retina: idle@2x.png, etc.
+*/
+
+/* Base: set per-unit frame size */
+.sprite-unit.fatima-do { --w: 128px; --h: 128px; }
+
+/* IDLE */
+.sprite-unit.fatima-do.idle {
+  --frames: 6; --fps: 10;
+  background-image: image-set(
+    url("/static/images/units/fatima-do/idle.png") 1x,
+    url("/static/images/units/fatima-do/idle@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* ATTACK */
+.sprite-unit.fatima-do.attack {
+  --frames: 10; --fps: 16;
+  background-image: image-set(
+    url("/static/images/units/fatima-do/attack.png") 1x,
+    url("/static/images/units/fatima-do/attack@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* DEATH (one-shot) */
+.sprite-unit.fatima-do.death {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/fatima-do/death.png") 1x,
+    url("/static/images/units/fatima-do/death@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* REVIVE (one-shot) */
+.sprite-unit.fatima-do.revive {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/fatima-do/revive.png") 1x,
+    url("/static/images/units/fatima-do/revive@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* SPECIAL SKILL (one-shot) */
+.sprite-unit.fatima-do.skill {
+  --frames: 16; --fps: 18; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/fatima-do/skill.png") 1x,
+    url("/static/images/units/fatima-do/skill@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+

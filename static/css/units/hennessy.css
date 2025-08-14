@@ -1,0 +1,64 @@
+/* === Hennessy (Common) ===
+Special: (none specified)
+Sprite strips expected at:
+  /static/images/units/hennessy/idle.png
+  /static/images/units/hennessy/attack.png
+  /static/images/units/hennessy/death.png
+  /static/images/units/hennessy/revive.png
+  /static/images/units/hennessy/skill.png
+Add @2x variants for retina: idle@2x.png, etc.
+*/
+
+/* Base: set per-unit frame size */
+.sprite-unit.hennessy { --w: 96px; --h: 96px; }
+
+/* IDLE */
+.sprite-unit.hennessy.idle {
+  --frames: 6; --fps: 10;
+  background-image: image-set(
+    url("/static/images/units/hennessy/idle.png") 1x,
+    url("/static/images/units/hennessy/idle@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* ATTACK */
+.sprite-unit.hennessy.attack {
+  --frames: 10; --fps: 16;
+  background-image: image-set(
+    url("/static/images/units/hennessy/attack.png") 1x,
+    url("/static/images/units/hennessy/attack@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* DEATH (one-shot) */
+.sprite-unit.hennessy.death {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/hennessy/death.png") 1x,
+    url("/static/images/units/hennessy/death@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* REVIVE (one-shot) */
+.sprite-unit.hennessy.revive {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/hennessy/revive.png") 1x,
+    url("/static/images/units/hennessy/revive@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* SPECIAL SKILL (one-shot) */
+.sprite-unit.hennessy.skill {
+  --frames: 16; --fps: 18; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/hennessy/skill.png") 1x,
+    url("/static/images/units/hennessy/skill@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+

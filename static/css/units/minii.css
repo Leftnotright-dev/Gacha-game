@@ -1,0 +1,64 @@
+/* === Minii (Common) ===
+Special: (none specified)
+Sprite strips expected at:
+  /static/images/units/minii/idle.png
+  /static/images/units/minii/attack.png
+  /static/images/units/minii/death.png
+  /static/images/units/minii/revive.png
+  /static/images/units/minii/skill.png
+Add @2x variants for retina: idle@2x.png, etc.
+*/
+
+/* Base: set per-unit frame size */
+.sprite-unit.minii { --w: 96px; --h: 96px; }
+
+/* IDLE */
+.sprite-unit.minii.idle {
+  --frames: 6; --fps: 10;
+  background-image: image-set(
+    url("/static/images/units/minii/idle.png") 1x,
+    url("/static/images/units/minii/idle@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* ATTACK */
+.sprite-unit.minii.attack {
+  --frames: 10; --fps: 16;
+  background-image: image-set(
+    url("/static/images/units/minii/attack.png") 1x,
+    url("/static/images/units/minii/attack@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* DEATH (one-shot) */
+.sprite-unit.minii.death {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/minii/death.png") 1x,
+    url("/static/images/units/minii/death@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* REVIVE (one-shot) */
+.sprite-unit.minii.revive {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/minii/revive.png") 1x,
+    url("/static/images/units/minii/revive@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* SPECIAL SKILL (one-shot) */
+.sprite-unit.minii.skill {
+  --frames: 16; --fps: 18; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/minii/skill.png") 1x,
+    url("/static/images/units/minii/skill@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+

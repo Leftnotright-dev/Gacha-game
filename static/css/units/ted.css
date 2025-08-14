@@ -1,0 +1,64 @@
+/* === Ted (Secret) ===
+Special: Vanish — Become invincible (5t). Enemies you attack are slowed -50% SPD while Vanish lasts. CD 10.
+Sprite strips expected at:
+  /static/images/units/ted/idle.png
+  /static/images/units/ted/attack.png
+  /static/images/units/ted/death.png
+  /static/images/units/ted/revive.png
+  /static/images/units/ted/skill.png
+Add @2x variants for retina: idle@2x.png, etc.
+*/
+
+/* Base: set per-unit frame size */
+.sprite-unit.ted { --w: 128px; --h: 128px; }
+
+/* IDLE */
+.sprite-unit.ted.idle {
+  --frames: 6; --fps: 10;
+  background-image: image-set(
+    url("/static/images/units/ted/idle.png") 1x,
+    url("/static/images/units/ted/idle@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* ATTACK */
+.sprite-unit.ted.attack {
+  --frames: 10; --fps: 16;
+  background-image: image-set(
+    url("/static/images/units/ted/attack.png") 1x,
+    url("/static/images/units/ted/attack@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* DEATH (one-shot) */
+.sprite-unit.ted.death {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/ted/death.png") 1x,
+    url("/static/images/units/ted/death@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* REVIVE (one-shot) */
+.sprite-unit.ted.revive {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/ted/revive.png") 1x,
+    url("/static/images/units/ted/revive@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* SPECIAL SKILL (one-shot) */
+.sprite-unit.ted.skill {
+  --frames: 16; --fps: 18; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/ted/skill.png") 1x,
+    url("/static/images/units/ted/skill@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+

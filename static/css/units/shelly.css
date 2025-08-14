@@ -1,0 +1,64 @@
+/* === Shelly (Rare) ===
+Special: (none specified)
+Sprite strips expected at:
+  /static/images/units/shelly/idle.png
+  /static/images/units/shelly/attack.png
+  /static/images/units/shelly/death.png
+  /static/images/units/shelly/revive.png
+  /static/images/units/shelly/skill.png
+Add @2x variants for retina: idle@2x.png, etc.
+*/
+
+/* Base: set per-unit frame size */
+.sprite-unit.shelly { --w: 96px; --h: 96px; }
+
+/* IDLE */
+.sprite-unit.shelly.idle {
+  --frames: 6; --fps: 10;
+  background-image: image-set(
+    url("/static/images/units/shelly/idle.png") 1x,
+    url("/static/images/units/shelly/idle@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* ATTACK */
+.sprite-unit.shelly.attack {
+  --frames: 10; --fps: 16;
+  background-image: image-set(
+    url("/static/images/units/shelly/attack.png") 1x,
+    url("/static/images/units/shelly/attack@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* DEATH (one-shot) */
+.sprite-unit.shelly.death {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/shelly/death.png") 1x,
+    url("/static/images/units/shelly/death@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* REVIVE (one-shot) */
+.sprite-unit.shelly.revive {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/shelly/revive.png") 1x,
+    url("/static/images/units/shelly/revive@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* SPECIAL SKILL (one-shot) */
+.sprite-unit.shelly.skill {
+  --frames: 16; --fps: 18; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/shelly/skill.png") 1x,
+    url("/static/images/units/shelly/skill@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+

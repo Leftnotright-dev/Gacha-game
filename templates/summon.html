@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>S.W.C.A – Summon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body { background:#0e1320; color:#fff; font-family:Arial, sans-serif; margin:0; }
+    .hud { padding:12px; display:flex; gap:10px; align-items:center;
+           background:rgba(0,0,0,0.35); backdrop-filter:blur(6px); position:sticky; top:0; z-index:5; }
+    .hud input { padding:8px; border-radius:8px; border:0; min-width:180px; }
+    .hud button { padding:8px 12px; border-radius:8px; border:0; cursor:pointer; font-weight:bold; }
+    #gems { margin-left:auto; font-weight:700; }
+
+    #result { margin:14px auto 0; width:min(1100px,92vw); font-size:18px; font-weight:700; }
+    #historyWrap { width:min(1100px,92vw); margin:12px auto; }
+    #history { list-style:none; margin:0; padding:0; }
+    .pull-item { padding:6px 8px; border-bottom:1px solid rgba(255,255,255,.08);
+                 display:flex; justify-content:space-between; }
+    .pull-meta { opacity:.85; font-size:12px; }
+
+    #pullResults { margin:16px auto; width:min(1100px, 92vw);
+                   display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; }
+    .card { background:#1b2236; border:1px solid #2d3b5f; border-radius:10px; padding:10px; }
+    .rarity { font-size:12px; opacity:0.85; }
+    .special-skill { margin-top:6px; font-size:12px; color:#ffd700; }
+
+    /* Rates panel */
+    #ratesContainer { display:none; width:min(1100px,92vw); margin:14px auto 0;
+                      background:#121a31; border:1px solid #2d3b5f; border-radius:10px; padding:12px; }
+    .rates-table { width:100%; border-collapse:collapse; font-size:14px; }
+    .rates-table th, .rates-table td { padding:6px 8px; border-bottom:1px solid rgba(255,255,255,.08); }
+    .rates-table th { text-align:left; opacity:.9; }
+    .rates-table td.num { text-align:right; opacity:.9; }
+
+    /* Index panel */
+    #unitIndexPanel { display:none; width:min(1100px,92vw); margin:14px auto; }
+    .index-header { display:flex; justify-content:space-between; align-items:center; background:#182238;
+                    border:1px solid #2d3b5f; border-radius:10px; padding:8px 12px; font-weight:700; }
+    .index-toggle .tab { background:#243357; border:0; color:#fff; padding:6px 10px; margin-left:8px;
+                         border-radius:8px; cursor:pointer; font-weight:700; }
+    .index-toggle .tab.active { background:#fff; color:#182238; }
+    .index-wrapper { background:#121a31; border:1px solid #2d3b5f; border-radius:10px; padding:12px; }
+    .summary { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:10px 0; }
+    .chip { padding:4px 10px; border-radius:999px; background:#1b2236; border:1px solid #2d3b5f; font-size:12px; }
+    .summary-bar { height:10px; width:260px; background:#1b2236; border:1px solid #2d3b5f; border-radius:999px; overflow:hidden; }
+    .summary-bar .bar { height:100%; width:0%; background:#32d27a; transition: width 300ms ease; }
+    .rarity-section { background:#0f172b; border:1px solid #2d3b5f; border-radius:10px; padding:10px; margin-bottom:12px; }
+    .rarity-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+    .rarity-title { margin:0; }
+    .progress-wrap { display:flex; align-items:center; gap:8px; }
+    .progress { height:8px; width:160px; background:#1b2236; border-radius:999px; overflow:hidden; border:1px solid #2d3b5f; }
+    .progress .bar { height:100%; width:0%; background:#6aa8ff; transition: width 300ms ease; }
+    .progress-label { font-size:12px; opacity:.85; min-width:48px; text-align:right; }
+    .unit-grid { display:flex; flex-wrap:wrap; gap:10px; }
+    .unit-badge { width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+                  position:relative; background:#223154; color:#dfe7ff; font-weight:800; letter-spacing:.3px; border:2px solid #2d3b5f; }
+    .unit-badge.owned { background:#1a3a2a; border-color:#2f7150; color:#c7ffdd; }
+    .unit-badge.unknown { background:#1b2236; border-color:#2d3b5f; color:#8899bb; }
+    .unit-badge .tiny { font-size:12px; line-height:1.1; text-align:center; padding:4px; }
+    .unit-badge .corner { position:absolute; right:-4px; top:-4px; font-size:14px; }
+
+    .rainbow-text{background-image:linear-gradient(to right,red,orange,yellow,green,blue,indigo,violet);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:bold;animation:rt 3s linear infinite;background-size:200% 100%}
+    @keyframes rt{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+    .mono-rainbow-text{background-image:linear-gradient(to right,#000,#444,#888,#bbb,#fff,#bbb,#888,#444,#000);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:bold;animation:mrt 4.5s linear infinite;background-size:200% 100%}
+    @keyframes mrt{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+    .gold-glow{color:gold;-webkit-text-stroke:.2px black;text-shadow:0 0 3px rgba(218,165,32,.6),0 0 6px rgba(218,165,32,.5),0 0 10px rgba(218,165,32,.4);font-weight:bold}
+
+    .vol input[type="range"] { accent-color: #6aa8ff; }
+  </style>
+</head>
+<body>
+
+  <!-- HUD -->
+  <div class="hud">
+    <input id="username" placeholder="Username">
+    <button onclick="pullUnit()">🎯 Summon 1 (100💎)</button>
+    <button onclick="pullTen()">🎯 Summon 10 (1000💎)</button>
+    <a href="{{ url_for('play_page') }}"><button>▶️ Play</button></a>
+    <a href="{{ url_for('team_page') }}"><button>🛠️ Team</button></a>
+    <button id="showRatesBtn" onclick="toggleRates()">Show Rates</button>
+    <button id="toggleIndexBtn" onclick="toggleIndex()">Show Index</button>
+    <label class="vol" style="display:inline-flex;align-items:center;gap:8px;">
+      🔊
+      <input id="musicVol" type="range" min="0" max="100" step="1" style="width:140px;">
+    </label>
+    <div id="gems">💎 —</div>
+  </div>
+
+  <!-- Latest result (main.js writes here) -->
+  <div id="result"></div>
+
+  <!-- Quick pull cards -->
+  <div id="pullResults"></div>
+
+  <!-- Rates -->
+  <div id="ratesContainer">
+    <h4>Summon Rates</h4>
+    <table id="ratesTable" class="rates-table">
+      <thead>
+        <tr>
+          <th>Rarity</th>
+          <th class="num">Base %</th>
+          <th class="num">Base 1 in X</th>
+          <th class="num">Shiny %</th>
+          <th class="num">Shiny 1 in X</th>
+        </tr>
+      </thead>
+      <tbody id="ratesTbody"></tbody>
+    </table>
+  </div>
+
+  <!-- Unit Index -->
+  <div id="unitIndexPanel">
+    <div class="index-header">
+      <span>Unit Index</span>
+      <div class="index-toggle">
+        <button id="viewNormalBtn" class="tab active" onclick="setIndexView('normal')">Normal</button>
+        <button id="viewShinyBtn" class="tab" onclick="setIndexView('shiny')">Shiny</button>
+      </div>
+    </div>
+    <div id="indexSummary" class="summary"></div>
+    <div id="unitIndex" class="index-wrapper"></div>
+  </div>
+
+  <!-- History (for main.js loadHistory) -->
+  <div id="historyWrap">
+    <h3>📜 Summon History</h3>
+    <div id="index-count" style="opacity:.85; font-size:13px;">0 unique units</div>
+    <ul id="history"></ul>
+  </div>
+
+  <!-- Scripts (defer ensures DOM exists before they run) -->
+  <script defer src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script defer src="{{ url_for('static', filename='js/music.js') }}"></script>
+
+  <!-- Small bootstrap: safe guards + music setup -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Hide optional panels safely (prevents null.style errors)
+      const rc = document.getElementById('ratesContainer');
+      if (rc && typeof rc.style !== 'undefined') rc.style.display = 'none';
+      const up = document.getElementById('unitIndexPanel');
+      if (up && typeof up.style !== 'undefined') up.style.display = 'none';
+
+      // Persist username locally (optional)
+      const usernameEl = document.getElementById('username');
+      if (usernameEl) {
+        const savedUser = localStorage.getItem('swca_username') || '';
+        if (savedUser && !usernameEl.value) usernameEl.value = savedUser;
+        usernameEl.addEventListener('change', () => {
+          localStorage.setItem('swca_username', usernameEl.value.trim());
+        });
+      }
+
+      // Music init (volume slider + menu music)
+      if (window.SWCA_Music) {
+        try {
+          SWCA_Music.ensureUnlocked();
+          const vol = document.getElementById('musicVol');
+          if (vol) {
+            vol.value = Math.round((SWCA_Music.volume ?? 0.5) * 100);
+            vol.addEventListener('input', e => {
+              const v = Math.max(0, Math.min(100, Number(e.target.value || 0)));
+              if (SWCA_Music.setVolume) SWCA_Music.setVolume(v / 100);
+            });
+          }
+          if (SWCA_Music.fadeTo) SWCA_Music.fadeTo('menu', 800);
+          else SWCA_Music.play('menu');
+        } catch (e) {
+          console.warn('[music] init failed:', e);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

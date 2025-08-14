@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>S.W.C.A – Play</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root { --glass: rgba(0,0,0,.35); }
+    body { background:#101520; color:#fff; font-family:Arial, sans-serif; margin:0; }
+    a { color: inherit; text-decoration: none; }
+
+    /* Top bar */
+    header { padding:12px; background:#1a2033; display:flex; gap:12px; align-items:center; position:sticky; top:0; z-index:10; }
+    header input { padding:8px 10px; border-radius:8px; border:0; min-width:180px; }
+    header .spacer { flex:1 1 auto; }
+    header .pill { background:#223154; border:1px solid #2d3b5f; padding:6px 10px; border-radius:999px; font-weight:700; }
+    header .vol { display:inline-flex; align-items:center; gap:8px; }
+    header .vol input[type="range"] { width:140px; accent-color:#6aa8ff; }
+    header nav a { background:#243357; padding:8px 12px; border-radius:8px; font-weight:700; }
+    header nav a:hover { background:#304578; }
+
+    /* Controls strip (kept separate so it never overlaps battlefield) */
+    .actions {
+      position: sticky; top:56px; z-index:9;
+      background: #0f1526cc; backdrop-filter: blur(6px);
+      border-bottom:1px solid #2d3b5f;
+    }
+    .actions .inner {
+      width:min(1200px,95vw); margin:0 auto; padding:10px 0; display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    }
+    .actions .group { display:flex; gap:8px; align-items:center; background:#182238; border:1px solid #2d3b5f; padding:6px 8px; border-radius:10px; }
+    .actions select, .actions button, .actions input[type="checkbox"] { cursor:pointer; }
+    .actions button { padding:8px 10px; border-radius:8px; border:0; font-weight:700; }
+    .actions .primary { background:#6aa8ff; color:#0e1320; }
+    .actions .ghost { background:#243357; color:#fff; }
+
+    /* Info chips */
+    .chips { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .pill { background:#223154; border:1px solid #2d3b5f; padding:6px 10px; border-radius:999px; font-weight:700; }
+
+    /* Game container */
+    #game-wrap { width:100%; }
+    #game-container { width:100%; height: calc(100vh - 170px); display:block; }
+
+    /* Log panel (optional) */
+    #log {
+      position: fixed; right:12px; bottom:12px; width:300px; max-height:40vh; overflow:auto;
+      background:#0e1320; border:1px solid #2d3b5f; padding:8px 10px; border-radius:10px; font-size:12px; opacity:.9;
+    }
+  </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sprites.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/all-units.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32.png') }}">
+</head>
+<body>
+  <!-- Top bar -->
+  <header>
+    <strong>S.W.C.A — Play</strong>
+    <input id="username" placeholder="Username">
+    <nav>
+      <a href="{{ url_for('index') }}">🎯 Summon</a>
+      <a href="{{ url_for('team_page') }}">🎒 Team</a>
+    </nav>
+    <span class="spacer"></span>
+
+    <div class="chips">
+      <span id="teamView" class="pill">Team: —</span>
+      <span id="waveView" class="pill">Wave: —</span>
+      <span id="coins" class="pill">🪙 —</span>
+      <span id="gems"  class="pill">💎 —</span>
+    </div>
+
+    <label class="vol">
+      🔊 <input id="musicVol" type="range" min="0" max="100" step="1">
+    </label>
+  </header>
+
+  <!-- Controls (sticky; never overlaps the battlefield) -->
+  <div class="actions">
+    <div class="inner">\n      <div id="skillBar" class="skill-bar"></div>
+      <div class="group">
+        <label for="stageSelect">Stage</label>
+        <select id="stageSelect">
+          <option value="1">1 — Training</option>
+          <option value="2">2 — Patrol</option>
+          <option value="3">3 — Stronghold</option>
+          <option value="4">4 — Hell's Castle Gates</option>
+          <option value="5">5 — Demon Castle</option>
+          <option value="6">6 — Abyssal rift</option>
+          <option value="7">7 — The Abyss</option>
+          <option value="8">8 — Abyssal Throne</option>
+          <option value="9">9 — Chrono Ruins</option>
+          <option value="10">10 — The End of All Things</option>
+        </select>
+        <button id="btnStage" class="primary" type="button">Start Stage</button>
+        <button id="btnPause" class="ghost" type="button">Pause / Resume (Space)</button>
+      </div>
+
+      <div class="group">
+        <label for="speedSel">Speed</label>
+        <select id="speedSel">
+          <option value="1" selected>1×</option>
+          <option value="2">2×</option>
+          <option value="3">3×</option>
+        </select>
+        <label><input id="autoToggle" type="checkbox"> Auto</label>
+      </div>
+
+      <div class="group">
+        <label><input id="optShowDmg" type="checkbox" checked> Show Damage</label>
+        <label><input id="optShowSkillTags" type="checkbox"> <button id="logClearFooter" class="btn btn-ghost" title="Clear damage log">Clear Log</button> <button id="logToggleFooter" class="btn btn-ghost" aria-expanded="true" title="Collapse damage log">Collapse Log</button> Show Skill Tags</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game -->
+  <div id="game-wrap">
+    <div id="game-container"></div>
+  </div>
+
+  <!-- Optional: simple log sink (phaser-game reads #log if its own logger uses it) -->
+</div>  <textarea id="log" class="dmg-log" readonly></textarea></div>
+  <div id="toast" style="position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+  background:#0e1320;border:1px solid #2d3b5f;padding:8px 12px;border-radius:10px;
+  display:none;z-index:9999"></div>
+  <!-- Scripts -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/play.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.0/dist/phaser.min.js" defer onerror="this.onerror=null;var s=document.createElement('script');s.src='{{ url_for('static', filename='vendor/phaser.min.js') }}';s.defer=true;document.head.appendChild(s);"></script>
+  <!-- Optional music helper (match Team page): -->
+  <script src="{{ url_for('static', filename='js/music.js') }}" defer></script>
+  <script>
+  window.STATIC_BASE = "{{ url_for('static', filename='') }}";
+  </script>
+
+  <!-- Load Phaser first, then your game (robust fallback) -->
+  <script>
+  (function () {
+    function loadGame() {
+      var s = document.createElement('script');
+      s.src = "{{ url_for('static', filename='js/phaser-game.js') }}";
+      s.defer = true;
+      document.body.appendChild(s);
+    }
+    var cdn = document.createElement('script');
+    cdn.src = "https://cdn.jsdelivr.net/npm/phaser@3.80.0/dist/phaser.min.js";
+    cdn.onload = loadGame;
+    cdn.onerror = function () {
+      var local = document.createElement('script');
+      local.src = "{{ url_for('static', filename='vendor/phaser.min.js') }}"; // put a copy here if you want local fallback
+      local.onload = loadGame;
+      document.head.appendChild(local);
+    };
+    document.head.appendChild(cdn);
+  })();
+  </script>
+
+  <script>
+    // Light music hookup (optional)
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.SWCA_Music) {
+        SWCA_Music.ensureUnlocked?.();
+        const vol = document.getElementById('musicVol');
+        if (vol) {
+          vol.value = Math.round((SWCA_Music.volume ?? 0.5) * 100);
+          vol.addEventListener('input', e => SWCA_Music.setVolume(Math.max(0, Math.min(100, +e.target.value)) / 100));
+        }
+        SWCA_Music.play?.('menu');
+      }
+    });
+  </script>
+  <!-- Phaser: CDN first, local fallback -->
+  <script
+  src="https://cdn.jsdelivr.net/npm/phaser@3.80.0/dist/phaser.min.js"
+  defer
+  onerror="this.onerror=null;var s=document.createElement('script');s.src='/static/vendor/phaser.min.js';s.defer=true;document.head.appendChild(s);">
+</script>
+
+  <div id="choiceModal" style="position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:9999;">
+    <div style="background:#1b2236; border:1px solid #2d3b5f; border-radius:12px; padding:16px; width:min(420px,90vw);">
+      <div id="choicePrompt" style="font-weight:700; margin-bottom:10px;">Choose an option</div>
+      <div id="choiceButtons" style="display:flex; gap:10px; flex-wrap:wrap;"></div>
+      <div style="margin-top:10px; font-size:12px; opacity:.8;">Tip: You can click outside to cancel.</div>
+    </div>
+  </div>
+
+
+  <footer class="site-footer">
+    <div class="inner">
+      <div class="footer-top">
+
+      <div>© 2025 SWCA • Build v1</div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <label style="font-size:12px; opacity:.85;">Music</label>
+        <input type="range" id="musicVol" min="0" max="100" value="50" style="width:160px;">
+        <label style="font-size:12px; opacity:.85;">Show</label>
+        <label for="optShowDmg" style="font-size:12px;">Dmg</label>
+        <input id="optShowDmg" type="checkbox" checked>
+        <label for="optShowSkillTags" style="font-size:12px;">Tags</label>
+        <input id="optShowSkillTags" type="checkbox">
+      </div>
+    
+      </div>
+      <div class="footer-log">
+        <div id="logPanel" class="dmg-log-panel">
+          <div class="dmg-log-header">
+            <span class="dmg-log-title">Damage Log</span>
+            <div class="dmg-log-actions">
+              <button id="logClear" class="btn btn-ghost" title="Clear log">Clear</button>
+              <button id="logToggle" class="btn btn-ghost" aria-expanded="true" title="Collapse">▾</button>
+            </div>
+          </div>
+          <textarea id="log" class="dmg-log" readonly></textarea>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function dmgLogSetup(){
+      var panel = document.getElementById('logPanel');
+      var toggle = document.getElementById('logToggle');
+      var clearBtn = document.getElementById('logClear');
+      var log = document.getElementById('log');
+      var toggleFooter = document.getElementById('logToggleFooter');
+var clearFooter = document.getElementById('logClearFooter');
+function setToggleUI(collapsed){
+  if (toggle){ toggle.setAttribute('aria-expanded', String(!collapsed)); toggle.textContent = collapsed ? '▸' : '▾'; }
+  if (toggleFooter){ toggleFooter.setAttribute('aria-expanded', String(!collapsed)); toggleFooter.textContent = collapsed ? 'Expand Log' : 'Collapse Log'; }
+}
+if (panel){ setToggleUI(panel.classList.contains('collapsed')); }
+if (toggle && panel) {
+        toggle.addEventListener('click', function() {
+          var collapsed = panel.classList.toggle('collapsed');
+          toggle.setAttribute('aria-expanded', String(!collapsed));
+          toggle.textContent = collapsed ? '▸' : '▾';
+        });
+      }
+      if (toggleFooter && panel){
+        toggleFooter.addEventListener('click', function(){
+          var collapsed = panel.classList.toggle('collapsed');
+          setToggleUI(collapsed);
+        });
+      }
+      if (clearBtn && log) {
+        clearBtn.addEventListener('click', function() { log.value = ''; log.scrollTop = log.scrollHeight; });
+      }
+      if (clearFooter && log){
+        clearFooter.addEventListener('click', function(){ log.value=''; log.scrollTop = log.scrollHeight; });
+      }
+    })();
+  </script>
+</body>
+</html>

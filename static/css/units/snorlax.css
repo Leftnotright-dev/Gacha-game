@@ -1,0 +1,64 @@
+/* === Snorlax (Ultra) ===
+Special: Rest — Restore 100% HP to self; if already at full HP, heal the lowest-HP ally by 100% of Snorlax’s base HP. Then apply Sleep (same effect as Stun; bosses immune) to all enemies for 10 turns. Once per wave.
+Sprite strips expected at:
+  /static/images/units/snorlax/idle.png
+  /static/images/units/snorlax/attack.png
+  /static/images/units/snorlax/death.png
+  /static/images/units/snorlax/revive.png
+  /static/images/units/snorlax/skill.png
+Add @2x variants for retina: idle@2x.png, etc.
+*/
+
+/* Base: set per-unit frame size */
+.sprite-unit.snorlax { --w: 128px; --h: 128px; }
+
+/* IDLE */
+.sprite-unit.snorlax.idle {
+  --frames: 6; --fps: 10;
+  background-image: image-set(
+    url("/static/images/units/snorlax/idle.png") 1x,
+    url("/static/images/units/snorlax/idle@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* ATTACK */
+.sprite-unit.snorlax.attack {
+  --frames: 10; --fps: 16;
+  background-image: image-set(
+    url("/static/images/units/snorlax/attack.png") 1x,
+    url("/static/images/units/snorlax/attack@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* DEATH (one-shot) */
+.sprite-unit.snorlax.death {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/snorlax/death.png") 1x,
+    url("/static/images/units/snorlax/death@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* REVIVE (one-shot) */
+.sprite-unit.snorlax.revive {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/snorlax/revive.png") 1x,
+    url("/static/images/units/snorlax/revive@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* SPECIAL SKILL (one-shot) */
+.sprite-unit.snorlax.skill {
+  --frames: 16; --fps: 18; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/snorlax/skill.png") 1x,
+    url("/static/images/units/snorlax/skill@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+

@@ -1,0 +1,64 @@
+/* === Berri (Ultra) ===
+Special: Strawberry Jell‑O — 150% ATK to target; then choose: heal self for 100% of damage dealt OR gain a stacking buff equal to +50% of the target’s current ATK (stacks and persists until stage end). CD 2.
+Sprite strips expected at:
+  /static/images/units/berri/idle.png
+  /static/images/units/berri/attack.png
+  /static/images/units/berri/death.png
+  /static/images/units/berri/revive.png
+  /static/images/units/berri/skill.png
+Add @2x variants for retina: idle@2x.png, etc.
+*/
+
+/* Base: set per-unit frame size */
+.sprite-unit.berri { --w: 128px; --h: 128px; }
+
+/* IDLE */
+.sprite-unit.berri.idle {
+  --frames: 6; --fps: 10;
+  background-image: image-set(
+    url("/static/images/units/berri/idle.png") 1x,
+    url("/static/images/units/berri/idle@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* ATTACK */
+.sprite-unit.berri.attack {
+  --frames: 10; --fps: 16;
+  background-image: image-set(
+    url("/static/images/units/berri/attack.png") 1x,
+    url("/static/images/units/berri/attack@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* DEATH (one-shot) */
+.sprite-unit.berri.death {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/berri/death.png") 1x,
+    url("/static/images/units/berri/death@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* REVIVE (one-shot) */
+.sprite-unit.berri.revive {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/berri/revive.png") 1x,
+    url("/static/images/units/berri/revive@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* SPECIAL SKILL (one-shot) */
+.sprite-unit.berri.skill {
+  --frames: 16; --fps: 18; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/berri/skill.png") 1x,
+    url("/static/images/units/berri/skill@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+

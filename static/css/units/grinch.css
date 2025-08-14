@@ -1,0 +1,64 @@
+/* === Grinch (Ultra) ===
+Special: Something — (Passive) At 1 HP enter Bloodthirsty (can’t die, +25% ATK per turn up to +200%) for 10 turns, then heal 30% max HP. Once per stage.
+Sprite strips expected at:
+  /static/images/units/grinch/idle.png
+  /static/images/units/grinch/attack.png
+  /static/images/units/grinch/death.png
+  /static/images/units/grinch/revive.png
+  /static/images/units/grinch/skill.png
+Add @2x variants for retina: idle@2x.png, etc.
+*/
+
+/* Base: set per-unit frame size */
+.sprite-unit.grinch { --w: 128px; --h: 128px; }
+
+/* IDLE */
+.sprite-unit.grinch.idle {
+  --frames: 6; --fps: 10;
+  background-image: image-set(
+    url("/static/images/units/grinch/idle.png") 1x,
+    url("/static/images/units/grinch/idle@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* ATTACK */
+.sprite-unit.grinch.attack {
+  --frames: 10; --fps: 16;
+  background-image: image-set(
+    url("/static/images/units/grinch/attack.png") 1x,
+    url("/static/images/units/grinch/attack@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* DEATH (one-shot) */
+.sprite-unit.grinch.death {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/grinch/death.png") 1x,
+    url("/static/images/units/grinch/death@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* REVIVE (one-shot) */
+.sprite-unit.grinch.revive {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/grinch/revive.png") 1x,
+    url("/static/images/units/grinch/revive@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* SPECIAL SKILL (one-shot) */
+.sprite-unit.grinch.skill {
+  --frames: 16; --fps: 18; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/grinch/skill.png") 1x,
+    url("/static/images/units/grinch/skill@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+

@@ -1,0 +1,64 @@
+/* === Zafuu (Mythical) ===
+Special: Severe — 300% ATK to a selected target, apply Corrupt (disables specials) and Bleed (5% ATK, 2t). Once per wave.
+Sprite strips expected at:
+  /static/images/units/zafuu/idle.png
+  /static/images/units/zafuu/attack.png
+  /static/images/units/zafuu/death.png
+  /static/images/units/zafuu/revive.png
+  /static/images/units/zafuu/skill.png
+Add @2x variants for retina: idle@2x.png, etc.
+*/
+
+/* Base: set per-unit frame size */
+.sprite-unit.zafuu { --w: 128px; --h: 128px; }
+
+/* IDLE */
+.sprite-unit.zafuu.idle {
+  --frames: 6; --fps: 10;
+  background-image: image-set(
+    url("/static/images/units/zafuu/idle.png") 1x,
+    url("/static/images/units/zafuu/idle@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* ATTACK */
+.sprite-unit.zafuu.attack {
+  --frames: 10; --fps: 16;
+  background-image: image-set(
+    url("/static/images/units/zafuu/attack.png") 1x,
+    url("/static/images/units/zafuu/attack@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* DEATH (one-shot) */
+.sprite-unit.zafuu.death {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/zafuu/death.png") 1x,
+    url("/static/images/units/zafuu/death@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* REVIVE (one-shot) */
+.sprite-unit.zafuu.revive {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/zafuu/revive.png") 1x,
+    url("/static/images/units/zafuu/revive@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* SPECIAL SKILL (one-shot) */
+.sprite-unit.zafuu.skill {
+  --frames: 16; --fps: 18; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/zafuu/skill.png") 1x,
+    url("/static/images/units/zafuu/skill@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+

@@ -1,0 +1,173 @@
+:root { --bg:#0e1320; --panel:#1b2440; --text:#dfe7ff; }
+html,body{height:100%;background:var(--bg);color:var(--text);margin:0}
+#page{min-height:100%;display:flex;flex-direction:column}
+header.site-header{background:var(--panel);border-bottom:1px solid #2d3b5f;padding:10px 14px;position:sticky;top:0;z-index:5}
+main{flex:1;padding:8px 12px}
+#game-container,#game-container canvas{position:relative;z-index:10}
+footer,.site-footer,.page-footer{position:relative;z-index:1;background:var(--panel);border-top:1px solid #2d3b5f;color:var(--text);padding:8px 12px}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;padding:8px 12px;background:rgba(32,44,76,.95);border:2px solid #7ef7a0;color:#fff;border-radius:10px;display:none;z-index:20}
+.pill{display:inline-block;padding:4px 8px;margin-right:6px;border-radius:999px;background:#223057;color:#fff;font-size:12px}
+
+/* Damage log textarea */
+.dmg-log {
+  position: fixed;
+  right: 16px;
+  bottom: 72px; /* leave room above footer */
+  width: 340px;
+  height: 180px;
+  background: rgba(16,21,38,.92);
+  border: 1px solid #2d3b5f;
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  line-height: 1.35;
+  padding: 8px;
+  border-radius: 10px;
+  resize: vertical;
+  z-index: 12;
+}
+.dmg-log:focus { outline: none; box-shadow: 0 0 0 2px #2d3b5f inset; }
+
+/* Footer layout */
+.site-footer .inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Collapsible damage log */
+.dmg-log-panel {
+  position: fixed;
+  right: 16px;
+  bottom: 72px; /* leave room above footer */
+  width: 340px;
+  z-index: 12;
+}
+.dmg-log-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: rgba(16,21,38,.96);
+  border: 1px solid #2d3b5f;
+  border-bottom: none;
+  padding: 6px 8px;
+  border-radius: 10px 10px 0 0;
+}
+.dmg-log-title { font-weight: 700; font-size: 12px; color: var(--text); opacity: .9; }
+.dmg-log-actions { display: flex; gap: 6px; }
+.dmg-log {
+  display: block;
+  width: 100%;
+  height: 180px;
+  background: rgba(16,21,38,.92);
+  border: 1px solid #2d3b5f;
+  border-top: none;
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  line-height: 1.35;
+  padding: 8px;
+  border-radius: 0 0 10px 10px;
+  resize: vertical;
+}
+.dmg-log:focus { outline: none; box-shadow: 0 0 0 2px #2d3b5f inset; }
+
+/* Collapsed state hides the textarea but keeps header visible */
+.dmg-log-panel.collapsed .dmg-log {
+  height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-width: 0 1px 1px 1px;
+  overflow: hidden;
+}
+
+/* Minimal buttons */
+.btn { border: 0; padding: 4px 8px; border-radius: 8px; cursor: pointer; }
+.btn-ghost { background: #243357; color: #fff; }
+.btn-ghost:hover { filter: brightness(1.05); }
+
+/* Footer skill bar */
+.skill-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  padding: 8px 0;
+  overflow-x: auto;
+}
+.skill-btn {
+  background: #243357;
+  color: #fff;
+  border: 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.skill-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Footer layout now in two rows: controls + log */
+.site-footer .inner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-log {}
+
+/* Log panel inside footer (no fixed positioning) */
+.dmg-log-panel {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  width: 100%;
+  z-index: 1;
+}
+
+.dmg-log-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: rgba(16,21,38,.96);
+  border: 1px solid #2d3b5f;
+  border-bottom: none;
+  padding: 6px 8px;
+  border-radius: 10px 10px 0 0;
+}
+
+.dmg-log {
+  display: block;
+  width: 100%;
+  height: 160px;
+  background: rgba(16,21,38,.92);
+  border: 1px solid #2d3b5f;
+  border-top: none;
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  line-height: 1.35;
+  padding: 8px;
+  border-radius: 0 0 10px 10px;
+  resize: vertical;
+}
+
+/* Collapsed: hide textarea, keep header shown */
+.dmg-log-panel.collapsed .dmg-log {
+  display: none;
+}
+
+.btn { border: 0; padding: 4px 8px; border-radius: 8px; cursor: pointer; }
+.btn-ghost { background: #243357; color: #fff; }
+.btn-ghost:hover { filter: brightness(1.05); }

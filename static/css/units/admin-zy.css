@@ -1,0 +1,64 @@
+/* === admin Zy (Celestial) ===
+Special: Gamma Burst — AOE 220% ATK, apply DEF Down (-30%, 3t), apply Burn (5% of caster ATK, 4t), self +25% ATK (3t). CD 6.
+Sprite strips expected at:
+  /static/images/units/admin-zy/idle.png
+  /static/images/units/admin-zy/attack.png
+  /static/images/units/admin-zy/death.png
+  /static/images/units/admin-zy/revive.png
+  /static/images/units/admin-zy/skill.png
+Add @2x variants for retina: idle@2x.png, etc.
+*/
+
+/* Base: set per-unit frame size */
+.sprite-unit.admin-zy { --w: 128px; --h: 128px; }
+
+/* IDLE */
+.sprite-unit.admin-zy.idle {
+  --frames: 6; --fps: 10;
+  background-image: image-set(
+    url("/static/images/units/admin-zy/idle.png") 1x,
+    url("/static/images/units/admin-zy/idle@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* ATTACK */
+.sprite-unit.admin-zy.attack {
+  --frames: 10; --fps: 16;
+  background-image: image-set(
+    url("/static/images/units/admin-zy/attack.png") 1x,
+    url("/static/images/units/admin-zy/attack@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* DEATH (one-shot) */
+.sprite-unit.admin-zy.death {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/admin-zy/death.png") 1x,
+    url("/static/images/units/admin-zy/death@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* REVIVE (one-shot) */
+.sprite-unit.admin-zy.revive {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/admin-zy/revive.png") 1x,
+    url("/static/images/units/admin-zy/revive@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* SPECIAL SKILL (one-shot) */
+.sprite-unit.admin-zy.skill {
+  --frames: 16; --fps: 18; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/admin-zy/skill.png") 1x,
+    url("/static/images/units/admin-zy/skill@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+

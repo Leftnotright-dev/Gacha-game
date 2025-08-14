@@ -1,0 +1,64 @@
+/* === Deshun (Mythical) ===
+Special: Pay to Win — Roll a die (1–6) for a random effect (stun all 6t / self +25% ATK 5t / DEF Down all 4t / self heal 30% max HP / invincible 2t / AOE 100% ATK). Once per wave.
+Sprite strips expected at:
+  /static/images/units/deshun/idle.png
+  /static/images/units/deshun/attack.png
+  /static/images/units/deshun/death.png
+  /static/images/units/deshun/revive.png
+  /static/images/units/deshun/skill.png
+Add @2x variants for retina: idle@2x.png, etc.
+*/
+
+/* Base: set per-unit frame size */
+.sprite-unit.deshun { --w: 128px; --h: 128px; }
+
+/* IDLE */
+.sprite-unit.deshun.idle {
+  --frames: 6; --fps: 10;
+  background-image: image-set(
+    url("/static/images/units/deshun/idle.png") 1x,
+    url("/static/images/units/deshun/idle@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* ATTACK */
+.sprite-unit.deshun.attack {
+  --frames: 10; --fps: 16;
+  background-image: image-set(
+    url("/static/images/units/deshun/attack.png") 1x,
+    url("/static/images/units/deshun/attack@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* DEATH (one-shot) */
+.sprite-unit.deshun.death {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/deshun/death.png") 1x,
+    url("/static/images/units/deshun/death@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* REVIVE (one-shot) */
+.sprite-unit.deshun.revive {
+  --frames: 12; --fps: 14; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/deshun/revive.png") 1x,
+    url("/static/images/units/deshun/revive@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+
+/* SPECIAL SKILL (one-shot) */
+.sprite-unit.deshun.skill {
+  --frames: 16; --fps: 18; --play: 1;
+  background-image: image-set(
+    url("/static/images/units/deshun/skill.png") 1x,
+    url("/static/images/units/deshun/skill@2x.png") 2x
+  );
+  background-size: calc(var(--w) * var(--frames)) var(--h);
+}
+

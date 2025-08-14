@@ -1,0 +1,5336 @@
+{
+  "users": {
+    "Leftnotright": {
+      "gems": 180,
+      "coins": 1632,
+      "max_cleared": 2,
+      "backpack": [
+        {
+          "id": "cbaed4d6d00a418b86135a3475a4e8aa",
+          "unit_name": "Squire",
+          "unit_label": "Squire",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "0870986ffc864a4e896d6208fc3105c9",
+          "unit_name": "Scout",
+          "unit_label": "Scout",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "f2004db00ebe4a96867ffa6f9d3943cf",
+          "unit_name": "Squire",
+          "unit_label": "Squire",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "289fd919e8844af494ac5717786b1eda",
+          "unit_name": "Squire",
+          "unit_label": "Squire",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "c37f1b10067f40c7926e23c8a2f2cd08",
+          "unit_name": "Adept",
+          "unit_label": "Adept",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "9dd81166382549289de490126c4c214a",
+          "unit_name": "Grinch",
+          "unit_label": "Grinch",
+          "rarity": "Ultra",
+          "shiny": true,
+          "celestial": false,
+          "level": 60,
+          "ascension": 2
+        },
+        {
+          "id": "440b4c3fc9784755b46d71cd40f01a24",
+          "unit_name": "Knight",
+          "unit_label": "Knight",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "115f7ee21b174cdcb8ac6b212ccd8d7d",
+          "unit_name": "Scout",
+          "unit_label": "Scout",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "19bf12872c284376a5dfc70a1fbba5c1",
+          "unit_name": "Guard",
+          "unit_label": "Guard",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "9fffafceebcd41efb7657caf0209b3a8",
+          "unit_name": "Archer",
+          "unit_label": "Archer",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "5a43cb87973945d4a8eeef9ce2df785a",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "508e7239a2c348c18ebcd4614483546e",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "8dee2b5d3f44478c9b0ae55f5d538d74",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "9e11c83f736b493faba8e411125c0984",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "bb2e192c0c964490a442036f2a235893",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "51306cf8d55545ec851d980403ac23b7",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "9ea862494b18467bb9f1e84bc1d26585",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "20a99f0d85dd4465bb22c3d321ffc6d7",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "e7d17bf382fa402eb987c10df94179a8",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "683491c28ba54e3b85cdb8bbaf791e42",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "c06fc75bd3a045d792ad20f7fedda610",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "3959e0816a6b4d1e85fc74fd8cd8c664",
+          "unit_name": "Channon",
+          "unit_label": "Channon",
+          "rarity": "Mythical",
+          "shiny": true,
+          "celestial": false,
+          "level": 100,
+          "ascension": 2
+        }
+      ],
+      "team": [
+        "3959e0816a6b4d1e85fc74fd8cd8c664",
+        "bb2e192c0c964490a442036f2a235893",
+        "9dd81166382549289de490126c4c214a"
+      ],
+      "shards": {},
+      "history": [
+        {
+          "unit_name": "Squire",
+          "unit_label": "Squire",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Scout",
+          "unit_label": "Scout",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Squire",
+          "unit_label": "Squire",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Squire",
+          "unit_label": "Squire",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Adept",
+          "unit_label": "Adept",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Grinch",
+          "unit_label": "Grinch",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Knight",
+          "unit_label": "Knight",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Scout",
+          "unit_label": "Scout",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Guard",
+          "unit_label": "Guard",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Archer",
+          "unit_label": "Archer",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Channon",
+          "unit_label": "Channon",
+          "rarity": "Mythical",
+          "shiny": true,
+          "celestial": false
+        }
+      ],
+      "index": [
+        "Squire",
+        "Scout",
+        "Adept",
+        "Grinch",
+        "Knight",
+        "Guard",
+        "Archer",
+        "Nva",
+        "Minii",
+        "Jlita",
+        "Yumi",
+        "Channon"
+      ]
+    },
+    "Boa": {
+      "gems": 4580,
+      "coins": 58527,
+      "max_cleared": 9,
+      "backpack": [
+        {
+          "id": "2aed0c975edd40959dde163d25e714b4",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "bfebab2cc3ff44a0abade15fdecb045e",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "9a4a854d54af46b48326c628241bdefc",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 3,
+          "ascension": 0
+        },
+        {
+          "id": "2b98176360df47be92556775732fbcac",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "812687bdacc1404fa6d5cb525ca8c1a1",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "014ed08025454188a8f834ba854db395",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "ee27ae029b9647ba8a587307befac419",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "6ee359768213407ea32ced49c437b9b1",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "0cdb9a08e9d1470fa859e57620bcd132",
+          "unit_name": "Grinch",
+          "unit_label": "Grinch",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 5,
+          "ascension": 0
+        },
+        {
+          "id": "27c5efa6f0c9457398c18317bb1a9f8c",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "0ce988f9c3194c62aaeb209208aa578d",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "e1f945ffa067480d9544a6421cd1c84e",
+          "unit_name": "Deshun",
+          "unit_label": "Deshun",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false,
+          "level": 17,
+          "ascension": 0
+        },
+        {
+          "id": "fc76a56c2c4b4fc4916b7b1c10412140",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "ff71907d6d694fc1b2e122681c34a464",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a7e7a6a1e00a47ca8916070f49917885",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "d8aa95d4975845df9a6146b196c977bd",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "bb84adfa8d184996b580481e5fcc7742",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "d178b369d7004ca78466d0494b0d9d8c",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "9e7a7c5c495644f9b2f347616a5976ef",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "72faea39837d4c4eaf827537e4be3d13",
+          "unit_name": "Grinch",
+          "unit_label": "Grinch",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 3,
+          "ascension": 0
+        },
+        {
+          "id": "015da93dfb2e4638867e05afde6f94b0",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "22b18432cf1b498e9c6033c56d0f2fb9",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "919b7eb436ba461386b293e72081cc80",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "6ed8c1e0d8274527b4e7eef0b31c0686",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "449f0982590b4da4955ff81f36419faa",
+          "unit_name": "Fatima Do",
+          "unit_label": "Fatima Do",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "0fd4c312d79245699fe5b4923b2028ff",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a703c0eb66fd47f59e1291f863fbd1ed",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "4381af62d6644d50a8ba6c891302cbae",
+          "unit_name": "Zimmy",
+          "unit_label": "Zimmy",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "4af29869d15e432e8378b0810962eb49",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "1f370345d89b494b851b8e5886b586dd",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "2a249991ab644171b13f426840bc13e2",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "2a38da8bfd294be1829a9c7230596cb0",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "cf26743d5921411daaa7e4cfad7f24b8",
+          "unit_name": "Grinch",
+          "unit_label": "Grinch",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b15a29e1010c41688bbb5c5a098c2856",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "0063ce75275f4c8cba9d6a6cee1e934b",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "10bbe05dfbe248d987fe43ac287941c3",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "ea7eef7bf7fd4613a224f044e00790c3",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "4679d804cc3148c2b49e163d83a69434",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "4b597f1d8e57463ab8b82129bd91f399",
+          "unit_name": "Fatima Do",
+          "unit_label": "Fatima Do",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "cec5232f2c64476699e1b6065f986ebd",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "ed13b3c8430449c4836f9a7f57bffa5a",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a8a53186ab8f464f9a1e5218abc36a12",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "5bf748820e2d4b93918588843b16d890",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "58c4926ead004ae1ad9bfa30a5d2a8ed",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "0fca0388d04b42198af9c7e9855a2fad",
+          "unit_name": "Zimmy",
+          "unit_label": "Zimmy",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "00f2670f8263409b83d80891755d67ad",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "fbe5bbb50e0d496cbc8b6f885fd139a7",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a13de747481c4e8ebee96c7a97d8c1f7",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "5bc163350e914ce4a68f57ddf2bfcdc9",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a3701028c81b4fe985cb68a73ca2195a",
+          "unit_name": "admin Zy",
+          "unit_label": "admin Zy",
+          "rarity": "Celestial",
+          "shiny": false,
+          "celestial": true,
+          "level": 57,
+          "ascension": 5
+        },
+        {
+          "id": "d5711e49e9f442bab7cba070e0b56bb8",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "7382a5307585454b8d783fe098bb81d8",
+          "unit_name": "Channon",
+          "unit_label": "Channon",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false,
+          "level": 10,
+          "ascension": 0
+        },
+        {
+          "id": "96237c295c59415f8da5481258ad4c8e",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "78570832bc8345e7a7007cee388c83fe",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "177c535e5c014c328467fcb73ea10586",
+          "unit_name": "Alex",
+          "unit_label": "Alex",
+          "rarity": "Celestial",
+          "shiny": false,
+          "celestial": true,
+          "level": 60,
+          "ascension": 5
+        },
+        {
+          "id": "dfbd41a44a7641f795244e278423e308",
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a3ee5fc11dbb4883a43be9323d507101",
+          "unit_name": "Channon",
+          "unit_label": "Channon",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "8bb68c1392284a6a89ebd7666dbb7e4a",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "f9e8847833d74feb9756f9e14f856ec7",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "9e9b390d6d7c417f99dfcab76f0c8dbe",
+          "unit_name": "Deshun",
+          "unit_label": "Deshun",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "93ca976f14e24da383aba503fd7850af",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "f102b76e260c437b8b7376dadf8f1377",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "ff1e93e96dc247a78912d3ba116417d5",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "c36d5daad4d945459416e38dcc67aa7b",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "48946d65f21a482e9f1b8c604f02b2f5",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "dc5f66d458464b228d06b16663ae4b25",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "ac67e0b3fcd540c88607a63a647b2fef",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b1f8e99e2877401d8c859e6680c53f90",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "5a4c9b0a1e364289995d81f34b3ade3b",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a5f660ddecec46a19e0ad3df6343efbb",
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "e1ab28e838f34b4a95c89c5cfa495b46",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "8b9e5a09be714efeb71593bd9d2d4970",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "e91ca4223d6e42e6aca6d4f7a0c3463d",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b5b88bd501114397bcb3e0c1bf9b52c1",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "90aed2ecbd1045168d9f0a46b4e25c04",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "d0d614434f4f427a88f4e5624971a0fe",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "4ea72f2e92cf4981abc75616ae460c0f",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b7fdc64005124b8280860ee61df53e13",
+          "unit_name": "Grinch",
+          "unit_label": "Grinch",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "379accbbf58d4c289819cbb1cc23a7fe",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a4c6549178754567bc6d63cdd920bdfc",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "29eab1e332f545f596ac21cbe29a2148",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "8095c09aee9443218e5322fe3600be1d",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "bee51de41e144f52ae1e8ed1ec095c1f",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "3bb6785a6b02427cb5dd1f78d730040e",
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a45e8d004e5e4ef08e32f8bd949041ea",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "61d0fcc9660c4ab7ad1910e081e936c9",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "1e1b52adbfc041808bda9d0c12d40f1b",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "970503746131463782e72b061fa4018f",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "f6e5013acb4e4d5d9962fa78e144e251",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a0b34f54c57a44a8acf2f936097e895e",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a55e3ba466624238ab233961183af896",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "483412078a154ff5ad29394131a5cb17",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "6450a127454541f19b4580e58b981d1d",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a11c6d7f4ada449d8980453c6e2920e1",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "1d816da07d184327af98a6bceb790704",
+          "unit_name": "Boa",
+          "unit_label": "Boa",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "c5f1190f7c3143e08148700d0256b8ff",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "f44b40f0f3ef4b3e91ae50dd40ef6f26",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "2a4ca837fa03470091dabb1c51e152cc",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "ab379c91e8f4477f9b1e1b918307e103",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "7fb5d6e03bc8423a86a7133f44d4ae5e",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "dac4e761d8c04ea38272f5cf421e5a18",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "9fecfff98965488b921c69912025d86f",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "ae4bb42bb45743fa9acd8f7f306b82bb",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "1aed78ac426d4231b6432e4615bc2011",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "0a0f3a6888d044dfa8f3572ae218d6e2",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "3dec09bedac24737b004fb5b381bc3c5",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "d80f455fccc7465c8f41f387f05c2632",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "6243faf9ac0f4f57af09e0ad8fc7fcee",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "9851ab04684548f6ac91fdd109bf78b7",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "ff59484fec1c43d4a8a86f4648161445",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "65ba1468c0a041acaa20ea0a05be7381",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "99f9224759d744f2ac6f91437af3cfb2",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "4735b2ff87414daf9122f53bb48c0a09",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "be393a9dd8a54c7584ccc6908dc27a27",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "38828a524235403ca5b2ecfbffed5d60",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "4aa604b4d8e14a63ae8ce54d4002ff97",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "76048e568868436188e0d951afad0f54",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "f7aa11caf3e242f8931e316eb0263757",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "5a8d8c6f34214dc2ba5ab96cc5c62f14",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "2454661bb1694b7ca9f17424062975c3",
+          "unit_name": "Fatima Do",
+          "unit_label": "Fatima Do",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "1d931f9b8c96431c8ed295e25ff55774",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "8ed3a2e46f76455bb53522a887bf1c8d",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "3942838e5c7e4d0082776d347598fa18",
+          "unit_name": "Zafuu",
+          "unit_label": "Zafuu",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "7d6ad4004e4749569811bb96e3572e2e",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "564e5c58064a4465b5a826bb38a13fbc",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "7775bb01ad1e4139ae5ef99f2ac5a9ff",
+          "unit_name": "admin Zy",
+          "unit_label": "admin Zy",
+          "rarity": "Celestial",
+          "shiny": false,
+          "celestial": true,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "dc7020cfc58448c8bcce6d69198a2e69",
+          "unit_name": "Ted",
+          "unit_label": "Ted",
+          "rarity": "Secret",
+          "shiny": false,
+          "celestial": false,
+          "level": 50,
+          "ascension": 4
+        },
+        {
+          "id": "435b7a28ae65430ab89d170563739e6a",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "5d2309217a8b4716a379ae9bc9284a2d",
+          "unit_name": "Zimmy",
+          "unit_label": "Zimmy",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "0c34fe37b7ec4ee0a2df434863ff16d0",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "4beb8d5f87e74ca893c2be423f96e301",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "16bb683b21144f58a04dbf34ee8d7637",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a9e8553bf8ba4214be6136253c61ebf7",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "0d2f227524ea411996202b56500f9119",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "c254a1c132384f32b0d7cb037d17a0df",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "d281273650214589adb396dec6f5a566",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "6f4c1c31ad6640ae8fc3da8a2ca14ebe",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "adf43d914caf4ea58f77c7c53abbcc11",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "49af6b79b0564f7f9cbf1f990df93b4e",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "85e03a8b33ee4e90943e4bbf4288a90b",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "6b939f1c9f204dd691d59453f1e0910e",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "48a242afcdba4ce38e1738a9ca2a8613",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "e635ca9a8cd244ba8bccdc19e9ebefb0",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "9660f7a53ee94fc2bcdddf50f0498dc5",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "397263987c43462eb346016aa7e79799",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "9728b67723aa43e58a21791551caee5c",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "5403fd2b1785441ea24b7cbb99123455",
+          "unit_name": "Boa",
+          "unit_label": "Boa",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "bc177411ff7b4dcf940860fd718c7be7",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "5cf3de888afa4f60ac1ca87d0eb36d54",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "c10f908614ea4d6c8e2ef440f294618f",
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "205a8f3fade14b849f5342d358529ecf",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "7bcaef269a4242fcaec1b03d18d817bc",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b221ae3d1247477897266ce9d852f741",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "322a812f8c0c4ec39e3fbec9ff8a34c6",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "180b7d290d224147b3724b830f249f96",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "2e21b5aba62642eeaaef80841fa89715",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "8cd7da07d596484ea8de163a79da5592",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "2b49b6ac36bf41a39f9e22534d959389",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "2d450b77ffe5496bbab3cf067b5550cd",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "c676973cc8704bb988bae535e631eb67",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "1950b477d82b4f26a8dc18ebde5255fa",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "e725ea50823c42fc94d95c0c95f79e12",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "d1c91e47958d4e26a4c594045fa73799",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "ae3a1631fe284c68bd827147751155f0",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "152708b80e854482b3e92768d0eb50cf",
+          "unit_name": "Alex",
+          "unit_label": "Alex",
+          "rarity": "Celestial",
+          "shiny": false,
+          "celestial": true,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "f3a8bbf056e544bb89569a7becf11ccb",
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b58a896075164de086f69c6f68c52df6",
+          "unit_name": "Grinch",
+          "unit_label": "Grinch",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b06c3621fad44daca9e33572255d414a",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "bb3a0676558a45fda5347f07c7c82b34",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "82a4a41c2d2c48999aeab3e7e141f359",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "3e82e847c0604c0cb77a7452e24b408d",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "e8bc3876f5ef4c8781242dfbe57ede63",
+          "unit_name": "Zafuu",
+          "unit_label": "Zafuu",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "e1397c33f5a2474fb7ecf24752aba2df",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "63bd96eef09c43f7aa43e8b17a0b33bd",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b85b6320913d43faba8d16859739ced5",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "1dce2beb6b1748fb86d5db9566fc5f20",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "5f0897fbfed044ceb714628998bc5519",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "1c8719a85a314541acb0e73c235fc8b5",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "63d4d1557e6242d28feb9d2a7cd1107e",
+          "unit_name": "Zimmy",
+          "unit_label": "Zimmy",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "c39618ec73de4085b662603392a1c677",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "c7949570490046dba36f34e35d5de857",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "e45aaae1f75f482ebf4c886bf1972229",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "bfd9ac8ebad3447186ead3a89dd8dccb",
+          "unit_name": "Deshun",
+          "unit_label": "Deshun",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "61c70fb479954884b477b09e4744b8df",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "0fd911213b5245d5ace1c861009476a4",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "6f378e2932854c6cb73f97253fc5c2fb",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b0d91a456b62458b8eb6650f44efc80c",
+          "unit_name": "Deshun",
+          "unit_label": "Deshun",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "134371387f00415182e9fd85aa5be7c8",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "8132f53eb775458cbef06cd2ec1bd06c",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "59ab73540cb24f78be3f2ff37bd59997",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "d369fe3f589348c9b1626adf1f4fce2f",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "725021e6e5544584a24352fe155af276",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "43e540f7ede84bc190bc818d41367fae",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "8372916207b9472d902e75357cdbc608",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "4dae220d1c34447b9523da9dfeedd474",
+          "unit_name": "Deshun",
+          "unit_label": "Deshun",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "33183fb1c6d54e9686bdd45afae9b9a8",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "917c1fe8ba4e4913b5cd71c5299cd35f",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "d91d2f5337c04f35aea2da27aa7c8583",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b80ba4aed20448dbbe3745de8cac9451",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "5fbe196e115c4271964d0c3016f35f22",
+          "unit_name": "Zafuu",
+          "unit_label": "Zafuu",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a58da82ca504467ba38df802be46bf7b",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "1e224c3d5a674da9bc32b8eeb77b86d0",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "df87224ffb7c4e119904722c28e73c12",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a4d1aa1e9b33459b86d69b462cd0c96f",
+          "unit_name": "Deshun",
+          "unit_label": "Deshun",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "57de9865be3a48648059d4caa2560465",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a365681da9084ed49e35d54a67c1c39b",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b9b4f72c6da14016aa23bbf34d938905",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b7a593e1c9474ef9a56e62db75062de1",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "ccc662c150e44c5885a0e306b791bbe3",
+          "unit_name": "Zimmy",
+          "unit_label": "Zimmy",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "d064f385d74f4cffaf9082b88db8bf43",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "21b7b5a285584b65865898f79dfa1172",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "743da73d584944b8b1bb9fb23b9654cd",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "37f80126f6344db991a181fa540c0cb4",
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "2cd465ab0798422d8aa0974f66903971",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "73d30c379ef84aafbff4a186f39558b9",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a70c440dfb194491b529d3c25cbe4dca",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "cdecc3c335784d2d8a8decff57910a64",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a56e2d829572416f8f32d6fec35208a7",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "601f2fd06070480eb75fbaa163f80ca3",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a6ed14167c8d4a53a65f6eeaf4a8959e",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b5781cdc4ccf4d2ab82e0391ac178d82",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "5115114955154c23985ca15d637dfe16",
+          "unit_name": "Channon",
+          "unit_label": "Channon",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "c7617cfffd924279ac4c759c03ce8124",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "735273c6cf86423da8c8bfc4696d5362",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "e5323a12ba9648b7a36c473bcd2dc029",
+          "unit_name": "Fatima Do",
+          "unit_label": "Fatima Do",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "638a33eeb384411d8abbac8986354e60",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "58d1ed1af54b49afb459b6ecd8b50ab0",
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "cd2b328384ef48beab09eab3c04c6253",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "1493e54376524b5481eddbe5ddc35b9a",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "3dfcc5e87d1a46eba4748783b43c30fa",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "fc9fec2bf77b47c8a5b8e738398282c8",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "d03963445f3e46dbbe947795980aa41c",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "fd518899f56c4bdab3db2b2b5210c01b",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b818fd23e4d646dc810012ec72724726",
+          "unit_name": "Boa",
+          "unit_label": "Boa",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "8ec5aa35b196413995ab94b1cb2fea43",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "792ec2dbb3d548e7a1a82315b78c52e4",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "922d7a83b6994e21baaf25ba92e732f4",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "7480db595d2d4693adcd375498cb540f",
+          "unit_name": "Deshun",
+          "unit_label": "Deshun",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "13bb6cce309a4ed58966f50e6bb799aa",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "6de27528a4ff438b85a9de1768e5442d",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "d76ebbc2d8b147d4bb82c98010665aa5",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "69e1e70629f049c4bdc0abd269958541",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "47fc3fafdbee4bdebe4311b9acf304f5",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "f7b15a843d4a4a5aaadd0bc7e445c821",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "f7979245a7e1461180ed924a3839a5b1",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "0cce3964e9bb449998b801a5e6bcae25",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "147712795fce46b9969db03a9afd715d",
+          "unit_name": "Grinch",
+          "unit_label": "Grinch",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "83700df2040742cfb865334976429a75",
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "452b864286f44b979d936ddfd64859a1",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "233a24f4b7bc4f5f82bc760d7f3bc5da",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "213e767be30b4de5a45d728a70756672",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "8380ff1d59d14992b0aa624054eca7b2",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "01462035a1f447e3b015e8407baa9b50",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "e5efe0da9f7a47fc9a47c3d585da6e75",
+          "unit_name": "Fatima Do",
+          "unit_label": "Fatima Do",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "ea48d008f8be4acb8432178612b9a716",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "40b9b1a9948a4199b3740175039165e4",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b7061096fcf24006b96c9088fcd829d1",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "9ffb0ba8defe44b19f26a08630ea6bd2",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "ffa0d3f02b9a4784bbf07c00fa3476d2",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "78a09ff5c5234015a60ec5f04d2a47fa",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "af8c858efbdf4ad2a1d95aa9703bdcad",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "1e75711c83ba4374944f54b696722049",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "617349e7e7f544d1ab8604e79c5f28cb",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b09b32b1a96a4a6288bc203520e4eee5",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "d6831c174c604768894e09525ec22293",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "f75a9bfffa04481db731c2446ffc27c2",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "71186bd28dc5402f93f7e2a4598e6829",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "87bbbef13fc34aa5a964da3eb536c3bf",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "5cc8dd705fd24cd0918b7b1ac57521af",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b7efd2aa6c1a45a09d6001f101a2c1fd",
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "a6cb37ecdf19496ca4b81b651166038c",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "200999f1edd74d30bd10cecaebd1dd5f",
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "e6509a12a0aa483cb4ef3549b9f876a1",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "9268d4aa30ee48bea82ed0191c103f27",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "3c7365f2c5d54ad0ba90abf1b5482fa9",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b6722a58d8514996a73378805a6cb55e",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "c90cf4ffc14d4f19a9e75eb792d1612e",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "660c59f9f0774a4189fcdc09e4b7316e",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "f753518987374284a4d65f2a41aad666",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "90ee3f8e2a4c48a8b5dda8b4095d6e6a",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "ea473ba171a14a678c257950b80f88bb",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "ec6577af820c49779aba257cdf331a03",
+          "unit_name": "Zafuu",
+          "unit_label": "Zafuu",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "af8f88bf27f84e518d3ffa9166b1016a",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "9060419771e64a8f8f48873908a41ba2",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "93c943f67d8746269a9efb5fa1b0a39a",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "f9078df51e634aa2a97d0ff618f78a76",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "edfadc50df63417abc7ee4cfc83a1bdc",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "344d317b45d547c895c83eb7ec00b7aa",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "f0ca010b2e0d4df8959092e4937a7051",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "c139856a23d5431ebe1799729caf9b20",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "af2c7f69c73f46d58bd48fceab6709a9",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "640dae89acc84eb29ff583914002221c",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "4ce9e7ed28eb43ea9a75e872e1c36ddb",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "5ec0ba06a85640de8c8b6f1ca652c895",
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "c761b93b34e5443daa21ab62350af173",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "5bd4048fdc284635976864440d5519ce",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "e40c0d4431f74c6dabcba4fefd996cf2",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "5a1b133dd07f475eaf8bedfb8cfa04b0",
+          "unit_name": "Hennessy",
+          "unit_label": "Hennessy",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "2c3414b16e2c4b5298548dab0e820bdd",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "16bf5a1e5bfa415595cfc183d90f38b7",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "021117a0822f4046a1678c947cd433d9",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "26f4544f236d4b1199c41714d3f93dd1",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "6848d999e9244819adae5d63432104f2",
+          "unit_name": "Fatima",
+          "unit_label": "Fatima",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "2a98ad787d224340b72a5db3498251d6",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "3f3a3900837a41268c7aa2a2113a4fb6",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "d4fb2a1561e84edbbce25eb052f34335",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "7533deddd0d9470c8d922bd0fe15d583",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "74dbb6dcfd5c4019b46cffd8383d644f",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "118e9872650b4fc5b3c7c5b38c9f4859",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "de0a475125274ea4bf54f4442365d3f9",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        }
+      ],
+      "team": [
+        "177c535e5c014c328467fcb73ea10586",
+        "a3701028c81b4fe985cb68a73ca2195a",
+        "dc7020cfc58448c8bcce6d69198a2e69"
+      ],
+      "shards": {
+        "Yumi": 1,
+        "Minii": 1,
+        "Zimmy": 4,
+        "Goonie": 4,
+        "Boa": 4,
+        "Hennessy": 1,
+        "Ted": 0
+      },
+      "history": [
+        {
+          "unit_name": "Zimmy",
+          "unit_label": "Zimmy",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Boa",
+          "unit_label": "Boa",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Alex",
+          "unit_label": "Alex",
+          "rarity": "Celestial",
+          "shiny": false,
+          "celestial": true
+        },
+        {
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Grinch",
+          "unit_label": "Grinch",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Zafuu",
+          "unit_label": "Zafuu",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Zimmy",
+          "unit_label": "Zimmy",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Deshun",
+          "unit_label": "Deshun",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Deshun",
+          "unit_label": "Deshun",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Ted",
+          "unit_label": "Ted",
+          "rarity": "Secret",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Deshun",
+          "unit_label": "Deshun",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Zafuu",
+          "unit_label": "Zafuu",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Deshun",
+          "unit_label": "Deshun",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Ted",
+          "unit_label": "Ted",
+          "rarity": "Secret",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Zimmy",
+          "unit_label": "Zimmy",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Channon",
+          "unit_label": "Channon",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Fatima Do",
+          "unit_label": "Fatima Do",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Boa",
+          "unit_label": "Boa",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Deshun",
+          "unit_label": "Deshun",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Grinch",
+          "unit_label": "Grinch",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Fatima Do",
+          "unit_label": "Fatima Do",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Ted",
+          "unit_label": "Ted",
+          "rarity": "Secret",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Zafuu",
+          "unit_label": "Zafuu",
+          "rarity": "Mythical",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Ted",
+          "unit_label": "Ted",
+          "rarity": "Secret",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Snorlax",
+          "unit_label": "Snorlax",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Boa",
+          "unit_label": "Boa",
+          "rarity": "Ultra",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Hennessy",
+          "unit_label": "Hennessy",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Fatima",
+          "unit_label": "Fatima",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Hennessy",
+          "unit_label": "Hennessy",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Fatima",
+          "unit_label": "Fatima",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        }
+      ],
+      "index": [
+        "Jlita",
+        "Minii",
+        "Goonie",
+        "Yumi",
+        "Grinch",
+        "Shelly",
+        "Nva",
+        "Deshun",
+        "Jordan",
+        "Wes",
+        "Fatima Do",
+        "Zimmy",
+        "admin Zy",
+        "Channon",
+        "Alex",
+        "Snorlax",
+        "Boa",
+        "Zafuu",
+        "Ted",
+        "Hennessy",
+        "Fatima"
+      ]
+    },
+    "Snorlaxlover46": {
+      "gems": 2000,
+      "coins": 500,
+      "max_cleared": 0,
+      "backpack": [],
+      "team": [],
+      "shards": {},
+      "history": [],
+      "index": []
+    },
+    "Axaxac1": {
+      "gems": 2000,
+      "coins": 500,
+      "max_cleared": 0,
+      "backpack": [],
+      "team": [],
+      "shards": {},
+      "history": [],
+      "index": []
+    },
+    "Princess-Shelly": {
+      "gems": 0,
+      "coins": 500,
+      "max_cleared": 0,
+      "backpack": [
+        {
+          "id": "c039de4d1e4542248ad8592df8cbc312",
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "c61f837004424a91994a4b3c18938e94",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "702715677eb047e59cc1618371841e0e",
+          "unit_name": "Hennessy",
+          "unit_label": "Hennessy",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "c020f37ea19141b984b8bf9514b7ad7d",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "167e9da474b44b959f177143397aded0",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "67c0ffbf3dbe474f9bfe2bf97bf9be67",
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "9bf08aef106e4c0dbd9cace1dc421cb3",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "2f53d2fa69254b459ab5c29824bd1b42",
+          "unit_name": "Fatima",
+          "unit_label": "Fatima",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "3404ab8f920240bda1a33218dac2094c",
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "7f8af77eaf89431c957dd3f18c6fb3f5",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "4bb757da99ad42e7ba6ed6fef59ab07f",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "95156785d0bc4041ac3d86508db43917",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "b7acba0c1580485faf61047fd365f381",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "bb1eadc107194614bd16c9cb0f4d1664",
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "7074b558631f47d4a6f89595eaafab37",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "40dafec342d746b8a949adec8ed36f3b",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "9ec53843f34c41ac8de1c73c7a0cff1c",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "0a870084ef024bd9b42f7960b48d1fad",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "cc559dea51d343089edd7c221351cd22",
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "6c8ec806c8d249049b1f7118c367a442",
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        }
+      ],
+      "team": [],
+      "shards": {},
+      "history": [
+        {
+          "unit_name": "Goonie",
+          "unit_label": "Goonie",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Hennessy",
+          "unit_label": "Hennessy",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Shelly",
+          "unit_label": "Shelly",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Fatima",
+          "unit_label": "Fatima",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Wes",
+          "unit_label": "Wes",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jordan",
+          "unit_label": "Jordan",
+          "rarity": "Rare",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Jlita",
+          "unit_label": "Jlita",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Nva",
+          "unit_label": "Nva",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        }
+      ],
+      "index": [
+        "Goonie",
+        "Minii",
+        "Hennessy",
+        "Jlita",
+        "Wes",
+        "Shelly",
+        "Fatima",
+        "Yumi",
+        "Jordan",
+        "Nva"
+      ]
+    }
+  }
+}
