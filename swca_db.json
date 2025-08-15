@@ -404,8 +404,8 @@
       ]
     },
     "Boa": {
-      "gems": 4580,
-      "coins": 58527,
+      "gems": 4560,
+      "coins": 1967,
       "max_cleared": 9,
       "backpack": [
         {
@@ -955,7 +955,7 @@
           "rarity": "Celestial",
           "shiny": false,
           "celestial": true,
-          "level": 60,
+          "level": 77,
           "ascension": 5
         },
         {
@@ -3507,12 +3507,32 @@
           "celestial": false,
           "level": 1,
           "ascension": 0
+        },
+        {
+          "id": "906b3016ec634245bd5bb51e389c0b17",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "72fe8e6c6f1443aba555c8cdc5bf1946",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
         }
       ],
       "team": [
         "177c535e5c014c328467fcb73ea10586",
         "a3701028c81b4fe985cb68a73ca2195a",
-        "dc7020cfc58448c8bcce6d69198a2e69"
+        "b818fd23e4d646dc810012ec72724726"
       ],
       "shards": {
         "Yumi": 1,
@@ -3524,20 +3544,6 @@
         "Ted": 0
       },
       "history": [
-        {
-          "unit_name": "Zimmy",
-          "unit_label": "Zimmy",
-          "rarity": "Ultra",
-          "shiny": false,
-          "celestial": false
-        },
-        {
-          "unit_name": "Yumi",
-          "unit_label": "Yumi",
-          "rarity": "Common",
-          "shiny": false,
-          "celestial": false
-        },
         {
           "unit_name": "Nva",
           "unit_label": "Nva",
@@ -4923,6 +4929,20 @@
           "rarity": "Common",
           "shiny": false,
           "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
         }
       ],
       "index": [
@@ -5331,6 +5351,16 @@
         "Jordan",
         "Nva"
       ]
+    },
+    "boa": {
+      "gems": 2000,
+      "coins": 500,
+      "max_cleared": 0,
+      "backpack": [],
+      "team": [],
+      "shards": {},
+      "history": [],
+      "index": []
     }
   }
 }

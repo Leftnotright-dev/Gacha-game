@@ -51,8 +51,6 @@
   </style>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/sprites.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/all-units.css') }}">
-  <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32.png') }}">
 </head>
 <body>
   <!-- Top bar -->
@@ -132,6 +130,18 @@
   <script src="{{ url_for('static', filename='js/music.js') }}" defer></script>
   <script>
   window.STATIC_BASE = "{{ url_for('static', filename='') }}";
+  </script>
+
+  <script>
+  // Build URLs with Flask so they always match real files
+  window.STAGE_BG_URLS = {
+    1: "{{ url_for('static', filename='images/stages/stage1.jpeg') }}",
+    2: "{{ url_for('static', filename='images/stages/stage2.jpeg') }}",
+    3: "{{ url_for('static', filename='images/stages/stage3.jpeg') }}",
+    4: "{{ url_for('static', filename='images/stages/stage4.jpeg') }}",
+    5: "{{ url_for('static', filename='images/stages/stage5.jpeg') }}"
+    // Add 6–10 as needed
+  };
   </script>
 
   <!-- Load Phaser first, then your game (robust fallback) -->

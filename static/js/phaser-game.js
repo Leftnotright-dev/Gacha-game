@@ -5,19 +5,8 @@
 
   // ---- Static base + Stage backgrounds (globals) ----
   const STATIC_BASE = (window.STATIC_BASE || '/static/');
-  // Extended to include 6–10 (falls back to color grid if files not present)
-  window.STAGE_BG_KEYS = { 1:'stage1', 2:'stage2', 3:'stage3', 4:'stage4', 5:'stage5', 6:'stage6', 7:'stage7', 8:'stage8', 9:'stage9', 10:'stage10' };
-  function stageBgSrc(id) {
-    return {
-      png: `${STATIC_BASE}images/stages/stage${id}.png`,
-      jpeg: `${STATIC_BASE}images/stages/stage${id}.jpeg`
-    };
-  }
-  // PNG/JPEG fallback helper (kept for compatibility)
-  const STAGE_BG_SRC = (id) => ({
-    png: `${STATIC_BASE}images/stages/stage${id}.png`,
-    jpeg: `${STATIC_BASE}images/stages/stage${id}.jpeg`
-  });
+const STAGE_BG_URLS = (window.STAGE_BG_URLS || {});  // id -> url
+  const STAGE_IDS = Object.keys(STAGE_BG_URLS).map(n => parseInt(n, 10));
 
   /* ================== RARITY / STAGE CONFIG ================== */
 
@@ -434,19 +423,8 @@
     this.load.image("icon_strawberry_jello", "/static/images/skills/strawberry_jello.png");
     this.load.image("icon_teleport", "/static/images/skills/teleport.png");
     this.cameras.main.setBackgroundColor('#101629');
-    this.loadedKeyById = {};
-    const __bgmap = (window.STAGE_BG_KEYS || window.__STAGE_BG_KEYS || {});
-    Object.entries(__bgmap).forEach(([id, key]) => {
-      const srcs = stageBgSrc(id);
-      this.load.image(`${key}_png`, srcs.png);
-      this.load.image(`${key}_jpeg`, srcs.jpeg);
-    });
-    this.load.on('filecomplete-image', (key) => {
-      const m = key.match(/^(stage(\d+))_(png|)$/);
-      if (m) {
-        const id = m[2];
-        if (!this.loadedKeyById[id]) this.loadedKeyById[id] = key;
-      }
+    STAGE_IDS.forEach(id => {
+      this.load.image(`stage${id}`, STAGE_BG_URLS[id]);
     });
     this.load.on('complete', () => {
       this.registry.set('bgKeyById', this.loadedKeyById);
@@ -744,10 +722,9 @@
   /* ---------------- Stage Background helpers ---------------- */
   MainScene.prototype.setStageBackground = function(stageId){
     this.bgLayer.removeAll(true);
-    const map = this.registry.get('bgKeyById') || {};
-    const key = map[String(stageId)];
     const bf = this.battlefield;
-    if (key) {
+    const key = `stage${stageId}`;
+    if (this.textures.exists(key)) {
       const img = this.add.image(bf.x + bf.w/2, bf.y + bf.h/2, key);
       const iW = img.width, iH = img.height;
       if (iW && iH) {
@@ -761,7 +738,12 @@
       g.fillStyle(colors[stageId] || 0x15223a, 1);
       g.fillRect(bf.x, bf.y, bf.w, bf.h);
       g.lineStyle(1, 0xffffff, 0.05);
-      for (let i = 0; i < 8; i++) { g.beginPath(); g.moveTo(bf.x, bf.y + (i+1)*(bf.h/9)); g.lineTo(bf.x + bf.w, bf.y + (i+1)*(bf.h/9)); g.strokePath(); }
+      for (let i = 0; i < 8; i++) {
+        g.beginPath();
+        g.moveTo(bf.x, bf.y + (i+1)*(bf.h/9));
+        g.lineTo(bf.x + bf.w, bf.y + (i+1)*(bf.h/9));
+        g.strokePath();
+      }
       this.bgLayer.add(g);
     }
   };
