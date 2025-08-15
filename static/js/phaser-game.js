@@ -720,17 +720,36 @@ const STAGE_BG_URLS = (window.STAGE_BG_URLS || {});  // id -> url
   };
 
   /* ---------------- Stage Background helpers ---------------- */
+  // Create a canvas texture matching the battlefield dimensions so the
+  // background always fits perfectly without overlapping units.
+  MainScene.prototype.convertStageBg = function(key){
+    const bf = this.battlefield;
+    const tex = this.textures.get(key);
+    if(!tex) return key;
+    const src = tex.getSourceImage();
+    if(!src) return key;
+    const canvasKey = `${key}_bf_${bf.w}x${bf.h}`;
+    if(this.textures.exists(canvasKey)) return canvasKey;
+    const canvasTex = this.textures.createCanvas(canvasKey, bf.w, bf.h);
+    const ctx = canvasTex.context;
+    const scale = Math.max(bf.w/src.width, bf.h/src.height);
+    const drawW = src.width * scale;
+    const drawH = src.height * scale;
+    const dx = (bf.w - drawW)/2;
+    const dy = (bf.h - drawH)/2;
+    ctx.drawImage(src, dx, dy, drawW, drawH);
+    canvasTex.refresh();
+    return canvasKey;
+  };
+
   MainScene.prototype.setStageBackground = function(stageId){
     this.bgLayer.removeAll(true);
     const bf = this.battlefield;
     const key = `stage${stageId}`;
     if (this.textures.exists(key)) {
-      const img = this.add.image(bf.x + bf.w/2, bf.y + bf.h/2, key);
-      const iW = img.width, iH = img.height;
-      if (iW && iH) {
-        const scale = Math.min(bf.w / iW, bf.h / iH);
-        img.setScale(scale);
-      }
+     const texKey = this.convertStageBg(key);
+      const img = this.add.image(bf.x + bf.w/2, bf.y + bf.h/2, texKey);
+      img.setDepth(0);
       this.bgLayer.add(img);
     } else {
       const g = this.add.graphics();
