@@ -1,0 +1,34 @@
+{
+  "frames": {
+    "frame_0000": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    }
+  },
+  "meta": {
+    "app": "placeholder",
+    "image": "stun@2x.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 192,
+      "h": 192
+    },
+    "scale": "1"
+  }
+}
