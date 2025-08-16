@@ -360,7 +360,7 @@ def index_data():
 
     reveal = {}
     for name, desc in SPECIALS.items():
-        if name in owned_norm:
+        if name in owned_any:
             reveal[name] = desc
 
     return jsonify({

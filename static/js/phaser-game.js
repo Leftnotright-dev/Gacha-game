@@ -5,19 +5,94 @@
 
   // ---- Static base + Stage backgrounds (globals) ----
   const STATIC_BASE = (window.STATIC_BASE || '/static/');
-  // Extended to include 6–10 (falls back to color grid if files not present)
-  window.STAGE_BG_KEYS = { 1:'stage1', 2:'stage2', 3:'stage3', 4:'stage4', 5:'stage5', 6:'stage6', 7:'stage7', 8:'stage8', 9:'stage9', 10:'stage10' };
-  function stageBgSrc(id) {
-    return {
-      png: `${STATIC_BASE}images/stages/stage${id}.png`,
-      jpeg: `${STATIC_BASE}images/stages/stage${id}.jpeg`
-    };
+const STAGE_BG_URLS = (window.STAGE_BG_URLS || {});  // id -> url
+  const STAGE_IDS = Object.keys(STAGE_BG_URLS).map(n => parseInt(n, 10));
+
+  // Animations we care about and default FPS (capped at 24)
+  const ANIM_ORDER = ["idle","attack","death","revive","stun","hit","special"];
+  const DEFAULT_FPS = { idle:12, attack:18, death:14, revive:14, stun:12, hit:14, special:18 };
+
+  const DPR_IS_2X = !!window.DEVICE_2X;
+  const ASSETS = window.UNIT_ASSETS || {};
+
+  const atlasKey = (unit, anim, twoX=false) => `${unit}-${anim}${twoX?'-2x':''}`;
+  const animKey  = (unit, anim) => `${unit}:${anim}`;
+
+  // Load all atlases for a unit (picks @2x when present)
+  function loadUnitAtlases(scene, unit) {
+    const def = ASSETS[unit] || {};
+    ANIM_ORDER.forEach(anim => {
+      const info = def[anim];
+      if (!info) return;
+
+      const use2x = DPR_IS_2X && info.png2 && info.json2;
+      const png = use2x ? info.png2 : info.png;
+      const json= use2x ? info.json2 : info.json;
+
+      if (!png || !json) return;
+
+      scene.load.atlas(atlasKey(unit, anim, use2x), png, json);
+    });
   }
-  // PNG/JPEG fallback helper (kept for compatibility)
-  const STAGE_BG_SRC = (id) => ({
-    png: `${STATIC_BASE}images/stages/stage${id}.png`,
-    jpeg: `${STATIC_BASE}images/stages/stage${id}.jpeg`
-  });
+
+  // Register Phaser animations after textures are loaded
+  function registerUnitAnims(scene, unit) {
+    const def = ASSETS[unit] || {};
+    ANIM_ORDER.forEach(anim => {
+      const info = def[anim];
+      if (!info) return;
+      const use2x = DPR_IS_2X && info.png2 && info.json2;
+      const key = atlasKey(unit, anim, use2x);
+
+      // Get frame names from the atlas (TexturePacker JSON-Array uses frame_0000…)
+      const tex = scene.textures.get(key);
+      if (!tex || !tex.key) return;
+      const frames = tex.getFrameNames().filter(n => n.startsWith("frame_"));
+      if (!frames.length) return;
+
+      // Cap FPS at 24, idle loops forever
+      const fps = Math.min(DEFAULT_FPS[anim] || 12, 24);
+      const repeat = anim === "idle" ? -1 : 0;
+
+      // Only create if it doesn't exist
+      const aKey = animKey(unit, anim);
+      if (!scene.anims.exists(aKey)) {
+        scene.anims.create({
+          key: aKey,
+          frames: frames.map(n => ({ key, frame: n })),
+          frameRate: fps,
+          repeat
+        });
+      }
+    });
+  }
+
+  // Utility: spawn and start idle
+  function spawnUnitSprite(scene, unit, x, y) {
+    const info = (ASSETS[unit] || {})["idle"];
+    const use2x = info && DPR_IS_2X && info.png2 && info.json2;
+    const startKey = atlasKey(unit, "idle", use2x);
+    const s = scene.add.sprite(x, y, startKey).setOrigin(0.5, 1.0);
+    // If using @2x frames, draw at 0.5 scale so on-screen size matches 96×96 logic
+    if (use2x) s.setScale(0.5);
+    s.play(animKey(unit, "idle"));
+    return s;
+  }
+
+  // Utility: play an animation and auto-return to idle when it finishes
+  function playUnitAnim(scene, sprite, unit, anim) {
+    const aKey = animKey(unit, anim);
+    if (!scene.anims.exists(aKey)) {
+      console.warn("No animation", aKey);
+      return;
+    }
+    sprite.play(aKey);
+    if (anim !== "idle") {
+      sprite.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+        sprite.play(animKey(unit, "idle"));
+      });
+    }
+  }
 
   /* ================== RARITY / STAGE CONFIG ================== */
 
@@ -434,19 +509,8 @@
     this.load.image("icon_strawberry_jello", "/static/images/skills/strawberry_jello.png");
     this.load.image("icon_teleport", "/static/images/skills/teleport.png");
     this.cameras.main.setBackgroundColor('#101629');
-    this.loadedKeyById = {};
-    const __bgmap = (window.STAGE_BG_KEYS || window.__STAGE_BG_KEYS || {});
-    Object.entries(__bgmap).forEach(([id, key]) => {
-      const srcs = stageBgSrc(id);
-      this.load.image(`${key}_png`, srcs.png);
-      this.load.image(`${key}_jpeg`, srcs.jpeg);
-    });
-    this.load.on('filecomplete-image', (key) => {
-      const m = key.match(/^(stage(\d+))_(png|)$/);
-      if (m) {
-        const id = m[2];
-        if (!this.loadedKeyById[id]) this.loadedKeyById[id] = key;
-      }
+    STAGE_IDS.forEach(id => {
+      this.load.image(`stage${id}`, STAGE_BG_URLS[id]);
     });
     this.load.on('complete', () => {
       this.registry.set('bgKeyById', this.loadedKeyById);
@@ -480,6 +544,11 @@
   const config = { type:Phaser.AUTO, parent:"game-container", width:W, height:H, backgroundColor:"#0e1320",
     physics:{ default:"arcade", arcade:{ gravity:{y:0}, debug:false } }, dom:{ createContainer:true }, scene:[BootScene, MainScene] };
   const game = new Phaser.Game(config);
+
+  MainScene.prototype.preload = function(){
+    const team = window.TEAM || [];
+    team.forEach(u => loadUnitAtlases(this, u));
+  };
 
   MainScene.prototype.create = function(){
     const $ = id=>document.getElementById(id);
@@ -531,6 +600,37 @@
 
     this.entities=[]; this.battleRunning=false; this.speedMul=1; this.autoMode=false;
     this.pendingTarget = null;
+
+    // Register animations for team units
+    const team = window.TEAM || [];
+    team.forEach(u => registerUnitAnims(this, u));
+
+    // Example: spawn Snorlax at bottom center
+    const w = this.scale.width, h = this.scale.height;
+    this.snorlax = spawnUnitSprite(this, "snorlax", w*0.5, h*0.90);
+
+    // Example wires: when your combat logic fires events:
+    this.events.on("battle:attack", ({ unit, sprite }) => {
+      playUnitAnim(this, sprite, unit, "attack");
+    });
+    this.events.on("battle:hit", ({ unit, sprite }) => {
+      playUnitAnim(this, sprite, unit, "hit");
+    });
+    this.events.on("battle:stun", ({ unit, sprite }) => {
+      playUnitAnim(this, sprite, unit, "stun");
+    });
+    this.events.on("battle:special", ({ unit, sprite }) => {
+      playUnitAnim(this, sprite, unit, "special");
+    });
+    this.events.on("battle:death", ({ unit, sprite }) => {
+      playUnitAnim(this, sprite, unit, "death");
+    });
+    this.events.on("battle:revive", ({ unit, sprite }) => {
+      playUnitAnim(this, sprite, unit, "revive");
+    });
+
+    // Quick demo:
+    // this.time.delayedCall(600,  () => this.events.emit("battle:attack", { unit:"snorlax", sprite:this.snorlax }));
 
     // Simple HTML choice modal
     this.openChoice = (prompt, options, onChoose) => {
@@ -742,18 +842,36 @@
   };
 
   /* ---------------- Stage Background helpers ---------------- */
+  // Create a canvas texture matching the battlefield dimensions so the
+  // background always fits perfectly without overlapping units.
+  MainScene.prototype.convertStageBg = function(key){
+    const bf = this.battlefield;
+    const tex = this.textures.get(key);
+    if(!tex) return key;
+    const src = tex.getSourceImage();
+    if(!src) return key;
+    const canvasKey = `${key}_bf_${bf.w}x${bf.h}`;
+    if(this.textures.exists(canvasKey)) return canvasKey;
+    const canvasTex = this.textures.createCanvas(canvasKey, bf.w, bf.h);
+    const ctx = canvasTex.context;
+    const scale = Math.max(bf.w/src.width, bf.h/src.height);
+    const drawW = src.width * scale;
+    const drawH = src.height * scale;
+    const dx = (bf.w - drawW)/2;
+    const dy = (bf.h - drawH)/2;
+    ctx.drawImage(src, dx, dy, drawW, drawH);
+    canvasTex.refresh();
+    return canvasKey;
+  };
+
   MainScene.prototype.setStageBackground = function(stageId){
     this.bgLayer.removeAll(true);
-    const map = this.registry.get('bgKeyById') || {};
-    const key = map[String(stageId)];
     const bf = this.battlefield;
-    if (key) {
-      const img = this.add.image(bf.x + bf.w/2, bf.y + bf.h/2, key);
-      const iW = img.width, iH = img.height;
-      if (iW && iH) {
-        const scale = Math.min(bf.w / iW, bf.h / iH);
-        img.setScale(scale);
-      }
+    const key = `stage${stageId}`;
+    if (this.textures.exists(key)) {
+     const texKey = this.convertStageBg(key);
+      const img = this.add.image(bf.x + bf.w/2, bf.y + bf.h/2, texKey);
+      img.setDepth(0);
       this.bgLayer.add(img);
     } else {
       const g = this.add.graphics();
@@ -761,7 +879,12 @@
       g.fillStyle(colors[stageId] || 0x15223a, 1);
       g.fillRect(bf.x, bf.y, bf.w, bf.h);
       g.lineStyle(1, 0xffffff, 0.05);
-      for (let i = 0; i < 8; i++) { g.beginPath(); g.moveTo(bf.x, bf.y + (i+1)*(bf.h/9)); g.lineTo(bf.x + bf.w, bf.y + (i+1)*(bf.h/9)); g.strokePath(); }
+      for (let i = 0; i < 8; i++) {
+        g.beginPath();
+        g.moveTo(bf.x, bf.y + (i+1)*(bf.h/9));
+        g.lineTo(bf.x + bf.w, bf.y + (i+1)*(bf.h/9));
+        g.strokePath();
+      }
       this.bgLayer.add(g);
     }
   };
@@ -860,7 +983,7 @@
 
     // Player side
     const bf=this.battlefield;
-    const px=bf.x+160, py=bf.y+bf.h-160, gap=150;
+    const px=bf.x+160, py=bf.y+bf.h-160, gap=170;
     this.playerTeam=this.currentTeam.map((u,i)=>this.spawnUnit({
       side:"player", x:px, y:py-i*gap, label:u.label, name:u.name, rarity:u.rarity, shiny:u.shiny, celestial:u.celestial,
       stats:buildStats(u.rarity, u.level||1, u.ascension||0, u.shiny, u.celestial, 1.0), asc:u.ascension||0, slotIndex:i
@@ -891,7 +1014,8 @@
       this._bossMusicOn = true;
     }
 
-    const bf=this.battlefield; const ex=bf.x+bf.w-160, ey=bf.y+bf.h-160, gap=150;
+
+    const bf=this.battlefield; const ex=bf.x+bf.w-160, ey=bf.y+bf.h-160, gap=170;
 
     if(isBossWave){
       // Stage 10 boss = 2× Stage 5 boss

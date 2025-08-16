@@ -404,8 +404,8 @@
       ]
     },
     "Boa": {
-      "gems": 4580,
-      "coins": 58527,
+      "gems": 4800,
+      "coins": 1297,
       "max_cleared": 9,
       "backpack": [
         {
@@ -955,7 +955,7 @@
           "rarity": "Celestial",
           "shiny": false,
           "celestial": true,
-          "level": 60,
+          "level": 77,
           "ascension": 5
         },
         {
@@ -2059,16 +2059,6 @@
           "ascension": 0
         },
         {
-          "id": "f3a8bbf056e544bb89569a7becf11ccb",
-          "unit_name": "Snorlax",
-          "unit_label": "Snorlax",
-          "rarity": "Ultra",
-          "shiny": false,
-          "celestial": false,
-          "level": 1,
-          "ascension": 0
-        },
-        {
           "id": "b58a896075164de086f69c6f68c52df6",
           "unit_name": "Grinch",
           "unit_label": "Grinch",
@@ -2879,16 +2869,6 @@
           "ascension": 0
         },
         {
-          "id": "83700df2040742cfb865334976429a75",
-          "unit_name": "Snorlax",
-          "unit_label": "Snorlax",
-          "rarity": "Ultra",
-          "shiny": false,
-          "celestial": false,
-          "level": 1,
-          "ascension": 0
-        },
-        {
           "id": "452b864286f44b979d936ddfd64859a1",
           "unit_name": "Yumi",
           "unit_label": "Yumi",
@@ -3099,30 +3079,10 @@
           "ascension": 0
         },
         {
-          "id": "b7efd2aa6c1a45a09d6001f101a2c1fd",
-          "unit_name": "Snorlax",
-          "unit_label": "Snorlax",
-          "rarity": "Ultra",
-          "shiny": false,
-          "celestial": false,
-          "level": 1,
-          "ascension": 0
-        },
-        {
           "id": "a6cb37ecdf19496ca4b81b651166038c",
           "unit_name": "Wes",
           "unit_label": "Wes",
           "rarity": "Rare",
-          "shiny": false,
-          "celestial": false,
-          "level": 1,
-          "ascension": 0
-        },
-        {
-          "id": "200999f1edd74d30bd10cecaebd1dd5f",
-          "unit_name": "Snorlax",
-          "unit_label": "Snorlax",
-          "rarity": "Ultra",
           "shiny": false,
           "celestial": false,
           "level": 1,
@@ -3345,8 +3305,8 @@
           "rarity": "Ultra",
           "shiny": false,
           "celestial": false,
-          "level": 1,
-          "ascension": 0
+          "level": 11,
+          "ascension": 2
         },
         {
           "id": "c761b93b34e5443daa21ab62350af173",
@@ -3507,12 +3467,32 @@
           "celestial": false,
           "level": 1,
           "ascension": 0
+        },
+        {
+          "id": "906b3016ec634245bd5bb51e389c0b17",
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
+        },
+        {
+          "id": "72fe8e6c6f1443aba555c8cdc5bf1946",
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false,
+          "level": 1,
+          "ascension": 0
         }
       ],
       "team": [
         "177c535e5c014c328467fcb73ea10586",
         "a3701028c81b4fe985cb68a73ca2195a",
-        "dc7020cfc58448c8bcce6d69198a2e69"
+        "5ec0ba06a85640de8c8b6f1ca652c895"
       ],
       "shards": {
         "Yumi": 1,
@@ -3521,23 +3501,10 @@
         "Goonie": 4,
         "Boa": 4,
         "Hennessy": 1,
-        "Ted": 0
+        "Ted": 0,
+        "Snorlax": 0
       },
       "history": [
-        {
-          "unit_name": "Zimmy",
-          "unit_label": "Zimmy",
-          "rarity": "Ultra",
-          "shiny": false,
-          "celestial": false
-        },
-        {
-          "unit_name": "Yumi",
-          "unit_label": "Yumi",
-          "rarity": "Common",
-          "shiny": false,
-          "celestial": false
-        },
         {
           "unit_name": "Nva",
           "unit_label": "Nva",
@@ -4923,6 +4890,20 @@
           "rarity": "Common",
           "shiny": false,
           "celestial": false
+        },
+        {
+          "unit_name": "Yumi",
+          "unit_label": "Yumi",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
+        },
+        {
+          "unit_name": "Minii",
+          "unit_label": "Minii",
+          "rarity": "Common",
+          "shiny": false,
+          "celestial": false
         }
       ],
       "index": [
@@ -5331,6 +5312,16 @@
         "Jordan",
         "Nva"
       ]
+    },
+    "boa": {
+      "gems": 2000,
+      "coins": 500,
+      "max_cleared": 0,
+      "backpack": [],
+      "team": [],
+      "shards": {},
+      "history": [],
+      "index": []
     }
   }
 }
