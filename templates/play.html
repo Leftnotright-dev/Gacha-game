@@ -133,6 +133,49 @@
   </script>
 
   <script>
+  // Device DPR helps us pick @2x assets when available
+  window.DEVICE_2X = (window.devicePixelRatio || 1) >= 2;
+
+  // Unit → animation → {png,json} (1x and optional 2x)
+  window.UNIT_ASSETS = {
+    snorlax: {
+      idle:   { png: "{{ url_for('static', filename='images/units/snorlax/idle.png') }}",
+                json: "{{ url_for('static', filename='images/units/snorlax/idle.json') }}",
+                png2: "{{ url_for('static', filename='images/units/snorlax/idle@2x.png') }}",
+                json2:"{{ url_for('static', filename='images/units/snorlax/idle@2x.json') }}" },
+      attack: { png: "{{ url_for('static', filename='images/units/snorlax/attack.png') }}",
+                json: "{{ url_for('static', filename='images/units/snorlax/attack.json') }}",
+                png2: "{{ url_for('static', filename='images/units/snorlax/attack@2x.png') }}",
+                json2:"{{ url_for('static', filename='images/units/snorlax/attack@2x.json') }}" },
+      death:  { png: "{{ url_for('static', filename='images/units/snorlax/death.png') }}",
+                json: "{{ url_for('static', filename='images/units/snorlax/death.json') }}",
+                png2: "{{ url_for('static', filename='images/units/snorlax/death@2x.png') }}",
+                json2:"{{ url_for('static', filename='images/units/snorlax/death@2x.json') }}" },
+      revive: { png: "{{ url_for('static', filename='images/units/snorlax/revive.png') }}",
+                json: "{{ url_for('static', filename='images/units/snorlax/revive.json') }}",
+                png2: "{{ url_for('static', filename='images/units/snorlax/revive@2x.png') }}",
+                json2:"{{ url_for('static', filename='images/units/snorlax/revive@2x.json') }}" },
+      stun:   { png: "{{ url_for('static', filename='images/units/snorlax/stun.png') }}",
+                json: "{{ url_for('static', filename='images/units/snorlax/stun.json') }}",
+                png2: "{{ url_for('static', filename='images/units/snorlax/stun@2x.png') }}",
+                json2:"{{ url_for('static', filename='images/units/snorlax/stun@2x.json') }}" },
+      hit:    { png: "{{ url_for('static', filename='images/units/snorlax/hit.png') }}",
+                json: "{{ url_for('static', filename='images/units/snorlax/hit.json') }}",
+                png2: "{{ url_for('static', filename='images/units/snorlax/hit@2x.png') }}",
+                json2:"{{ url_for('static', filename='images/units/snorlax/hit@2x.json') }}" },
+      special:{ png: "{{ url_for('static', filename='images/units/snorlax/special.png') }}",
+                json: "{{ url_for('static', filename='images/units/snorlax/special.json') }}",
+                png2: "{{ url_for('static', filename='images/units/snorlax/special@2x.png') }}",
+                json2:"{{ url_for('static', filename='images/units/snorlax/special@2x.json') }}" },
+    }
+  };
+
+  // Who’s on the team this battle? (can be built server-side)
+  window.TEAM = ["snorlax"];
+  </script>
+
+
+  <script>
   // Build URLs with Flask so they always match real files
   window.STAGE_BG_URLS = {
     1: "{{ url_for('static', filename='images/stages/stage1.png') }}",
