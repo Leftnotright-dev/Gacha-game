@@ -9,56 +9,101 @@ Sprite strips expected at:
 Add @2x variants for retina: idle@2x.png, etc.
 */
 
-/* Base: set per-unit frame size */
-.sprite-unit.snorlax { --w: 128px; --h: 128px; }
+/* Base sprite box */
+.sprite-unit {
+  width: 96px;
+  height: 96px;
+  image-rendering: pixelated;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
 
-/* IDLE */
+/* Loop settings for idle; one-shot for other anims */
+.sprite-unit.idle { animation-iteration-count: infinite; }
+.sprite-unit.once { animation-iteration-count: 1; animation-fill-mode: forwards; }
+
+/* ---- Snorlax: idle (6 frames @ 12fps ~0.5s) ---- */
 .sprite-unit.snorlax.idle {
-  --frames: 6; --fps: 10;
-  background-image: image-set(
-    url("/static/images/units/snorlax/idle.png") 1x,
-    url("/static/images/units/snorlax/idle@2x.png") 2x
-  );
-  background-size: calc(var(--w) * var(--frames)) var(--h);
+  background-image: url("/static/images/units/snorlax/idle.png");
+  animation-name: snorlax-idle;
+  animation-duration: 0.5s;
+  animation-timing-function: steps(6);
+  animation-iteration-count: infinite;
+}
+@keyframes snorlax-idle {
+  from { background-position: 0 0; }
+  to   { background-position: -480px 0; } /* 96px * (6-1) */
 }
 
-/* ATTACK */
+/* attack (12 frames @ 18fps ~0.6667s) */
 .sprite-unit.snorlax.attack {
-  --frames: 10; --fps: 16;
-  background-image: image-set(
-    url("/static/images/units/snorlax/attack.png") 1x,
-    url("/static/images/units/snorlax/attack@2x.png") 2x
-  );
-  background-size: calc(var(--w) * var(--frames)) var(--h);
+  background-image: url("/static/images/units/snorlax/attack.png");
+  animation-name: snorlax-attack;
+  animation-duration: 0.6667s;
+  animation-timing-function: steps(12);
+}
+@keyframes snorlax-attack {
+  from { background-position: 0 0; }
+  to   { background-position: -1056px 0; } /* 96*(12-1) */
 }
 
-/* DEATH (one-shot) */
+/* death (10 frames @ 14fps ~0.7143s) */
 .sprite-unit.snorlax.death {
-  --frames: 12; --fps: 14; --play: 1;
-  background-image: image-set(
-    url("/static/images/units/snorlax/death.png") 1x,
-    url("/static/images/units/snorlax/death@2x.png") 2x
-  );
-  background-size: calc(var(--w) * var(--frames)) var(--h);
+  background-image: url("/static/images/units/snorlax/death.png");
+  animation-name: snorlax-death;
+  animation-duration: 0.7143s;
+  animation-timing-function: steps(10);
+}
+@keyframes snorlax-death {
+  from { background-position: 0 0; }
+  to   { background-position: -864px 0; } /* 96*(10-1) */
 }
 
-/* REVIVE (one-shot) */
+/* revive (10 frames @ 14fps ~0.7143s) */
 .sprite-unit.snorlax.revive {
-  --frames: 12; --fps: 14; --play: 1;
-  background-image: image-set(
-    url("/static/images/units/snorlax/revive.png") 1x,
-    url("/static/images/units/snorlax/revive@2x.png") 2x
-  );
-  background-size: calc(var(--w) * var(--frames)) var(--h);
+  background-image: url("/static/images/units/snorlax/revive.png");
+  animation-name: snorlax-revive;
+  animation-duration: 0.7143s;
+  animation-timing-function: steps(10);
+}
+@keyframes snorlax-revive {
+  from { background-position: 0 0; }
+  to   { background-position: -864px 0; }
 }
 
-/* SPECIAL SKILL (one-shot) */
-.sprite-unit.snorlax.skill {
-  --frames: 16; --fps: 18; --play: 1;
-  background-image: image-set(
-    url("/static/images/units/snorlax/skill.png") 1x,
-    url("/static/images/units/snorlax/skill@2x.png") 2x
-  );
-  background-size: calc(var(--w) * var(--frames)) var(--h);
+/* stun (8 frames @ 12fps ~0.6667s) */
+.sprite-unit.snorlax.stun {
+  background-image: url("/static/images/units/snorlax/stun.png");
+  animation-name: snorlax-stun;
+  animation-duration: 0.6667s;
+  animation-timing-function: steps(8);
+}
+@keyframes snorlax-stun {
+  from { background-position: 0 0; }
+  to   { background-position: -672px 0; } /* 96*(8-1) */
 }
 
+/* hit (6 frames @ 14fps ~0.4286s) */
+.sprite-unit.snorlax.hit {
+  background-image: url("/static/images/units/snorlax/hit.png");
+  animation-name: snorlax-hit;
+  animation-duration: 0.4286s;
+  animation-timing-function: steps(6);
+}
+@keyframes snorlax-hit {
+  from { background-position: 0 0; }
+  to   { background-position: -480px 0; }
+}
+
+/* special (16 frames @ 18fps ~0.8889s) */
+.sprite-unit.snorlax.special {
+  background-image: url("/static/images/units/snorlax/special.png");
+  animation-name: snorlax-special;
+  animation-duration: 0.8889s;
+  animation-timing-function: steps(16);
+}
+@keyframes snorlax-special {
+  from { background-position: 0 0; }
+  to   { background-position: -1440px 0; } /* 96*(16-1) */
+}
+/* ---- End Snorlax ---- */
