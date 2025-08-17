@@ -6,6 +6,8 @@
   const STAGE_BG_URLS = (window.STAGE_BG_URLS || {});  // id -> url
   const STAGE_IDS = Object.keys(STAGE_BG_URLS).map(n => parseInt(n, 10));
 
+  
+
   /* ================== RARITY / STAGE CONFIG ================== */
 
   const RARITY_COLOR = {
