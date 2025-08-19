@@ -1,4 +1,4 @@
-/* === Base sprite animation helpers (drop into static/css/sprites.css) === */
+/* === Base sprite animation helpers === */
 .sprite-unit {
   --w: 96px;
   --h: 96px;

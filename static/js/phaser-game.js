@@ -6,8 +6,6 @@
   const STAGE_BG_URLS = (window.STAGE_BG_URLS || {});  // id -> url
   const STAGE_IDS = Object.keys(STAGE_BG_URLS).map(n => parseInt(n, 10));
 
-  
-
   /* ================== RARITY / STAGE CONFIG ================== */
 
   const RARITY_COLOR = {
@@ -27,68 +25,154 @@
   };
 
   // Fine-grained enemy-only knobs per stage (HP/ATK multipliers).
-  // Stages 6–10 add +40% HP and +25% ATK each stage (compounded).
   const STAGES = {
     1:{ name:"Training",           waves:2, enemyLevel:1.0, boss:false, enemyHpMul:1.00,       enemyAtkMul:1.00 },
     2:{ name:"Patrol",             waves:3, enemyLevel:1.8, boss:false, enemyHpMul:1.00,       enemyAtkMul:1.00 },
     3:{ name:"Stronghold",         waves:4, enemyLevel:2.2, boss:false, enemyHpMul:1.00,       enemyAtkMul:1.00 },
     4:{ name:"Hell Castle Gates",  waves:4, enemyLevel:3.0, boss:false, enemyHpMul:1.00,       enemyAtkMul:1.00 },
     5:{ name:"Demon Castle",       waves:5, enemyLevel:4.0, boss:true,  enemyHpMul:1.00,       enemyAtkMul:1.00 },
-
-    6:{ name:"The Abyss",             waves:5, enemyLevel:4.2, boss:false, enemyHpMul:1.40,        enemyAtkMul:1.25        },
-    7:{ name:"Abyssal Throne",        waves:5, enemyLevel:4.4, boss:false, enemyHpMul:1.96,        enemyAtkMul:1.5625      }, // 1.4^2, 1.25^2
-    8:{ name:"Wraithspire Keep",      waves:5, enemyLevel:4.6, boss:false, enemyHpMul:2.744,       enemyAtkMul:1.953125    }, // 1.4^3, 1.25^3
-    9:{ name:"Chrono Ruins",          waves:5, enemyLevel:4.8, boss:false, enemyHpMul:3.8416,      enemyAtkMul:2.44140625  }, // 1.4^4, 1.25^4
-   10:{ name:"The End of All Things", waves:5, enemyLevel:5.0, boss:true,  enemyHpMul:5.37824,     enemyAtkMul:3.0517578125}  // 1.4^5, 1.25^5
+    6:{ name:"The Abyss",          waves:5, enemyLevel:4.2, boss:false, enemyHpMul:1.40,       enemyAtkMul:1.25 },
+    7:{ name:"Abyssal Throne",     waves:5, enemyLevel:4.4, boss:false, enemyHpMul:1.96,       enemyAtkMul:1.5625 },
+    8:{ name:"Wraithspire Keep",   waves:5, enemyLevel:4.6, boss:false, enemyHpMul:2.744,      enemyAtkMul:1.953125 },
+    9:{ name:"Chrono Ruins",       waves:5, enemyLevel:4.8, boss:false, enemyHpMul:3.8416,     enemyAtkMul:2.44140625 },
+   10:{ name:"The End of All Things", waves:5, enemyLevel:5.0, boss:true,  enemyHpMul:5.37824,  enemyAtkMul:3.0517578125}
   };
 
-  /* ================== PER-UNIT SPECIALS ================== */
+  // --- Generic sprite animation helpers ---
+  const ANIM_ORDER = ["idle","attack","hit","special","stun","death","revive"];
+  const DEFAULT_ANIM_FPS = 12;
+
+  function preloadUnitSprites(scene, slug, anims = ANIM_ORDER){
+    const base = `/static/images/units/${slug}`;
+    anims.forEach(anim => {
+      const pngKey = `${slug}_${anim}_png`;
+      const metaKey = `${slug}_${anim}_meta`;
+      scene.load.image(pngKey, `${base}/${anim}.png`);
+      scene.load.json(metaKey, `${base}/${anim}.meta.json`);
+    });
+  }
+
+  function resolveFrameRate(meta){
+    if(meta && typeof meta.frameRate === 'number') return Math.max(1, Math.round(meta.frameRate));
+    if(meta && typeof meta.msPerFrame === 'number') return Math.max(1, Math.round(1000/meta.msPerFrame));
+    return DEFAULT_ANIM_FPS;
+  }
+
+  function buildFrameIndices(meta){
+    const rows = meta?.rows;
+    const cols = meta?.columns;
+    const total = meta?.frameCount ?? ((rows && cols)? rows*cols : 1);
+    const start = (typeof meta?.frameStart === 'number') ? meta.frameStart : 0;
+    const endInc = (typeof meta?.frameEnd === 'number') ? meta.frameEnd : (total-1);
+    let indices = [];
+    for(let i=start;i<=endInc;i++) indices.push(i);
+    if(Array.isArray(meta?.frameOrder) && meta.frameOrder.length>0) indices = meta.frameOrder.slice();
+    return { indices, total, rows: rows ?? 1, cols: cols ?? total };
+  }
+
+  function ensureSheetFrames(scene, slug, anim, meta, pngKey){
+    const sheetKey = `${slug}_${anim}_sheet`;
+    if(scene.textures.exists(sheetKey)) return sheetKey;
+    const tex = scene.textures.get(pngKey);
+    if(!tex) return null;
+    const img = tex.getSourceImage();
+    if(!img) return null;
+    const fw = meta.frameWidth;
+    const fh = meta.frameHeight;
+    if(!(fw>0 && fh>0)) return null;
+    const { rows, cols } = buildFrameIndices(meta);
+    const dyn = scene.textures.create(sheetKey);
+    let idx = 0;
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols;c++){
+        const sx = c*fw, sy = r*fh;
+        if(sx+fw>img.width || sy+fh>img.height) continue;
+        const frameKey = `${idx}`;
+        const tmpKey = `${sheetKey}_f${idx}`;
+        const canvas = scene.textures.createCanvas(tmpKey, fw, fh);
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, sx, sy, fw, fh, 0, 0, fw, fh);
+        canvas.refresh();
+        dyn.add(frameKey, 0, 0, fw, fh).source = canvas.getSourceImage();
+        idx++;
+      }
+    }
+    return sheetKey;
+  }
+
+  function registerUnitAnimations(scene, slug){
+    ANIM_ORDER.forEach(anim => {
+      const metaKey = `${slug}_${anim}_meta`;
+      const pngKey = `${slug}_${anim}_png`;
+      const animKey = `${slug}_${anim}`;
+      if(scene.anims.exists(animKey)) return;
+      if(!scene.textures.exists(pngKey)) return;
+      const meta = scene.cache.json.get(metaKey);
+      if(meta && meta.frameWidth && meta.frameHeight){
+        const sheetKey = ensureSheetFrames(scene, slug, anim, meta, pngKey);
+        if(sheetKey){
+          const { indices } = buildFrameIndices(meta);
+          const frames = indices.map(i=>({ key: sheetKey, frame: String(i) }));
+          scene.anims.create({
+            key: animKey,
+            frames,
+            frameRate: resolveFrameRate(meta),
+            repeat: (typeof meta.repeat==='number') ? meta.repeat : (anim==='idle'? -1:0),
+            yoyo: !!meta?.yoyo
+          });
+        } else {
+          scene.anims.create({ key: animKey, frames:[{key: pngKey}], frameRate:1, repeat:(anim==='idle'? -1:0) });
+        }
+      } else {
+        scene.anims.create({ key: animKey, frames:[{key: pngKey}], frameRate:1, repeat:(anim==='idle'? -1:0) });
+      }
+    });
+  }
+
+  function playUnitAnim(sprite, slug, anim){
+    const tryAnims = [anim, 'idle'];
+    for(const a of tryAnims){
+      const key = `${slug}_${a}`;
+      if(sprite.anims && sprite.anims.animationManager.exists(key)){
+        sprite.play(key, true);
+        return;
+      }
+      const pngKey = `${slug}_${a}_png`;
+      if(sprite.scene.textures.exists(pngKey)){
+        sprite.setTexture(pngKey);
+        return;
+      }
+    }
+  }
+
+  function applySpriteMetaDisplay(sprite, meta){
+    if(!meta) return;
+    if(meta.displayWidth && meta.displayHeight){
+      sprite.setDisplaySize(meta.displayWidth, meta.displayHeight);
+    } else if(typeof meta.scale === 'number'){
+      sprite.setScale(meta.scale);
+    }
+    if(typeof meta.originX === 'number' || typeof meta.originY === 'number'){
+      const ox = (typeof meta.originX==='number') ? meta.originX : 0.5;
+      const oy = (typeof meta.originY==='number') ? meta.originY : 0.5;
+      sprite.setOrigin(ox, oy);
+    }
+  }
+
+  /* ================== PER-UNIT SPECIALS (unchanged) ================== */
   const fx = {
     effDef: (t) => Math.round(t.def * (t._defDownMult ?? 1)),
     debuffOk: (t) => (!t.isBoss),
-    addDefDown: (t, mult, turns) => {
-      if (!fx.debuffOk(t)) return;
-      t._defDownMult = Math.min(t._defDownMult ?? 1, mult);
-      t._defDownTurns = Math.max(t._defDownTurns ?? 0, turns);
-    },
-    addSlow: (t, mult, turns) => {
-      if (!fx.debuffOk(t)) return;
-      t._spdDebuffs = t._spdDebuffs || [];
-      t._spdDebuffs.push({ mult, turns });
-    },
-    addStun: (t, turns) => {
-      if (!fx.debuffOk(t)) return;
-      t._stunTurns = Math.max(t._stunTurns ?? 0, turns);
-    },
-    // Sleep == Stun (different label), cannot affect boss
-    addSleep: (t, turns) => {
-      if (!fx.debuffOk(t)) return;
-      t._sleepTurns = Math.max(t._sleepTurns ?? 0, turns);
-    },
-    addBurn: (t, perTick, turns, label="Burn") => {
-      if (!fx.debuffOk(t)) return;
-      t._burns = t._burns || [];
-      t._burns.push({ perTick, turns, label });
-    },
-    addBleed: (t, perTick, turns) => {
-      if (!fx.debuffOk(t)) return;
-      t._bleeds = t._bleeds || [];
-      t._bleeds.push({ perTick, turns, label:"Bleed" });
-    },
-    addCorrupt: (t, turns) => {
-      if (!fx.debuffOk(t)) return;
-      t._corruptTurns = Math.max(t._corruptTurns ?? 0, turns);
-    },
-    addBuff: (self, listKey, mult, turns) => {
-      self[listKey] = self[listKey] || [];
-      self[listKey].push({ mult, turns });
-    },
-    healPct: (unit, pct) => {
-      unit.hp = Math.min(unit.maxhp, unit.hp + Math.round(unit.maxhp * pct));
-    },
-    healFlat: (unit, amount) => {
-      unit.hp = Math.min(unit.maxhp, unit.hp + Math.max(0, Math.round(amount)));
-    },
+    addDefDown: (t, mult, turns) => { if (!fx.debuffOk(t)) return; t._defDownMult = Math.min(t._defDownMult ?? 1, mult); t._defDownTurns = Math.max(t._defDownTurns ?? 0, turns); },
+    addSlow: (t, mult, turns) => { if (!fx.debuffOk(t)) return; t._spdDebuffs = t._spdDebuffs || []; t._spdDebuffs.push({ mult, turns }); },
+    addStun: (t, turns) => { if (!fx.debuffOk(t)) return; t._stunTurns = Math.max(t._stunTurns ?? 0, turns); },
+    addSleep: (t, turns) => { if (!fx.debuffOk(t)) return; t._sleepTurns = Math.max(t._sleepTurns ?? 0, turns); },
+    addBurn: (t, perTick, turns, label="Burn") => { if (!fx.debuffOk(t)) return; t._burns = t._burns || []; t._burns.push({ perTick, turns, label }); },
+    addBleed: (t, perTick, turns) => { if (!fx.debuffOk(t)) return; t._bleeds = t._bleeds || []; t._bleeds.push({ perTick, turns, label:"Bleed" }); },
+    addCorrupt: (t, turns) => { if (!fx.debuffOk(t)) return; t._corruptTurns = Math.max(t._corruptTurns ?? 0, turns); },
+    addBuff: (self, listKey, mult, turns) => { self[listKey] = self[listKey] || []; self[listKey].push({ mult, turns }); },
+    healPct: (unit, pct) => { unit.hp = Math.min(unit.maxhp, unit.hp + Math.round(unit.maxhp * pct)); },
+    healFlat: (unit, amount) => { unit.hp = Math.min(unit.maxhp, unit.hp + Math.max(0, Math.round(amount))); },
     reviveToPct: (unit, pct, scene) => {
       unit.alive = true;
       unit.hp = Math.max(1, Math.round(unit.maxhp * pct));
@@ -104,14 +188,9 @@
     lowestHpAlly: (list) => list.filter(x=>x.alive).sort((a,b)=>a.hp/a.maxhp - b.hp/b.maxhp)[0],
   };
 
-  // Registry (passives require Asc 1; actives already gated visually and in code)
   const UNIT_SPECIALS = {
-    // Celestial
-    "admin Zy": {
-      name: "Gamma Burst",
-      type: "active",
-      cdType: "turns", cd: 6,
-      use: (scene, self) => {
+    "admin Zy": { name:"Gamma Burst", type:"active", cdType:"turns", cd:6,
+      use:(scene,self)=>{
         const enemies = scene.entities.filter(e => e.alive && e.side !== self.side);
         enemies.forEach(target => {
           const effDef = fx.effDef(target);
@@ -119,55 +198,29 @@
           const dmg = Math.round(raw);
           scene.resolveHit(self, target, dmg, { skill: "Gamma Burst" });
         });
-        enemies.forEach(t => fx.addDefDown(t, 0.7, 3)); // -30% DEF
+        enemies.forEach(t => fx.addDefDown(t, 0.7, 3));
         fx.addBuff(self, "_atkBuffs", 1.25, 3);
         enemies.forEach(t => fx.addBurn(t, Math.round(self.atk * 0.05), 4, "Burn"));
         fx.recalcStats(scene, self);
       }
     },
-
-    "Alex": {
-      name: "Gluttony",
-      type: "active",
-      cdType: "waves", cd: 2,
-      use: (scene, self) => {
-        self._gluttonyWaves = 2;
-        scene.toast("Gluttony activated for 2 waves!", "#ffd36b");
-      }
+    "Alex": { name:"Gluttony", type:"active", cdType:"waves", cd:2,
+      use:(scene,self)=>{ self._gluttonyWaves = 2; scene.toast("Gluttony activated for 2 waves!", "#ffd36b"); }
     },
-
-    "EyexDJ": {
-      name: "Teleport",
-      iconKey: "icon_teleport",
-      type: "active",
-      cdType: "turns", cd: 20,
-      use: (scene, self) => {
-        self._teleportCharges = 10;
-        scene.toast("Teleport active: negate next 10 hits!", "#9d8cff");
-      }
+    "EyexDJ": { name:"Teleport", iconKey:"icon_teleport", type:"active", cdType:"turns", cd:20,
+      use:(scene,self)=>{ self._teleportCharges = 10; scene.toast("Teleport active: negate next 10 hits!", "#9d8cff"); }
     },
-
-    "Berri": {
-      name: "Strawberry Jell-O",
-      iconKey: "icon_strawberry_jello",
-      type: "active",
-      cdType: "turns", cd: 2,
-      target: "enemy",
-      useOn: (scene, self, target) => {
-        // 150% damage
+    "Berri": { name:"Strawberry Jell-O", iconKey:"icon_strawberry_jello", type:"active", cdType:"turns", cd:2, target:"enemy",
+      useOn:(scene,self,target)=>{
         const base = computeDamage(self, target);
         const dmg = Math.max(1, Math.round(base * 1.5));
         scene.resolveHit(self, target, dmg, { skill: "Strawberry Jell-O" });
-
-        // Interactive choice
         scene.openChoice("Berri: choose an effect", [
           { id: "heal", label: "Heal self for 100% of damage" },
           { id: "buff", label: "Gain +50% of enemy ATK (stack)" }
         ], (choice) => {
-          if (choice === "heal") {
-            fx.healFlat(self, dmg);
-            scene.toast(`Berri healed ${dmg} HP`, "#7ef7a0");
-          } else if (choice === "buff") {
+          if (choice === "heal") { fx.healFlat(self, dmg); scene.toast(`Berri healed ${dmg} HP`, "#7ef7a0"); }
+          else if (choice === "buff") {
             const flat = 0.5 * (target.atk || 0);
             const mult = Math.max(0.1, (self.baseAtk + flat) / Math.max(1, self.baseAtk));
             fx.addBuff(self, "_atkBuffs", mult, 999);
@@ -179,19 +232,12 @@
         return "pending";
       }
     },
-
-    // Mythical
-    "Zimmy": {
-      name: "Ragebait",
-      iconKey: "icon_ragebait",
-      type: "active",
-      cdType: "turns", cd: 10,
-      use: (scene, self) => {
+    "Zimmy": { name:"Ragebait", iconKey:"icon_ragebait", type:"active", cdType:"turns", cd:10,
+      use:(scene,self)=>{
         self._provokeTurns = 6;
         self._dmgReduction = Math.max(self._dmgReduction ?? 1, 0.5);
         self._dmgRedTurns = 6;
         scene.toast("Zimmy is provoking the wave! -50% damage taken.", "#7ef7a0");
-
         const enemies = scene.entities.filter(e => e.alive && e.side !== self.side);
         enemies.forEach(t => {
           const splash = Math.max(1, Math.round(self.baseAtk * 0.25));
@@ -199,11 +245,8 @@
         });
       }
     },
-    "Deshun": {
-      name: "Pay to Win",
-      type: "active",
-      cdType: "waves", cd: 1,
-      use: (scene, self) => {
+    "Deshun": { name:"Pay to Win", type:"active", cdType:"waves", cd:1,
+      use:(scene,self)=>{
         const roll = Phaser.Math.Between(1,6);
         scene.log(`Deshun rolled a ${roll}!`);
         const enemies = scene.entities.filter(e=>e.alive && e.side!=="player");
@@ -225,12 +268,8 @@
         }
       }
     },
-    "Zafuu": {
-      name: "Severe",
-      type: "active",
-      cdType: "waves", cd: 1,
-      target: "enemy",
-      useOn: (scene, self, target) => {
+    "Zafuu": { name:"Severe", type:"active", cdType:"waves", cd:1, target:"enemy",
+      useOn:(scene,self,target)=>{
         if (!target || !target.alive) return;
         const effDef = fx.effDef(target);
         const raw = Math.max(5, self.atk * 3.0 - effDef * 0.6);
@@ -240,11 +279,8 @@
         fx.addBleed(target, Math.round(self.atk * 0.05), 2);
       }
     },
-    "Channon": {
-      name: "Aura",
-      type: "active",
-      cdType: "turns", cd: 5,
-      use: (scene, self) => {
+    "Channon": { name:"Aura", type:"active", cdType:"turns", cd:5,
+      use:(scene,self)=>{
         const allies = scene.entities.filter(e=>e.alive && e.side===self.side);
         const enemies = scene.entities.filter(e=>e.alive && e.side!==self.side);
         allies.forEach(a => fx.addBuff(a, "_atkBuffs", 1.25, 2));
@@ -253,129 +289,68 @@
         scene.toast("Aura: team ATK +25% (2T) & enemies DEF -30% (2T)", "#7ef7a0");
       }
     },
-
-    // Secret
-    "Ted": {
-      name: "Vanish",
-      type: "active",
-      cdType: "turns", cd: 10,
-      use: (scene, self) => {
-        self._invincibleTurns = Math.max(self._invincibleTurns ?? 0, 5);
-        self._vanishSlowActive = 5;
-        scene.toast("Ted vanished (Invincible 5T). Attacks Slow enemies.", "#7ef7a0");
-      }
+    "Ted": { name:"Vanish", type:"active", cdType:"turns", cd:10,
+      use:(scene,self)=>{ self._invincibleTurns = Math.max(self._invincibleTurns ?? 0, 5); self._vanishSlowActive = 5; scene.toast("Ted vanished (Invincible 5T). Attacks Slow enemies.", "#7ef7a0"); }
     },
-
-    // Ultra
-    "Snorlax": {
-      name: "Rest",
-      type: "active",
-      cdType: "waves", cd: 1,
-      use: (scene, self) => {
+    "Snorlax": { name:"Rest", type:"active", cdType:"waves", cd:1,
+      use:(scene,self)=>{
         if (self.hp >= self.maxhp) {
           const allies = scene.entities.filter(e=>e.side===self.side);
           const target = fx.lowestHpAlly(allies);
-          if (target) {
-            fx.healFlat(target, self.baseMaxhp);
-            scene.toast(`Snorlax: Rest → healed ${target.name}`, "#7ef7a0");
-          }
+          if (target) { fx.healFlat(target, self.baseMaxhp); scene.toast(`Snorlax: Rest → healed ${target.name}`, "#7ef7a0"); }
         } else {
-          self.hp = self.maxhp;
-          scene.toast("Snorlax fully restored HP (Rest)!", "#7ef7a0");
+          self.hp = self.maxhp; scene.toast("Snorlax fully restored HP (Rest)!", "#7ef7a0");
         }
         const enemies = scene.entities.filter(e=>e.alive && e.side!==self.side);
         enemies.forEach(t => fx.addSleep(t, 10));
       }
     },
-    "Zy": {
-      name: "Shock",
-      type: "active",
-      cdType: "turns", cd: 20,
-      target: "enemy",
-      useOn: (scene, self, target) => {
-        if (!target || !target.alive) return;
-        fx.addStun(target, 3);
-        scene.toast(`${target.name} stunned (3T)`, "#ffd36b");
-      }
+    "Zy": { name:"Shock", type:"active", cdType:"turns", cd:20, target:"enemy",
+      useOn:(scene,self,target)=>{ if (!target || !target.alive) return; fx.addStun(target, 3); scene.toast(`${target.name} stunned (3T)`, "#ffd36b"); }
     },
-    "Grinch": {
-      name: "Something",
-      type: "passive",
-      cdType: "stage", cd: 1,
-      onTick: (scene, self) => {
+    "Grinch": { name:"Something", type:"passive", cdType:"stage", cd:1,
+      onTick:(scene,self)=>{
         if (self.ascension < 1) return;
         if (self._bloodthirstUsed) return;
         if (self.alive && self.hp <= 1 && !self._bloodthirstActive) {
-          self._bloodthirstActive = true;
-          self._bloodthirstUsed = true;
-          self._btTurns = 10;
-          self._cantDie = true;
-          self._atkStacks = 0;
+          self._bloodthirstActive = true; self._bloodthirstUsed = true; self._btTurns = 10; self._cantDie = true; self._atkStacks = 0;
           scene.toast("Grinch entered Bloodthirsty!", "#ff9f43");
         }
         if (self._bloodthirstActive) {
-          if (self._atkStacks < 8) {
-            self._atkStacks++;
-            fx.addBuff(self, "_atkBuffs", 1.25, 9999);
-            fx.recalcStats(scene, self);
-          }
+          if (self._atkStacks < 8) { self._atkStacks++; fx.addBuff(self, "_atkBuffs", 1.25, 9999); fx.recalcStats(scene, self); }
         }
       },
-      onDurationTick: (scene, self) => {
+      onDurationTick:(scene,self)=>{
         if (self.ascension < 1) return;
         if (!self._bloodthirstActive) return;
         self._btTurns--;
         if (self._btTurns <= 0) {
-          self._bloodthirstActive = false;
-          self._cantDie = false;
-          self._atkBuffs = [];
-          fx.recalcStats(scene, self);
-          fx.healPct(self, 0.30);
+          self._bloodthirstActive = false; self._cantDie = false; self._atkBuffs = []; fx.recalcStats(scene, self); fx.healPct(self, 0.30);
           scene.toast("Bloodthirsty ended. Grinch healed 30%.", "#7ef7a0");
         }
       }
     },
-    "Fatima Do": {
-      name: "Florish",
-      type: "active",
-      cdType: "turns", cd: 15,
-      use: (scene, self) => {
-        const allies = scene.entities.filter(e=>e.alive && e.side===self.side);
-        allies.forEach(a => fx.healPct(a, 0.50));
-        scene.toast("Florish: Team healed 50% HP", "#7ef7a0");
-      }
+    "Fatima Do": { name:"Florish", type:"active", cdType:"turns", cd:15,
+      use:(scene,self)=>{ const allies = scene.entities.filter(e=>e.alive && e.side===self.side); allies.forEach(a => fx.healPct(a, 0.50)); scene.toast("Florish: Team healed 50% HP", "#7ef7a0"); }
     },
-    "Boa": {
-      name: "Life",
-      type: "active",
-      cdType: "stage", cd: 1,
-      target: "ally-or-fallen",
-      useOn: (scene, self, target) => {
+    "Boa": { name:"Life", type:"active", cdType:"stage", cd:1, target:"ally-or-fallen",
+      useOn:(scene,self,target)=>{
         if (!target) return;
-        if (!target.alive) {
-          fx.reviveToPct(target, 0.50, scene);
-          scene.playUnitAnim(target, 'revive');
-          scene.toast(`${target.name} revived (50% HP)`, "#7ef7a0");
-        } else {
-          fx.healPct(target, 0.50);
-          scene.toast(`${target.name} healed 50% HP`, "#7ef7a0");
-        }
-        fx.addBuff(target, "_atkBuffs", 2.0, 5);
-        fx.recalcStats(scene, target);
+        if (!target.alive) { fx.reviveToPct(target, 0.50, scene); scene.playUnitAnim(target, 'revive'); scene.toast(`${target.name} revived (50% HP)`, "#7ef7a0"); }
+        else { fx.healPct(target, 0.50); scene.toast(`${target.name} healed 50% HP`, "#7ef7a0"); }
+        fx.addBuff(target, "_atkBuffs", 2.0, 5); fx.recalcStats(scene, target);
       }
     },
   };
 
-  function pickSkillForUnit(name) {
-    return UNIT_SPECIALS[name] || null;
-  }
+  function pickSkillForUnit(name) { return UNIT_SPECIALS[name] || null; }
 
   /* ================== HELPERS ================== */
 
   function hashCode(s){ let h=0; for(let i=0;i<s.length;i++) h=((h<<5)-h)+s.charCodeAt(i)|0; return h; }
   function pickSkill(name){ const keys=["Opening Burst","Piercing Shot","Guard Up","Adrenaline Rush"]; const i=Math.abs(hashCode(name))%keys.length; const k=keys[i]; return {name:k, cdLeft:0}; }
 
-  // Growth-aware stats (level + ascension + shiny/celestial + enemy multiplier)
+  // Growth-aware stats
   function levelMult(level){ return 1 + 0.035 * Math.max(0, (level||1) - 1); }
   function ascMult(asc){ const T=[1,1.10,1.22,1.37,1.55,1.76]; return T[Math.min(asc||0,5)] || 1; }
   function buildStats(rarity, level=1, asc=0, shiny=false, celestial=false, enemyMul=1){
@@ -383,34 +358,16 @@
     const sm = shiny ? 1.05 : 1;
     const cm = celestial ? 1.10 : 1;
     const mul = enemyMul * sm * cm * levelMult(level) * ascMult(asc);
-    return {
-      maxhp: Math.round(b.hp * mul), hp: Math.round(b.hp * mul),
-      atk: Math.round(b.atk * mul),  def: Math.round(b.def * mul),
-      spd: Math.round(b.spd * (shiny?1.02:1) * (celestial?1.02:1)),
-      crit: Math.min(0.5, b.crit + (shiny?0.02:0) + (celestial?0.02:0))
-    };
+    return { maxhp: Math.round(b.hp * mul), hp: Math.round(b.hp * mul), atk: Math.round(b.atk * mul),  def: Math.round(b.def * mul), spd: Math.round(b.spd * (shiny?1.02:1) * (celestial?1.02:1)), crit: Math.min(0.5, b.crit + (shiny?0.02:0) + (celestial?0.02:0)) };
   }
-
-  // Enemy-only per-stage knobs (HP/ATK only)
-  function applyEnemyKnobs(stats, hpMul=1, atkMul=1){
-    stats.maxhp = Math.round(stats.maxhp * hpMul);
-    stats.hp    = stats.maxhp;
-    stats.atk   = Math.round(stats.atk * atkMul);
-    return stats;
-  }
-
+  function applyEnemyKnobs(stats, hpMul=1, atkMul=1){ stats.maxhp = Math.round(stats.maxhp * hpMul); stats.hp = stats.maxhp; stats.atk = Math.round(stats.atk * atkMul); return stats; }
   function computeDamage(a, d){
     const defMult = d._defDownMult ?? 1;
     const effDef = Math.round(d.def * defMult);
     const base = Math.max(5, a.atk - effDef*0.6);
     const variance = Phaser.Math.Between(-3,3);
     let dmg = Math.max(1, Math.round(base + variance));
-    if (Math.random() < a.crit) {
-      dmg = Math.round(dmg * 1.75);
-      a._lastCrit = true;
-    } else {
-      a._lastCrit = false;
-    }
+    if (Math.random() < a.crit) { dmg = Math.round(dmg * 1.75); a._lastCrit = true; } else { a._lastCrit = false; }
     return dmg;
   }
 
@@ -423,36 +380,23 @@
     this.load.image("icon_strawberry_jello", "/static/images/skills/strawberry_jello.png");
     this.load.image("icon_teleport", "/static/images/skills/teleport.png");
     this.cameras.main.setBackgroundColor('#101629');
-    STAGE_IDS.forEach(id => {
-      this.load.image(`stage${id}`, STAGE_BG_URLS[id]);
-    });
-    this.load.on('complete', () => {
-      this.registry.set('bgKeyById', this.loadedKeyById);
-      this.scene.start('MainScene');
-    });
+    STAGE_IDS.forEach(id => { this.load.image(`stage${id}`, STAGE_BG_URLS[id]); });
+    this.load.on('complete', () => { this.registry.set('bgKeyById', this.loadedKeyById); this.scene.start('MainScene'); });
   };
 
   function MainScene(){ Phaser.Scene.call(this,{key:"MainScene"}); }
   MainScene.prototype = Object.create(Phaser.Scene.prototype);
   MainScene.prototype.constructor = MainScene;
 
-  // Simple UI helpers so scene methods never crash
+  // Simple UI helpers
   MainScene.prototype.toast = function (msg, color) {
     const el = document.getElementById('toast');
     if (!el) { console.log('[TOAST]', msg); return; }
-    el.textContent = msg;
-    if (color) el.style.borderColor = color;
-    el.style.display = 'block';
+    el.textContent = msg; if (color) el.style.borderColor = color; el.style.display = 'block';
     setTimeout(() => { el.style.display = 'none'; }, 1300);
   };
-
   MainScene.prototype.log = function (line) {
-    if (this.logBox) {
-      this.logBox.value += line + '\\n';
-      this.logBox.scrollTop = this.logBox.scrollHeight;
-    } else {
-      console.log(line);
-    }
+    if (this.logBox) { this.logBox.value += line + '\\n'; this.logBox.scrollTop = this.logBox.scrollHeight; } else { console.log(line); }
   };
 
   const config = { type:Phaser.AUTO, parent:"game-container", width:W, height:H, backgroundColor:"#0e1320",
@@ -469,36 +413,25 @@
     this.usernameInput = $("username");
     const savedU = localStorage.getItem('swca_username');
     if (savedU && this.usernameInput && !this.usernameInput.value) this.usernameInput.value = savedU;
-    if (this.usernameInput) {
-      this.usernameInput.addEventListener('input', () =>
-        localStorage.setItem('swca_username', this.usernameInput.value.trim())
-      );
-    }
+    if (this.usernameInput) { this.usernameInput.addEventListener('input', () => localStorage.setItem('swca_username', this.usernameInput.value.trim())); }
     this.stageSelect   = $("stageSelect");
 
-    // Robust button/event wiring
-    const startBtn = $("btnStage");
-    if (startBtn) startBtn.addEventListener("click", (ev)=>{ ev.preventDefault(); this.startStage(); });
-    const pauseBtn = $("btnPause");
-    if (pauseBtn) pauseBtn.addEventListener("click", (ev)=>{ ev.preventDefault(); this.battleRunning=!this.battleRunning; if(this.battleRunning){ this.toast("Resumed"); this.processNextTurn(); } else { this.toast("Paused"); } });
-    const speedSel = $("speedSel");
-    if (speedSel) speedSel.addEventListener("change", (e)=>{ this.speedMul=parseInt(e.target.value,10)||1; this.toast(`Speed ${this.speedMul}×`); });
-    const autoToggle = $("autoToggle");
-    if (autoToggle) autoToggle.addEventListener("change", (e)=>{ this.autoMode=!!e.target.checked; this.toast(this.autoMode?"Auto ON":"Auto OFF"); });
+    const startBtn = $("btnStage"); if (startBtn) startBtn.addEventListener("click", (ev)=>{ ev.preventDefault(); this.startStage(); });
+    const pauseBtn = $("btnPause"); if (pauseBtn) pauseBtn.addEventListener("click", (ev)=>{ ev.preventDefault(); this.battleRunning=!this.battleRunning; if(this.battleRunning){ this.toast("Resumed"); this.processNextTurn(); } else { this.toast("Paused"); } });
+    const speedSel = $("speedSel"); if (speedSel) speedSel.addEventListener("change", (e)=>{ this.speedMul=parseInt(e.target.value,10)||1; this.toast(`Speed ${this.speedMul}×`); });
+    const autoToggle = $("autoToggle"); if (autoToggle) autoToggle.addEventListener("change", (e)=>{ this.autoMode=!!e.target.checked; this.toast(this.autoMode?"Auto ON":"Auto OFF"); });
     window.addEventListener("keydown",ev=>{ if(ev.code==="Space"){ ev.preventDefault(); pauseBtn?.click(); }});
 
     this.usernameInput?.addEventListener("change", ()=>{ this.refreshProfile(); this.refreshTeam(); this.refreshStageLocks(true); });
 
     this.logBox=$("log"); this.gemsEl=$("gems"); this.coinsEl=$("coins"); this.teamView=$("teamView"); this.waveView=$("waveView");
 
-    // Battlefield layout (reserves space for header/actions/footer)
+    // Battlefield layout
     const pad = 90;
     const UI_HEADER_H = 52;
     const ACTIONS_BAR_H = 40;
     const FOOTER_PAD = 60;
-
-    const bfX = pad;
-    const bfY = pad + UI_HEADER_H;
+    const bfX = pad, bfY = pad + UI_HEADER_H;
     const bfW = W - pad * 2;
     const bfH = Math.max(280, H - pad * 2 - UI_HEADER_H - ACTIONS_BAR_H - FOOTER_PAD);
     this.battlefield={x:bfX,y:bfY,w:bfW,h:bfH};
@@ -512,7 +445,7 @@
     this.entities=[]; this.battleRunning=false; this.speedMul=1; this.autoMode=false;
     this.pendingTarget = null;
 
-    // Simple HTML choice modal
+    // HTML choice modal
     this.openChoice = (prompt, options, onChoose) => {
       const modal = document.getElementById('choiceModal');
       const promptEl = document.getElementById('choicePrompt');
@@ -540,24 +473,21 @@
     this.turnIndex = 0;
     this.actionPending = false;
 
-    // Skill button bar is in the footer (HTML-driven)
+    // Footer skill bar
     this.skillUI = null;
     this.skillBar = document.getElementById("skillBar");
     this.skillButtons = [];
     this.layoutSkillButtons = () => {};
 
-    // Live profile + locks
     this.refreshProfile();
     this.refreshTeam();
     this.refreshStageLocks(true);
 
-    // Ensure stageSelect has a valid default (first unlocked)
     if (this.stageSelect && !this.stageSelect.value) {
       const firstOk = Array.from(this.stageSelect.options).find(o => !o.disabled) || this.stageSelect.options[0];
       if (firstOk) this.stageSelect.value = firstOk.value;
     }
 
-    // Cross-tab sync
     this._lastTeamUpdate = +localStorage.getItem('swca_team_updated') || 0;
     window.addEventListener('storage', (e) => {
       if (e.key === 'swca_team_updated') { this._lastTeamUpdate = +e.newValue || Date.now(); this.refreshTeam(); }
@@ -567,39 +497,22 @@
         this.refreshProfile(); this.refreshTeam(); this.refreshStageLocks();
       }
     });
-    try {
-      const bc = new BroadcastChannel('swca');
-      bc.addEventListener('message', m => { if (m.data?.type === 'team-updated') this.refreshTeam(); });
-    } catch {}
+    try { const bc = new BroadcastChannel('swca'); bc.addEventListener('message', m => { if (m.data?.type === 'team-updated') this.refreshTeam(); }); } catch {}
 
     this.toast("Play ready. Select a team (🎒 on play page) and start a stage!", "#7ef7a0");
 
-    // Music unlock
-    if (window.SWCA_Music) {
-      SWCA_Music.ensureUnlocked();
-    }
+    if (window.SWCA_Music) { SWCA_Music.ensureUnlocked && SWCA_Music.ensureUnlocked(); }
 
-    // Global clock for per-second ticks; scale with speed
     this.secondTickAcc = 0;
+    this.time.addEvent({ delay:33, loop:true, callback: () => {
+      if(!this.battleRunning) return;
+      const dt = 33;
+      const tickEvery = 1000 / (this.speedMul || 1);
+      this.secondTickAcc += dt;
+      if (this.secondTickAcc >= tickEvery) { this.secondTickAcc -= tickEvery; this.secondTick(); }
+      this.syncHPBars(); this.checkWaveEnd(); this.checkBattleEnd();
+    }});
 
-    // Main loop
-    this.time.addEvent({
-      delay: 33, loop: true, callback: () => {
-        if(!this.battleRunning) return;
-        const dt = 33;
-        const tickEvery = 1000 / (this.speedMul || 1);
-        this.secondTickAcc += dt;
-        if (this.secondTickAcc >= tickEvery) {
-          this.secondTickAcc -= tickEvery;
-          this.secondTick();
-        }
-        this.syncHPBars();
-        this.checkWaveEnd();
-        this.checkBattleEnd();
-      }
-    });
-
-    // Click targeting for skills that need a target
     this.input.on('gameobjectdown', (pointer, obj) => {
       if (!this.pendingTarget) return;
       const ent = this.entities.find(e => e.rect === obj || e.nameText === obj);
@@ -616,28 +529,19 @@
   };
 
   /* ---------------- Progression (server + UI lock) ---------------- */
-  MainScene.prototype.progressKey=function(){
-    const u = this.username() || "_guest";
-    return `swca_progress_${u}`;
-  };
+  MainScene.prototype.progressKey=function(){ const u = this.username() || "_guest"; return `swca_progress_${u}`; };
   MainScene.prototype.getMaxClearedLocal=function(){ const raw=localStorage.getItem(this.progressKey()); const n=parseInt(raw||"0",10); return Number.isFinite(n)?n:0; };
   MainScene.prototype.setMaxClearedLocal=function(stg){ const cur=this.getMaxClearedLocal(); if(stg>cur) localStorage.setItem(this.progressKey(), String(stg)); };
 
   MainScene.prototype.fetchProgressServer = async function(){
     const u = this.username();
     if(!u) return {max_cleared:0, next_allowed:1};
-    try{
-      const res=await fetch("/progress/get",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:u})});
-      return await res.json();
-    }catch(err){
-      console.warn("[progress/get] failed:", err);
-      return {max_cleared:0, next_allowed:1};
-    }
+    try{ const res=await fetch("/progress/get",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:u})}); return await res.json(); }
+    catch(err){ console.warn("[progress/get] failed:", err); return {max_cleared:0, next_allowed:1}; }
   };
 
   MainScene.prototype.refreshStageLocks = async function(initial=false){
-    const sel = this.stageSelect;
-    if (!sel) return;
+    const sel = this.stageSelect; if (!sel) return;
     const p = await this.fetchProgressServer();
     this.setMaxClearedLocal(p.max_cleared||0);
     const maxCleared = p.max_cleared||0;
@@ -645,7 +549,7 @@
       const val=parseInt(opt.value,10);
       const locked = (val > maxCleared + 1);
       opt.disabled = locked;
-      const base = opt.textContent.replace(/\\s*\\(locked.*?\\)$/i,'');
+      const base = opt.textContent.replace(/\s*\(locked.*?\)$/i,'');
       opt.textContent = locked ? `${base} (locked 🔒)` : base;
     }
     if(initial){
@@ -655,19 +559,11 @@
   };
 
   /* ---------------- API helpers ---------------- */
-  MainScene.prototype.username=function(){
-    return (this.usernameInput?.value || localStorage.getItem('swca_username') || '').trim();
-  };
-
+  MainScene.prototype.username=function(){ return (this.usernameInput?.value || localStorage.getItem('swca_username') || '').trim(); };
   MainScene.prototype.api = async function(path, payload={}){
     const u=this.username(); if(!u){ this.toast("Enter a username","#ffad60"); return null; }
-    try{
-      const res=await fetch(path,{method:"POST",headers:{ "Content-Type":"application/json" },body:JSON.stringify({username:u, ...payload})});
-      return await res.json();
-    }catch(err){
-      console.error(`[api] ${path} failed`, err);
-      this.toast("Network error. Is Flask running?","#ff6b6b"); return null;
-    }
+    try{ const res=await fetch(path,{method:"POST",headers:{ "Content-Type":"application/json" },body:JSON.stringify({username:u, ...payload})}); return await res.json(); }
+    catch(err){ console.error(`[api] ${path} failed`, err); this.toast("Network error. Is Flask running?","#ff6b6b"); return null; }
   };
 
   MainScene.prototype.refreshProfile = async function(){
@@ -722,8 +618,6 @@
   };
 
   /* ---------------- Stage Background helpers ---------------- */
-  // Create a canvas texture matching the battlefield dimensions so the
-  // background always fits perfectly without overlapping units.
   MainScene.prototype.convertStageBg = function(key){
     const bf = this.battlefield;
     const tex = this.textures.get(key);
@@ -749,7 +643,7 @@
     const bf = this.battlefield;
     const key = `stage${stageId}`;
     if (this.textures.exists(key)) {
-     const texKey = this.convertStageBg(key);
+      const texKey = this.convertStageBg(key);
       const img = this.add.image(bf.x + bf.w/2, bf.y + bf.h/2, texKey);
       img.setDepth(0);
       this.bgLayer.add(img);
@@ -759,23 +653,13 @@
       g.fillStyle(colors[stageId] || 0x15223a, 1);
       g.fillRect(bf.x, bf.y, bf.w, bf.h);
       g.lineStyle(1, 0xffffff, 0.05);
-      for (let i = 0; i < 8; i++) {
-        g.beginPath();
-        g.moveTo(bf.x, bf.y + (i+1)*(bf.h/9));
-        g.lineTo(bf.x + bf.w, bf.y + (i+1)*(bf.h/9));
-        g.strokePath();
-      }
+      for (let i = 0; i < 8; i++) { g.beginPath(); g.moveTo(bf.x, bf.y + (i+1)*(bf.h/9)); g.lineTo(bf.x + bf.w, bf.y + (i+1)*(bf.h/9)); g.strokePath(); }
       this.bgLayer.add(g);
     }
   };
 
   /* --------------- Turn System helpers --------------- */
-
-  MainScene.prototype.getActionDelay = function(){
-    const base = 900;
-    const d = Math.max(200, Math.round(base / (this.speedMul || 1)));
-    return d;
-  };
+  MainScene.prototype.getActionDelay = function(){ const base = 900; const d = Math.max(200, Math.round(base / (this.speedMul || 1))); return d; };
 
   MainScene.prototype.buildTurnOrder = function(){
     const alive = this.entities.filter(e=>e.alive);
@@ -796,19 +680,14 @@
     if (!this.battleRunning) return;
     if (this.actionPending) return;
 
-    if (!this.turnOrder.length || this.turnIndex >= this.turnOrder.length) {
-      this.buildTurnOrder();
-    }
+    if (!this.turnOrder.length || this.turnIndex >= this.turnOrder.length) { this.buildTurnOrder(); }
 
     let actor = null;
     while (this.turnIndex < this.turnOrder.length && !actor) {
       const cand = this.turnOrder[this.turnIndex++];
       if (cand && cand.alive) actor = cand;
     }
-    if (!actor) {
-      this.time.delayedCall(50, ()=>this.processNextTurn());
-      return;
-    }
+    if (!actor) { this.time.delayedCall(50, ()=>this.processNextTurn()); return; }
 
     if ((actor._stunTurns && actor._stunTurns > 0) || (actor._sleepTurns && actor._sleepTurns > 0)) {
       if (actor._stunTurns && actor._stunTurns > 0) actor._stunTurns--;
@@ -819,10 +698,7 @@
 
     this.actionPending = true;
     this.takeTurn(actor);
-    this.time.delayedCall(this.getActionDelay(), ()=>{
-      this.actionPending = false;
-      if (this.battleRunning) this.processNextTurn();
-    });
+    this.time.delayedCall(this.getActionDelay(), ()=>{ this.actionPending = false; if (this.battleRunning) this.processNextTurn(); });
   };
 
   /* --------------- Battle Setup --------------- */
@@ -833,72 +709,66 @@
     const stageId=parseInt(this.stageSelect.value,10);
     const prog = await this.fetchProgressServer();
     const maxCleared = prog.max_cleared||0;
-    if(stageId > maxCleared + 1){
-      this.toast(`Clear Stage ${maxCleared+1} first to unlock this stage.`, "#ffad60");
-      return;
-    }
-    if(!this.currentTeam||this.currentTeam.length===0){
-      this.toast("Select a team first (open Backpack and save).","#ffad60"); return;
-    }
+    if(stageId > maxCleared + 1){ this.toast(`Clear Stage ${maxCleared+1} first to unlock this stage.`, "#ffad60"); return; }
+    if(!this.currentTeam||this.currentTeam.length===0){ this.toast("Select a team first (open Backpack and save).","#ffad60"); return; }
 
     this.stageId=stageId; this.stage=STAGES[stageId]||STAGES[1];
-
-    // Cache enemy-only knobs for this stage
     this.enemyHpMul = this.stage.enemyHpMul || 1.0;
     this.enemyAtkMul = this.stage.enemyAtkMul || 1.0;
 
-    // Music
-    if (window.SWCA_Music) {
-      if (SWCA_Music.fadeTo) SWCA_Music.fadeTo('battle', 1000); else SWCA_Music.play('battle');
-    }
+    if (window.SWCA_Music) { if (SWCA_Music.fadeTo) SWCA_Music.fadeTo('battle', 1000); else SWCA_Music.play('battle'); }
     this._bossMusicOn = false;
 
     this.setStageBackground(stageId);
 
-    this.layer.removeAll(true);
-    this.entities=[]; this.wave=1;
-    this.maxWaves=this.stage.waves; this.enemyLevel=this.stage.enemyLevel;
-    this.battleRunning=true; this.resultShown=false;
-    this.resetWaveCooldowns();
+    // PRELOAD all unit sprites for players
+    const slugs = [...new Set(this.currentTeam.map(u => slugifyName(u.name)))];
+    const scene = this;
+    slugs.forEach(slug => preloadUnitSprites(scene, slug));
 
-    // Player side
-    const bf=this.battlefield;
-    const px=bf.x+160, py=bf.y+bf.h-160, gap=170;
-    this.playerTeam=this.currentTeam.map((u,i)=>this.spawnUnit({
-      side:"player", x:px, y:py-i*gap, label:u.label, name:u.name, rarity:u.rarity, shiny:u.shiny, celestial:u.celestial,
-      stats:buildStats(u.rarity, u.level||1, u.ascension||0, u.shiny, u.celestial, 1.0), asc:u.ascension||0, slotIndex:i
-    }));
+    scene.load.once('complete', () => {
+      slugs.forEach(slug => registerUnitAnimations(scene, slug));
 
-    this.spawnWave();
-    this.updateWavePill();
-    this.toast(`Stage ${stageId}: ${this.stage.name} — Wave 1/${this.maxWaves}`,"#7ef7a0");
+      scene.layer.removeAll(true);
+      scene.entities=[]; scene.wave=1;
+      scene.maxWaves=scene.stage.waves; scene.enemyLevel=scene.stage.enemyLevel;
+      scene.battleRunning=true; scene.resultShown=false;
+      scene.resetWaveCooldowns();
 
-    this.buildTurnOrder();
-    this.processNextTurn();
-    this.updateSkillButtons(); this.layoutSkillButtons && this.layoutSkillButtons();
+      // Player side (with sprite boxes)
+      const bf=scene.battlefield;
+      const px=bf.x+160, py=bf.y+bf.h-160, gap=170;
+      scene.playerTeam=scene.currentTeam.map((u,i)=>scene.spawnUnit({
+        side:"player", x:px, y:py-i*gap, label:u.label, name:u.name, rarity:u.rarity, shiny:u.shiny, celestial:u.celestial,
+        stats:buildStats(u.rarity, u.level||1, u.ascension||0, u.shiny, u.celestial, 1.0), asc:u.ascension||0, slotIndex:i
+      }));
+
+      scene.spawnWave();
+      scene.updateWavePill();
+      scene.toast(`Stage ${stageId}: ${scene.stage.name} — Wave 1/${scene.maxWaves}`,"#7ef7a0")
+
+      scene.buildTurnOrder();
+      scene.processNextTurn();
+      scene.updateSkillButtons(); scene.layoutSkillButtons && scene.layoutSkillButtons();
+    });
+
+    scene.load.start();
   };
 
-  MainScene.prototype.resetWaveCooldowns=function(){
-    this.entities?.forEach(e => { e._waveLocks = {}; });
-  };
+  MainScene.prototype.resetWaveCooldowns=function(){ this.entities?.forEach(e => { e._waveLocks = {}; }); };
 
   MainScene.prototype.spawnWave=function(){
     this.enemyTeam=[];
-
     const isBossWave = (this.stage?.boss === true) && (this.wave === this.maxWaves);
 
     if (isBossWave && !this._bossMusicOn) {
-      if (window.SWCA_Music) {
-        if (SWCA_Music.fadeTo) SWCA_Music.fadeTo('boss', 1000); else SWCA_Music.play('boss');
-      }
+      if (window.SWCA_Music) { if (SWCA_Music.fadeTo) SWCA_Music.fadeTo('boss', 1000); else SWCA_Music.play('boss'); }
       this._bossMusicOn = true;
     }
-
 
     const bf=this.battlefield; const ex=bf.x+bf.w-160, ey=bf.y+bf.h-160, gap=170;
 
     if(isBossWave){
-      // Stage 10 boss = 2× Stage 5 boss
       const bossMult = (this.stageId === 10) ? 2.0 : 1.0;
       const bossName = (this.stageId === 10) ? "The Endbringer" : "Demon Lord";
       const boss=this.spawnBoss({x:ex,y:ey,name:bossName,mult:bossMult});
@@ -921,24 +791,16 @@
       const name = `${rar} Bot ${this.wave*10 + i+1}`;
       const cel=(rar==="Celestial");
       const sh=!cel && Math.random()<(1/4000);
-      const s = applyEnemyKnobs(
-        buildStats(rar,1,0,sh,cel,this.enemyLevel),
-        this.enemyHpMul, this.enemyAtkMul
-      );
+      const s = applyEnemyKnobs(buildStats(rar,1,0,sh,cel,this.enemyLevel), this.enemyHpMul, this.enemyAtkMul);
       const e = this.spawnUnit({side:"enemy",x:ex,y:ey-i*gap,label:name,name,rarity:rar,shiny:sh,celestial:cel,stats:s});
       e._spawnIdx = i;
       this.enemyTeam.push(e);
     }
   };
 
-  // Extended: optional multiplier for boss stats; base = Stage 5 boss
   MainScene.prototype.spawnBoss=function({x,y,name,mult=1.0}){
     const base = {maxhp:10000, atk:250, def:120, spd:95, crit:0.12};
-    const s={
-      maxhp:Math.round(base.maxhp*mult), hp:Math.round(base.maxhp*mult),
-      atk:Math.round(base.atk*mult), def:Math.round(base.def*mult),
-      spd:Math.round(base.spd*mult), crit:base.crit
-    };
+    const s={ maxhp:Math.round(base.maxhp*mult), hp:Math.round(base.maxhp*mult), atk:Math.round(base.atk*mult), def:Math.round(base.def*mult), spd:Math.round(base.spd*mult), crit:base.crit };
     const rect=this.add.rectangle(x,y,120,120,0x7a0b0b).setStrokeStyle(4,0xff3b3b,0.9).setInteractive();
     const nameText=this.add.text(x,y+85,name,{fontSize:"16px",color:"#ffdede",fontFamily:"Arial"}).setOrigin(0.5).setInteractive();
     const bg=this.add.rectangle(x-60,y-78,120,12,0x2a0010).setOrigin(0,0.5);
@@ -962,10 +824,11 @@
     let slug = null;
     if (side === 'player') {
       slug = slugifyName(name);
-      const spriteEl = document.createElement('div');
-      spriteEl.className = `sprite-unit ${slug} idle`;
-      sprite = this.add.dom(x, y, spriteEl);
-      sprite.setOrigin(0.5);
+      sprite = this.add.sprite(x, y, `${slug}_idle_png`);
+      const idleMeta = this.cache.json.get(`${slug}_idle_meta`);
+      applySpriteMetaDisplay(sprite, idleMeta);
+      if(typeof idleMeta?.offsetX === 'number') sprite.x += idleMeta.offsetX;
+      if(typeof idleMeta?.offsetY === 'number') sprite.y += idleMeta.offsetY;
     }
 
     const ent={side,rect,nameText,hpbar:{bg,fg},hpText,sprite,label,name,rarity,shiny,celestial,ascension:asc,...stats,alive:true,atb:0,stunMs:0,isBoss:false};
@@ -982,13 +845,11 @@
 
     if(celestial) rect.setStrokeStyle(3,0xffd700,0.9);
     else if(rarity==="Secret") rect.setFillStyle(0x333333);
-    else if(shiny){
-      this.tweens.addCounter({from:0,to:360,duration:1800,repeat:-1,onUpdate:t=>rect.setFillStyle(Phaser.Display.Color.HSLToColor((t.getValue()/360),1,0.6).color)});
-    }
+    else if(shiny){ this.tweens.addCounter({from:0,to:360,duration:1800,repeat:-1,onUpdate:t=>rect.setFillStyle(Phaser.Display.Color.HSLToColor((t.getValue()/360),1,0.6).color)}); }
 
     this.entities.push(ent);
     if (side === 'player' && sprite) {
-      rect.setAlpha(0);
+      rect.setAlpha(0); // hide the old square behind sprite
       this.layer.add([rect,sprite,nameText,bg,fg,hpText]);
       this.playUnitAnim(ent, 'idle');
     } else {
@@ -999,17 +860,14 @@
 
   function shortLabel(s){ s=String(s||""); return s.length<=14?s:s.slice(0,13)+"…"; }
 
+  // IMPORTANT: slug must match folder names in static/images/units/<slug>.
   function slugifyName(name){
-    return (name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    return String(name||'').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
   }
 
-   /* --------------- Loop-driven helpers --------------- */
-
+  /* --------------- Loop-driven helpers --------------- */
   MainScene.prototype.secondTick = function(){
-    for (const e of this.entities) {
-      const meta = e._meta;
-      if (meta && meta.type === "passive" && meta.onTick && e.ascension >= 1) meta.onTick(this, e);
-    }
+    for (const e of this.entities) { const meta = e._meta; if (meta && meta.type === "passive" && meta.onTick && e.ascension >= 1) meta.onTick(this, e); }
 
     this.playerTeam?.forEach(p => { if (p._specCdLeft > 0) p._specCdLeft--; });
 
@@ -1034,7 +892,6 @@
       this.recomputeDerivedStats(e);
     });
 
-    // DoTs
     all.forEach(e => {
       if (!e.alive) return;
       const applyTick = (arr, color) => {
@@ -1055,10 +912,7 @@
       if (e.hp <= 0 && e.alive) { e.alive = false; this.onDeath(e); }
     });
 
-    for (const e of this.entities) {
-      const meta = e._meta;
-      if (meta && meta.type === "passive" && meta.onDurationTick && e.ascension >= 1) meta.onDurationTick(this, e);
-    }
+    for (const e of this.entities) { const meta = e._meta; if (meta && meta.type === "passive" && meta.onDurationTick && e.ascension >= 1) meta.onDurationTick(this, e); }
 
     this.updateSkillButtons(); this.layoutSkillButtons && this.layoutSkillButtons();
   };
@@ -1092,9 +946,7 @@
     if(!t) return;
 
     let dmg = computeDamage(actor, t);
-    if (gluttonyOn) {
-      dmg += Math.round(t.maxhp * 0.10) + Math.round(t.hp * 0.15);
-    }
+    if (gluttonyOn) { dmg += Math.round(t.maxhp * 0.10) + Math.round(t.hp * 0.15); }
 
     if (t._dmgReduction && t._dmgReduction < 1) dmg = Math.round(dmg * t._dmgReduction);
 
@@ -1103,15 +955,10 @@
       this.hitVFX(actor, t, 0, false);
     } else {
       this.resolveHit(actor, t, dmg, { basic:true });
-      if (gluttonyOn && actor.side==="player") {
-        actor.hp = Math.min(actor.maxhp, actor.hp + Math.round(dmg * 0.5));
-      }
+      if (gluttonyOn && actor.side==="player") { actor.hp = Math.min(actor.maxhp, actor.hp + Math.round(dmg * 0.5)); }
     }
 
-    // Ted slow application while vanished (on attack)
-    if (actor._vanishSlowActive && actor._invincibleTurns>0) {
-      fx.addSlow(t, 0.5, 3);
-    }
+    if (actor._vanishSlowActive && actor._invincibleTurns>0) { fx.addSlow(t, 0.5, 3); }
   };
 
   MainScene.prototype.resolveHit=function(actor,target,dmg,meta={}){
@@ -1131,11 +978,7 @@
     else this.log(`${actor.name} → ${target.name} for ${dmg} dmg`);
 
     if(target.hp<=0 && target.alive){
-      if (target._cantDie) {
-        target.hp = 1;
-      } else {
-        target.alive=false; this.onDeath(target);
-      }
+      if (target._cantDie) { target.hp = 1; } else { target.alive=false; this.onDeath(target); }
     }
   };
 
@@ -1150,23 +993,27 @@
   };
 
   MainScene.prototype.playUnitAnim = function(ent, anim){
-    if (!ent || !ent.sprite || !ent.sprite.node) return;
-    const el = ent.sprite.node;
+    if (!ent || !ent.sprite) return;
     const slug = ent._slug || slugifyName(ent.name || '');
-    if (anim === 'idle') {
-      el.className = `sprite-unit ${slug} idle`;
-      return;
+    const sprite = ent.sprite;
+    const meta = this.cache.json.get(`${slug}_${anim}_meta`);
+    const idleMeta = this.cache.json.get(`${slug}_idle_meta`);
+    if (meta) applySpriteMetaDisplay(sprite, meta);
+    playUnitAnim(sprite, slug, anim);
+    if (anim !== 'idle' && anim !== 'death') {
+      sprite.once(Phaser.Animations.Events.ANIMATION_COMPLETE, (a)=>{
+        if (a.key === `${slug}_${anim}`) {
+          if (idleMeta) applySpriteMetaDisplay(sprite, idleMeta);
+          playUnitAnim(sprite, slug, 'idle');
+        }
+      });
     }
-    el.className = `sprite-unit ${slug} ${anim} once`;
-    const scene = this;
-    el.addEventListener('animationend', () => {
-      if (anim !== 'death') scene.playUnitAnim(ent, 'idle');
-    }, { once: true });
   };
 
   MainScene.prototype.onDeath=function(ent){
     this.playUnitAnim(ent, 'death');
-    this.tweens.add({targets:[ent.rect,ent.nameText,ent.hpbar.bg,ent.hpbar.fg,ent.hpText],alpha:0.2,duration:200});
+    const fadeTargets=[ent.rect,ent.nameText,ent.hpbar.bg,ent.hpbar.fg,ent.hpText, ent.sprite].filter(Boolean);
+    this.tweens.add({targets:fadeTargets,alpha:0.2,duration:200});
     if (ent.side === 'player') this.updateSkillButtons();
   };
 
@@ -1194,9 +1041,7 @@
     this.buildTurnOrder();
   };
 
-  MainScene.prototype.updateWavePill=function(){
-    this.waveView.innerHTML=`<span class="pill">Wave: ${this.wave}/${this.maxWaves}</span>`;
-  };
+  MainScene.prototype.updateWavePill=function(){ this.waveView.innerHTML=`<span class="pill">Wave: ${this.wave}/${this.maxWaves}</span>`; };
 
   MainScene.prototype.checkBattleEnd = function(){
     const playersAlive=this.entities.some(e=>e.side==="player"&&e.alive);
@@ -1205,12 +1050,8 @@
 
     if(!this.resultShown){
       this.resultShown=true; this.battleRunning=false;
-      if(playersAlive){
-        this.handleStageComplete(true);
-      }else{
-        this.toast("Defeat… try a different team!","#ff6b6b"); this.log("Defeat.");
-        this.handleStageComplete(false);
-      }
+      if(playersAlive){ this.handleStageComplete(true); }
+      else { this.toast("Defeat… try a different team!","#ff6b6b"); this.log("Defeat."); this.handleStageComplete(false); }
     }
   };
 
@@ -1232,9 +1073,7 @@
       console.warn("/stage/complete error:", res?.error);
     }
 
-    if (window.SWCA_Music) {
-      if (SWCA_Music.fadeTo) SWCA_Music.fadeTo('menu', 1000); else SWCA_Music.play('menu');
-    }
+    if (window.SWCA_Music) { if (SWCA_Music.fadeTo) SWCA_Music.fadeTo('menu', 1000); else SWCA_Music.play('menu'); }
   };
 
   /* ---------------- Skill UI & Activation ---------------- */
@@ -1305,7 +1144,7 @@
   };
 
   MainScene.prototype.useSpecialImmediate = function(ent, meta){
-    this.playUnitAnim(ent, 'skill');
+    this.playUnitAnim(ent, 'special');
     if (meta.use) {
       const r = meta.use(this, ent);
       if (r === "pending") { this._pendingSpecial = { ent, meta }; return; }
@@ -1314,7 +1153,7 @@
   };
 
   MainScene.prototype.useSpecialWithTarget = function(ent, meta, target){
-    this.playUnitAnim(ent, 'skill');
+    this.playUnitAnim(ent, 'special');
     if (meta.useOn) {
       const r = meta.useOn(this, ent, target);
       if (r === "pending") { this._pendingSpecial = { ent, meta }; return; }
@@ -1336,5 +1175,4 @@
   /* ---------------- Utils ---------------- */
   function weightedPick(pairs){ const tot=pairs.reduce((s,[,w])=>s+w,0); let r=Math.random()*tot; for(const [v,w] of pairs){ if((r-=w)<=0) return v; } return pairs[pairs.length-1][0]; }
 
-  // simple logger & toaster assumed elsewhere
 })();
