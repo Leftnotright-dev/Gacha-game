@@ -57,6 +57,28 @@
     .gold-glow{color:gold;-webkit-text-stroke:.2px black;text-shadow:0 0 3px rgba(218,165,32,.6),0 0 6px rgba(218,165,32,.5),0 0 10px rgba(218,165,32,.4);font-weight:bold}
     .equipped { background: rgba(255,255,255,.04); }
 
+    /* Memory shards */
+    .memory-loadout { margin-top:10px; background:#1a2236; border:1px solid #2d3b5f; border-radius:8px; padding:8px; }
+    .memory-loadout .header-row { display:flex; justify-content:space-between; align-items:center; font-size:12px; font-weight:700; }
+    .memory-chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+    .memory-chip { background:#2b3550; border:1px solid #3f4c78; border-radius:999px; padding:2px 8px; font-size:12px; display:inline-flex; align-items:center; gap:6px; }
+    .memory-chip .effect { opacity:.75; font-size:11px; }
+    .memory-chip button { background:none; border:0; color:#ff8383; cursor:pointer; font-weight:700; padding:0; }
+    .memory-select { margin-top:6px; width:100%; padding:6px 8px; border-radius:8px; border:0; background:#233153; color:#fff; }
+    .memory-warning { margin-top:4px; color:#ffad60; font-size:12px; }
+    .memory-panel { margin-top:18px; border-top:1px solid rgba(255,255,255,0.08); padding-top:12px; }
+    .memory-header { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    .memory-tools { display:flex; gap:8px; flex-wrap:wrap; }
+    .memory-list { display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap:10px; }
+    .memory-card { background:#1c253a; border:1px solid #2e3b5c; border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:6px; font-size:13px; }
+    .memory-card .top { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+    .memory-card .title { font-weight:700; }
+    .memory-card .tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
+    .memory-card .tag-small { background:#223154; border:1px solid #2d3b5f; border-radius:999px; padding:2px 6px; font-size:11px; }
+    .memory-card details { background:#182238; border-radius:8px; padding:6px 8px; }
+    .memory-card summary { cursor:pointer; font-weight:700; }
+    .memory-empty { font-size:13px; opacity:.8; margin-top:6px; }
+
     /* Toast */
     #toast { position:fixed; bottom:16px; left:50%; transform:translateX(-50%); background:#0e1320; border:1px solid #2d3b5f; padding:8px 12px; border-radius:10px; display:none; z-index:9999; }
   </style>
@@ -118,6 +140,18 @@
         </div>
 
         <div id="bpList"></div>
+
+        <div class="memory-panel">
+          <div class="memory-header">
+            <strong>🧠 Memory Shards</strong>
+            <div class="memory-tools">
+              <button id="memoryRefresh" class="btn ghost" type="button">Refresh</button>
+              <button id="memoryFuseBtn" class="btn primary" type="button" disabled>Fuse Selected</button>
+            </div>
+          </div>
+          <div id="memoryList" class="memory-list"></div>
+          <div id="memoryEmpty" class="memory-empty">Complete stages and pivotal choices to earn Memory Shards.</div>
+        </div>
       </div>
     </section>
   </div>
@@ -126,6 +160,7 @@
 
   <!-- Music -->
   <script src="{{ url_for('static', filename='js/music.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/memory.js') }}"></script>
 
   <script>
   /* ==== tiny helpers ==== */
@@ -156,7 +191,180 @@
   let BACKPACK = [];
   let TEAM_IDS = [];
   let SHARDS = {};
+  let MEMORY = { inventory: [], equipped: {} };
+  let MEMORY_BY_ID = new Map();
+  let MEMORY_ASSIGNED = new Map();
+  let INST_INDEX = new Map();
+  const MEMORY_SLOT_LIMIT = 3;
   const RAR_EMO = { Common:'⚪', Rare:'🔷', Ultra:'🟣', Mythical:'🟠', Secret:'🖤', Celestial:'🌟' };
+
+  function escapeHtml(value){
+    return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  }
+  function escapeHtmlMultiline(value){
+    return escapeHtml(value).replace(/\n/g, '<br>');
+  }
+
+  function rebuildInstanceIndex(){
+    INST_INDEX = new Map();
+    BACKPACK.forEach(inst => {
+      if (inst && inst.id) INST_INDEX.set(inst.id, inst);
+    });
+  }
+
+  function updateMemoryState(mem, rerender = true){
+    const inventory = Array.isArray(mem?.inventory) ? mem.inventory.slice() : [];
+    const equipped = {};
+    Object.entries(mem?.equipped || {}).forEach(([instId, ids]) => {
+      equipped[instId] = Array.isArray(ids) ? ids.slice() : [];
+    });
+    MEMORY = { inventory, equipped };
+    MEMORY_BY_ID = new Map();
+    MEMORY.inventory.forEach(shard => { if (shard && shard.id) MEMORY_BY_ID.set(shard.id, shard); });
+    MEMORY_ASSIGNED = new Map();
+    Object.entries(MEMORY.equipped).forEach(([instId, ids]) => {
+      ids.forEach(sid => MEMORY_ASSIGNED.set(sid, instId));
+    });
+    renderMemoryList();
+    if (rerender) {
+      renderTeam();
+      renderBackpack();
+    }
+  }
+
+  function renderMemoryList(){
+    const list = $('memoryList');
+    const empty = $('memoryEmpty');
+    if (!list) return;
+    list.innerHTML = '';
+    const shards = MEMORY.inventory.slice().sort((a,b) => (b?.created_at || 0) - (a?.created_at || 0));
+    if (!shards.length){
+      if (empty) empty.style.display = 'block';
+      updateFuseButton();
+      return;
+    }
+    if (empty) empty.style.display = 'none';
+    shards.forEach(shard => {
+      const card = document.createElement('div');
+      card.className = 'memory-card';
+      const tags = (shard?.tags || []).map(tag => `<span class="tag-small">${escapeHtml(tag)}</span>`).join('');
+      const eqInstId = MEMORY_ASSIGNED.get(shard?.id);
+      const eqInst = eqInstId ? INST_INDEX.get(eqInstId) : null;
+      const status = eqInst ? `Equipped by ${eqInst.unit_name || '—'}` : 'Unassigned';
+      const effects = (window.SWCA_Memory && typeof SWCA_Memory.summarizeEffects === 'function') ? SWCA_Memory.summarizeEffects(shard?.effects || {}) : '';
+      const notes = shard?.notes ? `<div class="sub">${escapeHtml(shard.notes)}</div>` : '';
+      const story = shard?.story ? escapeHtmlMultiline(shard.story) : 'This memory is still forming.';
+      const fuse = `<label><input type="checkbox" class="memory-fuse" value="${shard?.id}"> Fuse</label>`;
+      card.innerHTML = `
+        <div class="top">
+          <div>
+            <div class="title">${escapeHtml(shard?.title || 'Memory')}</div>
+            <div class="tags">${tags}</div>
+          </div>
+          <div>${fuse}</div>
+        </div>
+        ${effects ? `<div class="sub">Effects: ${escapeHtml(effects)}</div>` : ''}
+        <div class="sub">Status: ${escapeHtml(status)}</div>
+        ${notes}
+        <details><summary>Story</summary><p>${story}</p></details>
+      `;
+      list.appendChild(card);
+    });
+    updateFuseButton();
+  }
+
+  function updateFuseButton(){
+    const btn = $('memoryFuseBtn');
+    if (!btn) return;
+    const selected = Array.from(document.querySelectorAll('.memory-fuse:checked')).map(cb => cb.value);
+    btn.disabled = selected.length !== 2;
+  }
+
+  async function handleFuseSelected(){
+    const selected = Array.from(document.querySelectorAll('.memory-fuse:checked')).map(cb => cb.value);
+    if (selected.length !== 2){
+      alert('Select exactly two shards to fuse.');
+      return;
+    }
+    try{
+      const res = await api('/memory/fuse', { shard_ids: selected });
+      if (res.memory) updateMemoryState(res.memory);
+      toast(`Fused into ${res.shard?.title || 'new shard'}`);
+    }catch(e){ alert(e.message); }
+  }
+
+  async function refreshMemoryFromServer(){
+    try{
+      const res = await api('/memory/list');
+      if (res.memory) updateMemoryState(res.memory);
+      toast('Memory refreshed.');
+    }catch(e){ alert(e.message); }
+  }
+
+  function setupMemoryListeners(){
+    const bp = $('bpList');
+    if (bp && !bp.dataset.memoryBound){
+      bp.dataset.memoryBound = '1';
+      bp.addEventListener('change', async ev => {
+        const sel = ev.target;
+        if (sel.classList.contains('memory-select')){
+          const shardId = sel.value;
+          const instanceId = sel.getAttribute('data-instance');
+          if (!shardId) return;
+          try{
+            const res = await api('/memory/equip', { instance_id: instanceId, shard_id: shardId });
+            if (res.memory) updateMemoryState(res.memory);
+            toast('Memory equipped.');
+          }catch(e){ alert(e.message); }
+          sel.value = '';
+        }
+      });
+      bp.addEventListener('click', async ev => {
+        const btn = ev.target;
+        if (btn.classList.contains('memory-remove')){
+          const shardId = btn.getAttribute('data-shard');
+          const instanceId = btn.getAttribute('data-instance');
+          try{
+            const res = await api('/memory/unequip', { instance_id: instanceId, shard_id: shardId });
+            if (res.memory) updateMemoryState(res.memory);
+            toast('Memory removed.');
+          }catch(e){ alert(e.message); }
+        }
+      });
+    }
+    const memList = $('memoryList');
+    if (memList && !memList.dataset.memoryBound){
+      memList.dataset.memoryBound = '1';
+      memList.addEventListener('change', updateFuseButton);
+    }
+    const fuseBtn = $('memoryFuseBtn');
+    if (fuseBtn && !fuseBtn.dataset.memoryBound){
+      fuseBtn.dataset.memoryBound = '1';
+      fuseBtn.addEventListener('click', handleFuseSelected);
+    }
+    const refreshBtn = $('memoryRefresh');
+    if (refreshBtn && !refreshBtn.dataset.memoryBound){
+      refreshBtn.dataset.memoryBound = '1';
+      refreshBtn.addEventListener('click', refreshMemoryFromServer);
+    }
+  }
+
+  function getEquippedShardObjects(instanceId){
+    if (!instanceId) return [];
+    const ids = MEMORY.equipped?.[instanceId] || [];
+    return ids.map(id => MEMORY_BY_ID.get(id)).filter(Boolean);
+  }
+
+  function buildTeamShardSets(){
+    return TEAM_IDS.map(id => getEquippedShardObjects(id));
+  }
+
+  function computeTeamTagsFor(instanceId, loadouts){
+    if (!window.SWCA_Memory || typeof SWCA_Memory.tagsForLoadouts !== 'function') return {};
+    const shardSets = loadouts || buildTeamShardSets();
+    const idx = TEAM_IDS.findIndex(id => id === instanceId);
+    return SWCA_Memory.tagsForLoadouts(shardSets, idx >= 0 ? idx : undefined);
+  }
 
   /* ==== stat calc (mirrors play page) ==== */
   const BASE_STATS = {
@@ -181,9 +389,19 @@
       spd: Math.round(b.spd * (shiny?1.02:1) * (celestial?1.02:1)),
     };
   }
-  function statLine(inst){
-    const s = buildStats(inst.rarity, inst.level||1, inst.ascension||0, !!inst.shiny, !!inst.celestial);
-    return `HP ${s.hp} • ATK ${s.atk} • DEF ${s.def} • SPD ${s.spd}`;
+  function computeMemoryStats(inst, teamLoadouts){
+    if (!inst) {
+      return { base:{hp:0,atk:0,def:0,spd:0}, final:{hp:0,atk:0,def:0,spd:0}, memory:null, shards:[] };
+    }
+    const base = buildStats(inst.rarity, inst.level||1, inst.ascension||0, !!inst.shiny, !!inst.celestial);
+    const shards = getEquippedShardObjects(inst.id);
+    let memoryResult = null;
+    if (window.SWCA_Memory && typeof SWCA_Memory.applyEffects === 'function' && shards.length){
+      const teamTags = computeTeamTagsFor(inst.id, teamLoadouts);
+      memoryResult = SWCA_Memory.applyEffects({ hp: base.hp, atk: base.atk, def: base.def, spd: base.spd }, shards, { teamTags });
+    }
+    const finalStats = memoryResult?.stats ? memoryResult.stats : base;
+    return { base, final: finalStats, memory: memoryResult, shards };
   }
 
   /* ==== load + render ==== */
@@ -194,8 +412,11 @@
 
     const inv = await api('/inventory');
     BACKPACK = inv.backpack || [];
+    rebuildInstanceIndex();
     SHARDS = inv.shards || {};
     renderShardSummary();
+    const memoryPayload = inv.memory || inv.memory_shards || {};
+    updateMemoryState(memoryPayload, false);
 
     const t = await api('/team/get');
     TEAM_IDS = t.team || [];
@@ -214,6 +435,7 @@
     wrap.innerHTML = '';
     const selected = new Set(TEAM_IDS);
     const chosen = BACKPACK.filter(i => selected.has(i.id)).slice(0,3);
+    const teamLoadouts = buildTeamShardSets();
 
     for (let s = 0; s < 3; s++){
       const inst = chosen[s];
@@ -222,11 +444,16 @@
         div.innerHTML = `<div class="name" style="opacity:.7">Empty Slot</div><div class="sub">Click “Add to Team” on a unit below.</div>`;
       } else {
         const tags = `${inst.rarity}${inst.shiny?' ✨':''}${inst.celestial?' 🌟':''}`;
-        const stats = statLine(inst);
+        const memoryInfo = computeMemoryStats(inst, teamLoadouts);
+        const stats = memoryInfo.final;
+        let statLine = `HP ${stats.hp} • ATK ${stats.atk} • DEF ${stats.def} • SPD ${stats.spd}`;
+        if (memoryInfo.memory?.summary) statLine += ` • Memories: ${memoryInfo.memory.summary}`;
+        const warn = (memoryInfo.memory?.warnings || []).length ? `<div class="memory-warning">${escapeHtml(memoryInfo.memory.warnings.join(' '))}</div>` : '';
         div.innerHTML = `
           <div class="name">${RAR_EMO[inst.rarity]||''} ${inst.unit_name}</div>
           <div class="sub">${tags} — Lv.${inst.level} • Asc ${inst.ascension}</div>
-          <div class="sub" style="margin-top:4px;opacity:.85">${stats}</div>
+          <div class="sub" style="margin-top:4px;opacity:.85">${statLine}</div>
+          ${warn}
           <div class="btns">
             <button class="btn ghost" onclick="removeFromTeam('${inst.id}')">Remove</button>
           </div>
@@ -238,18 +465,6 @@
 
   function removeFromTeam(id){
     TEAM_IDS = TEAM_IDS.filter(x => x !== id);
-    renderTeam();
-    renderBackpack();
-  }
-
-  function toggleOnTeam(id){
-    const has = TEAM_IDS.includes(id);
-    if (has){
-      TEAM_IDS = TEAM_IDS.filter(x => x !== id);
-    } else {
-      if (TEAM_IDS.length >= 3) { toast('Max 3 on team'); return; }
-      TEAM_IDS.push(id);
-    }
     renderTeam();
     renderBackpack();
   }
@@ -278,6 +493,7 @@
     const shinyOnly = $('fShiny').checked;
 
     const selected = new Set(TEAM_IDS);
+    const teamLoadouts = buildTeamShardSets();
 
     const filtered = BACKPACK.filter(inst => {
       if (r !== 'All' && inst.rarity !== r) return false;
@@ -297,13 +513,35 @@
       // meta
       const meta = document.createElement('div'); meta.className = 'meta';
       const tags = `${inst.rarity}${inst.shiny?' ✨':''}${inst.celestial?' 🌟':''}`;
-      const stats = statLine(inst);
+      const memoryInfo = computeMemoryStats(inst, teamLoadouts);
+      const stats = memoryInfo.final;
+      let statLine = `HP ${stats.hp} • ATK ${stats.atk} • DEF ${stats.def} • SPD ${stats.spd}`;
+      if (memoryInfo.memory?.summary) statLine += ` • Memories: ${memoryInfo.memory.summary}`;
+      const warningText = (memoryInfo.memory?.warnings || []).join(' ');
+      const warningsHtml = warningText ? `<div class="memory-warning">${escapeHtml(warningText)}</div>` : '';
+      const chipsHtml = memoryInfo.shards.length
+        ? memoryInfo.shards.map(shard => {
+            const eff = (window.SWCA_Memory && typeof SWCA_Memory.summarizeEffects === 'function') ? SWCA_Memory.summarizeEffects(shard.effects || {}) : '';
+            return `<span class="memory-chip"><span>${escapeHtml(shard.title || 'Memory')}</span>${eff ? `<span class="effect">${escapeHtml(eff)}</span>` : ''}<button type="button" class="memory-remove" data-instance="${inst.id}" data-shard="${shard.id}">×</button></span>`;
+          }).join('')
+        : '<span class="muted">None equipped</span>';
+      const equippedIds = MEMORY.equipped?.[inst.id] || [];
+      let optionHtml = '';
+      MEMORY.inventory.forEach(shard => {
+        if (!shard || !shard.id) return;
+        if (equippedIds.includes(shard.id)) return;
+        const holderId = MEMORY_ASSIGNED.get(shard.id);
+        const holder = holderId ? INST_INDEX.get(holderId) : null;
+        const extra = holder && holderId !== inst.id ? ` (Equipped by ${holder?.unit_name || 'another unit'})` : '';
+        optionHtml += `<option value="${shard.id}">${escapeHtml((shard.title || 'Memory') + extra)}</option>`;
+      });
+      const slotLabel = `${memoryInfo.shards.length}/${MEMORY_SLOT_LIMIT}`;
       meta.innerHTML = `
         <div class="name">${RAR_EMO[inst.rarity]||''} ${inst.unit_name}</div>
         <div class="sub">${tags} — Lv.${inst.level} • Asc ${inst.ascension}
           ${inst.celestial ? `<span class="tag gold-glow">Celestial</span>` : ''}
         </div>
-        <div class="sub" style="margin-top:4px;opacity:.85">${stats}</div>
+        <div class="sub" style="margin-top:4px;opacity:.85">${statLine}</div>
         <div class="row" style="margin-top:6px">
           <span class="tag">Shards for ${inst.unit_name}: ${SHARDS[inst.unit_name] || 0}</span>
           ${selected.has(inst.id) ? '<span class="tag">On Team</span>' : ''}
@@ -314,6 +552,15 @@
           <button class="btn" onclick="ascend('${inst.id}', ${inst.ascension||0})">Ascend</button>
           <button class="btn warn" onclick="sellUnit('${inst.id}')">Sell</button>
           <button class="btn danger" onclick="dismantleUnit('${inst.id}')">Dismantle</button>
+        </div>
+        <div class="memory-loadout">
+          <div class="header-row"><span>Memory Loadout</span><span class="muted">${slotLabel}</span></div>
+          <div class="memory-chips">${chipsHtml}</div>
+          <select class="memory-select" data-instance="${inst.id}">
+            <option value="">Equip Memory Shard…</option>
+            ${optionHtml}
+          </select>
+          ${warningsHtml}
         </div>
       `;
       c.appendChild(meta);
@@ -348,6 +595,8 @@
       const r = await api('/inventory/sell', { instance_ids: ids });
       toast(`Sold ${ids.length} units (+${r.coins_gained ?? 0} coins)`);
       BACKPACK = r.backpack ?? BACKPACK;
+      rebuildInstanceIndex();
+      if (r.memory) updateMemoryState(r.memory, false);
       $('coins').textContent = `🪙 ${r.coins ?? 0}`;
       renderTeam(); renderBackpack();
     }catch(e){ alert(e.message); }
@@ -373,6 +622,8 @@
       toast(`Dismantled ${ids.length} unit(s) → +${gained} shards`);
       BACKPACK = r.backpack ?? BACKPACK;
       SHARDS   = r.shards ?? SHARDS;
+      rebuildInstanceIndex();
+      if (r.memory) updateMemoryState(r.memory, false);
       renderTeam(); renderBackpack(); renderShardSummary();
     }catch(e){ alert(e.message); }
   }
@@ -392,6 +643,8 @@
       const r = await api('/inventory/sell', { instance_ids: [id] });
       toast(`Sold (+${r.coins_gained ?? 0} coins)`);
       BACKPACK = r.backpack ?? BACKPACK;
+      rebuildInstanceIndex();
+      if (r.memory) updateMemoryState(r.memory, false);
       $('coins').textContent = `🪙 ${r.coins ?? 0}`;
       renderTeam(); renderBackpack();
     }catch(e){ alert(e.message); }
@@ -414,6 +667,8 @@
       const gained = Math.max(0, (after - before));
       toast(`Dismantled → +${gained} shards`);
       BACKPACK = r.backpack || BACKPACK; SHARDS = r.shards || SHARDS;
+      rebuildInstanceIndex();
+      if (r.memory) updateMemoryState(r.memory, false);
       renderTeam(); renderBackpack(); renderShardSummary();
     }catch(e){ alert(e.message); }
   }
@@ -424,6 +679,7 @@
       toast(`Level ${curLevel} → ${r.inst?.level ?? curLevel+1}`);
       $('coins').textContent = `🪙 ${r.coins}`;
       const idx = BACKPACK.findIndex(x => x.id === id); if (idx >= 0) BACKPACK[idx] = r.inst;
+      rebuildInstanceIndex();
       renderTeam(); renderBackpack();
     }catch(e){ alert(e.message); }
   }
@@ -434,6 +690,7 @@
       toast(`Ascension ${curAsc} → ${r.inst?.ascension ?? curAsc+1}`);
       SHARDS = r.shards; renderShardSummary();
       const idx = BACKPACK.findIndex(x => x.id === id); if (idx >= 0) BACKPACK[idx] = r.inst;
+      rebuildInstanceIndex();
       renderTeam(); renderBackpack();
     }catch(e){ alert(e.message); }
   }
@@ -463,6 +720,7 @@
   // Music
   document.addEventListener('DOMContentLoaded', () => {
     rememberUser();
+    setupMemoryListeners();
     if (window.SWCA_Music) {
       SWCA_Music.ensureUnlocked();
       const vol = $('musicVol');

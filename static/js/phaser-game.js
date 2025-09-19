@@ -582,9 +582,16 @@
 
   MainScene.prototype.refreshTeam = async function(){
     const u=this.username(); if(!u) return;
-    let teamIds=[]; let backpack=[];
+    let teamIds=[]; let backpack=[]; let memory={ inventory:[], equipped:{} };
     try{ const r=await fetch("/team/get",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:u})}); const d=await r.json(); if(r.ok) teamIds=d.team||[]; }catch(e){ console.warn("team/get failed", e); }
-    try{ const r=await fetch("/inventory",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:u})}); const d=await r.json(); if(r.ok) backpack=d.backpack||[]; }catch(e){ console.warn("inventory failed", e); }
+    try{ const r=await fetch("/inventory",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:u})}); const d=await r.json(); if(r.ok){ backpack=d.backpack||[]; memory=d.memory || d.memory_shards || memory; } }catch(e){ console.warn("inventory failed", e); }
+
+    const memoryInventory = Array.isArray(memory?.inventory) ? memory.inventory : [];
+    const memoryEquipped = memory?.equipped && typeof memory.equipped === 'object' ? memory.equipped : {};
+    const memoryMap = new Map(memoryInventory.map(sh => [sh.id, sh]));
+    this.memoryState = memory;
+    this.memoryIndex = memoryMap;
+    this.memoryLoadouts = memoryEquipped;
 
     let team = teamIds.map(id=>backpack.find(it=>it.id===id)).filter(Boolean);
     if(!team.length){
@@ -593,12 +600,13 @@
       const recent=pulls.slice(-3);
       team=recent.map(p=>({
         name:p.unit_name,label:p.unit_label||p.unit_name,rarity:p.rarity,shiny:!!p.shiny,celestial:!!p.celestial,
-        level:1, ascension:0
+        level:1, ascension:0, memoryShards:[], _instanceId:null
       }));
     } else {
       team=team.map((inst,i)=>({
         name:inst.unit_name,label:inst.unit_label||inst.unit_name,rarity:inst.rarity,shiny:!!inst.shiny,celestial:!!inst.celestial,
-        level:inst.level||1, ascension:inst.ascension||0, _slotIndex:i
+        level:inst.level||1, ascension:inst.ascension||0, _slotIndex:i, _instanceId:inst.id,
+        memoryShards:(memoryEquipped[inst.id]||[]).map(id=>memoryMap.get(id)).filter(Boolean)
       }));
     }
     this.renderTeamPills(team);
@@ -738,10 +746,28 @@
       // Player side (with sprite boxes)
       const bf=scene.battlefield;
       const px=bf.x+160, py=bf.y+bf.h-160, gap=170;
-      scene.playerTeam=scene.currentTeam.map((u,i)=>scene.spawnUnit({
-        side:"player", x:px, y:py-i*gap, label:u.label, name:u.name, rarity:u.rarity, shiny:u.shiny, celestial:u.celestial,
-        stats:buildStats(u.rarity, u.level||1, u.ascension||0, u.shiny, u.celestial, 1.0), asc:u.ascension||0, slotIndex:i
-      }));
+      const teamLoadouts = (scene.currentTeam || []).map(u => Array.isArray(u.memoryShards) ? u.memoryShards : []);
+      scene.playerTeam=scene.currentTeam.map((u,i)=>{
+        const stats=buildStats(u.rarity, u.level||1, u.ascension||0, u.shiny, u.celestial, 1.0);
+        if (window.SWCA_Memory && Array.isArray(u.memoryShards) && u.memoryShards.length){
+          const teamTags = (typeof SWCA_Memory.tagsForLoadouts === 'function') ? SWCA_Memory.tagsForLoadouts(teamLoadouts, i) : {};
+          const baseForMemory = { hp: stats.maxhp, atk: stats.atk, def: stats.def, spd: stats.spd };
+          const memoryResult = SWCA_Memory.applyEffects ? SWCA_Memory.applyEffects(baseForMemory, u.memoryShards, { teamTags }) : null;
+          if (memoryResult && memoryResult.stats){
+            stats.maxhp = Math.max(1, Math.round(memoryResult.stats.hp));
+            stats.hp = stats.maxhp;
+            stats.atk = Math.max(1, Math.round(memoryResult.stats.atk));
+            stats.def = Math.max(1, Math.round(memoryResult.stats.def));
+            stats.spd = Math.max(1, Math.round(memoryResult.stats.spd));
+            u._memorySummary = memoryResult.summary;
+            u._memoryWarnings = memoryResult.warnings;
+          }
+        }
+        return scene.spawnUnit({
+          side:"player", x:px, y:py-i*gap, label:u.label, name:u.name, rarity:u.rarity, shiny:u.shiny, celestial:u.celestial,
+          stats, asc:u.ascension||0, slotIndex:i
+        });
+      });
 
       scene.spawnWave();
       scene.updateWavePill();
