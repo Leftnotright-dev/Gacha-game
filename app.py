@@ -1,5 +1,5 @@
 # app.py
-import json, os, random, time, uuid
+import json, os, random, time, uuid, copy
 from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
@@ -58,10 +58,13 @@ def get_user(username):
             "team": [],
             "shards": {},
             "history": [],
-            "index": []
+            "index": [],
+            "memory_shards": copy.deepcopy(DEFAULT_MEMORY_STATE)
         }
         save_db(DB)
-    return DB["users"][username]
+    user = DB["users"][username]
+    ensure_memory_struct(user)
+    return user
 
 # ----------------------- Catalog & rates -----------------------
 ORDER = ["Common", "Rare", "Ultra", "Mythical", "Secret", "Celestial"]
@@ -168,6 +171,315 @@ def add_shards(user, unit_name, rarity, count=None):
     user.setdefault("shards", {})
     user["shards"][unit_name] = int(user["shards"].get(unit_name, 0)) + int(count)
 
+# ----------------------- Memory Shards system -----------------------
+DEFAULT_MEMORY_STATE = {
+    "inventory": [],
+    "equipped": {}
+}
+
+MEMORY_SLOT_LIMIT = 3
+
+MEMORY_STAGE_SCALES = {
+    "attack_pct": 0.0045,
+    "defense_pct": 0.0035,
+    "hp_pct": 0.0050,
+    "speed_pct": 0.0025
+}
+
+MEMORY_STAGE_FLAT_SCALES = {
+    "attack_flat": 6,
+    "defense_flat": 4,
+    "hp_flat": 18,
+    "speed_flat": 1.2
+}
+
+def _stage_tags(stage_id):
+    try:
+        stage_id = int(stage_id)
+    except (TypeError, ValueError):
+        stage_id = 1
+    if stage_id >= 9:
+        return ["chrono", f"stage-{stage_id}"]
+    if stage_id >= 7:
+        return ["abyssal", f"stage-{stage_id}"]
+    if stage_id >= 5:
+        return ["infernal", f"stage-{stage_id}"]
+    if stage_id >= 3:
+        return ["campaign", f"stage-{stage_id}"]
+    return ["training", f"stage-{stage_id}"]
+
+def _fmt_text(text, stage_id, unit_name, victory):
+    if not isinstance(text, str):
+        return text
+    result = text
+    try:
+        result = text.format(stage=stage_id, unit=unit_name, result="victory" if victory else "defeat")
+    except KeyError:
+        result = text
+    return result
+
+def _round_effects(effects):
+    rounded = {}
+    for key, val in (effects or {}).items():
+        if isinstance(val, (int, float)):
+            rounded[key] = round(float(val), 6)
+    return rounded
+
+def _scale_effects(effects, stage_id):
+    scaled = {}
+    for key, val in (effects or {}).items():
+        if not isinstance(val, (int, float)):
+            continue
+        base = float(val)
+        if key in MEMORY_STAGE_SCALES:
+            delta = MEMORY_STAGE_SCALES[key] * max(0, int(stage_id))
+            if base < 0:
+                delta = -delta
+            base += delta
+        elif key in MEMORY_STAGE_FLAT_SCALES:
+            delta = MEMORY_STAGE_FLAT_SCALES[key] * max(0, int(stage_id))
+            if base < 0:
+                delta = -delta
+            base += delta
+        scaled[key] = round(base, 6)
+    return scaled
+
+MEMORY_VICTORY_TEMPLATES = [
+    {
+        "key": "battle_triumph",
+        "title": "Echo of Triumph",
+        "tags": ["victory", "resolve", "momentum"],
+        "effects": {"attack_pct": 0.04, "speed_pct": 0.01},
+        "notes": "Confidence from a decisive strike quickens every motion.",
+        "story": "Stage {stage} victory lit a spark in {unit}, who now lunges with fearless momentum."
+    },
+    {
+        "key": "alliance_oath",
+        "title": "Alliance Oath",
+        "tags": ["victory", "alliance", "bond"],
+        "effects": {"hp_pct": 0.05, "defense_pct": 0.03},
+        "notes": "A battlefield oath reinforces their guard alongside allies.",
+        "story": "Allies clasped hands after Stage {stage}, and {unit} swore never to break the line again."
+    },
+    {
+        "key": "pyromancer_training",
+        "title": "Pyromancer Training",
+        "tags": ["victory", "pyromancy", "discipline"],
+        "effects": {"attack_pct": 0.05, "speed_pct": 0.015},
+        "notes": "Harnessed abyssal fire with ruthless focus.",
+        "story": "Training alongside flamecasters after Stage {stage} taught {unit} to bend heat without hesitation."
+    }
+]
+
+MEMORY_DEFEAT_TEMPLATES = [
+    {
+        "key": "fear_of_fire",
+        "title": "Fear of Fire",
+        "tags": ["defeat", "fear", "fire"],
+        "effects": {"defense_pct": 0.05, "attack_pct": -0.02},
+        "notes": "Winces at sparks, guarding carefully but striking slower.",
+        "story": "Singed during Stage {stage}, {unit} now keeps distance from burning arcs.",
+        "conflicts": [
+            {
+                "tag": "pyromancy",
+                "effects": {"defense_pct": -0.04},
+                "note": "Panic resurfaces next to flame-obsessed allies."
+            }
+        ]
+    },
+    {
+        "key": "betrayal_trauma",
+        "title": "Trauma: Betrayed by Allies",
+        "tags": ["defeat", "trauma", "betrayal"],
+        "effects": {"hp_pct": 0.04, "defense_pct": 0.03, "attack_pct": -0.03},
+        "notes": "Steel your heart, but trust falters.",
+        "story": "Left behind during Stage {stage}, {unit} steels their heart yet hesitates beside unproven allies.",
+        "conflicts": [
+            {
+                "tag": "betrayal",
+                "effects": {"attack_pct": -0.05, "speed_pct": -0.03},
+                "note": "Trust collapses when allies carry betrayal memories."
+            }
+        ]
+    },
+    {
+        "key": "self_sacrifice",
+        "title": "Self-Sacrifice",
+        "tags": ["defeat", "sacrifice", "resolve"],
+        "effects": {"hp_pct": 0.05, "defense_pct": 0.02, "speed_pct": -0.02},
+        "notes": "Shoulders weight for the team, even if pace slows.",
+        "story": "Stage {stage} ended in retreat, yet {unit} recalls shielding their allies from the final blow."
+    }
+]
+
+def ensure_memory_struct(user):
+    mem = user.get("memory_shards")
+    if not isinstance(mem, dict):
+        mem = copy.deepcopy(DEFAULT_MEMORY_STATE)
+        user["memory_shards"] = mem
+    else:
+        if not isinstance(mem.get("inventory"), list):
+            mem["inventory"] = []
+        if not isinstance(mem.get("equipped"), dict):
+            mem["equipped"] = {}
+    return mem
+
+def _instantiate_memory_shard(template, stage_id, inst, victory):
+    tpl = copy.deepcopy(template)
+    unit_name = inst.get("unit_name") or inst.get("unit_label") or "Unknown"
+    shard = {
+        "id": uuid.uuid4().hex,
+        "key": tpl.get("key", "memory"),
+        "title": _fmt_text(tpl.get("title", "Memory Shard"), stage_id, unit_name, victory),
+        "tags": list(dict.fromkeys((tpl.get("tags") or []) + _stage_tags(stage_id) + (["victory"] if victory else ["defeat"]))),
+        "effects": _scale_effects(tpl.get("effects"), stage_id),
+        "notes": _fmt_text(tpl.get("notes"), stage_id, unit_name, victory),
+        "story": _fmt_text(tpl.get("story"), stage_id, unit_name, victory),
+        "created_at": _now(),
+        "origin": {
+            "stage": int(stage_id),
+            "result": "victory" if victory else "defeat",
+            "unit_id": inst.get("id"),
+            "unit_name": unit_name
+        },
+        "conflicts": []
+    }
+    conflicts = tpl.get("conflicts") or []
+    for conf in conflicts:
+        if not isinstance(conf, dict):
+            continue
+        eff = _scale_effects(conf.get("effects"), stage_id)
+        shard["conflicts"].append({
+            "tag": conf.get("tag"),
+            "effects": eff,
+            "note": _fmt_text(conf.get("note"), stage_id, unit_name, victory)
+        })
+    return shard
+
+def memory_generate_for_stage(user, stage_id, victory):
+    mem = ensure_memory_struct(user)
+    team_ids = list(user.get("team", []) or [])
+    if not team_ids:
+        return []
+    bp_map = {inst.get("id"): inst for inst in user.get("backpack", [])}
+    templates = MEMORY_VICTORY_TEMPLATES if victory else MEMORY_DEFEAT_TEMPLATES
+    new_shards = []
+    for iid in team_ids:
+        inst = bp_map.get(iid)
+        if not inst:
+            continue
+        tpl = random.choice(templates)
+        shard = _instantiate_memory_shard(tpl, stage_id, inst, victory)
+        mem.setdefault("inventory", []).append(shard)
+        new_shards.append(shard)
+    return new_shards
+
+def memory_clear_instances(user, instance_ids):
+    mem = ensure_memory_struct(user)
+    changed = False
+    for iid in instance_ids:
+        if iid in mem.get("equipped", {}):
+            del mem["equipped"][iid]
+            changed = True
+    return changed
+
+def memory_find_shard(mem, shard_id):
+    for shard in mem.get("inventory", []):
+        if shard.get("id") == shard_id:
+            return shard
+    return None
+
+def memory_remove_shards(mem, shard_ids):
+    shard_ids = set(shard_ids)
+    mem["inventory"] = [sh for sh in mem.get("inventory", []) if sh.get("id") not in shard_ids]
+    for inst_id, ids in list(mem.get("equipped", {}).items()):
+        new_ids = [sid for sid in ids if sid not in shard_ids]
+        if new_ids:
+            mem["equipped"][inst_id] = new_ids
+        else:
+            del mem["equipped"][inst_id]
+
+def _fusion_unstable_flame(shards):
+    stage = max((sh.get("origin", {}).get("stage") or 1) for sh in shards if isinstance(sh, dict))
+    titles = ", ".join(sh.get("title", "") for sh in shards)
+    fused = {
+        "key": "unstable_flame_channeler",
+        "title": "Unstable Flame Channeler",
+        "tags": ["pyromancy", "fear", "volatile"],
+        "effects": _scale_effects({"attack_pct": 0.12, "speed_pct": 0.03, "defense_pct": -0.05}, stage),
+        "notes": "Fire surges wildly — overwhelming output but scorched defenses.",
+        "story": f"Balancing {titles}, the wielder channels violent flames that threaten to consume them.",
+        "conflicts": [
+            {
+                "tag": "water",
+                "effects": {"attack_pct": -0.03},
+                "note": "Dampening support douses their unstable momentum."
+            }
+        ]
+    }
+    return fused
+
+def _default_fusion(shards):
+    stage = max((sh.get("origin", {}).get("stage") or 1) for sh in shards if isinstance(sh, dict))
+    titles = [sh.get("title", "Memory") for sh in shards]
+    combined_effects = {}
+    for shard in shards:
+        for key, val in (shard.get("effects") or {}).items():
+            if isinstance(val, (int, float)):
+                combined_effects[key] = combined_effects.get(key, 0.0) + float(val)
+    # slight resonance bonus
+    for key in list(combined_effects.keys()):
+        combined_effects[key] *= 1.05
+    combined_effects = _scale_effects(combined_effects, max(stage, 1))
+    notes = [sh.get("notes") for sh in shards if sh.get("notes")]
+    story = "Memories fuse, echoing both triumphs and scars."
+    return {
+        "key": "memory_fusion",
+        "title": f"Fusion of {titles[0]} + {titles[1] if len(titles) > 1 else titles[0]}",
+        "tags": list(dict.fromkeys(["fusion"] + [tag for sh in shards for tag in (sh.get("tags") or [])])),
+        "effects": combined_effects,
+        "notes": " / ".join(notes) if notes else "Interwoven recollections empower new instincts.",
+        "story": story,
+        "conflicts": [conf for sh in shards for conf in (sh.get("conflicts") or [])]
+    }
+
+FUSION_RECIPES = {
+    frozenset(["fear_of_fire", "pyromancer_training"]): _fusion_unstable_flame
+}
+
+def memory_fuse(user, shard_ids):
+    mem = ensure_memory_struct(user)
+    if not isinstance(shard_ids, list) or len(shard_ids) < 2:
+        raise ValueError("Select at least two shards to fuse")
+    shard_ids = shard_ids[:2]
+    shards = []
+    for sid in shard_ids:
+        shard = memory_find_shard(mem, sid)
+        if not shard:
+            raise ValueError(f"Shard {sid} not found")
+        shards.append(shard)
+    keys = frozenset(sh.get("key") for sh in shards)
+    if keys in FUSION_RECIPES:
+        fused = FUSION_RECIPES[keys](shards)
+    else:
+        fused = _default_fusion(shards)
+    stage = max((sh.get("origin", {}).get("stage") or 1) for sh in shards if isinstance(sh, dict))
+    fused["id"] = uuid.uuid4().hex
+    fused["tags"] = list(dict.fromkeys((fused.get("tags") or []) + _stage_tags(stage) + ["fusion"]))
+    fused["effects"] = _round_effects(fused.get("effects"))
+    fused["notes"] = _fmt_text(fused.get("notes"), stage, "", True)
+    fused["story"] = _fmt_text(fused.get("story"), stage, "", True)
+    fused["created_at"] = _now()
+    fused["origin"] = {
+        "result": "fusion",
+        "components": [sh.get("id") for sh in shards],
+        "stage": stage
+    }
+    # Remove old shards and unequip them
+    memory_remove_shards(mem, shard_ids)
+    mem.setdefault("inventory", []).append(fused)
+    return fused
+
 def _normalize_ids(data):
     ids = data.get("instance_ids")
     if ids is None:
@@ -220,7 +532,12 @@ def inventory():
     data = request.get_json(force=True)
     user = get_user(data.get("username"))
     if not user: return jsonify({"error":"missing username"}), 400
-    return jsonify({"backpack": user["backpack"], "shards": user.get("shards", {})})
+    mem = ensure_memory_struct(user)
+    return jsonify({
+        "backpack": user["backpack"],
+        "shards": user.get("shards", {}),
+        "memory": mem
+    })
 
 @app.post("/team/get")
 def team_get():
@@ -398,13 +715,17 @@ def stage_complete():
         if stage_id == int(user.get("max_cleared", 0)) + 1:
             user["max_cleared"] = stage_id
 
+    new_shards = memory_generate_for_stage(user, stage_id, victory)
+    mem = ensure_memory_struct(user)
     save_db(DB)
     return jsonify({
         "ok": True,
         "rewards": rewards,
         "gems": user["gems"],
         "coins": user["coins"],
-        "max_cleared": user.get("max_cleared", 0)
+        "max_cleared": user.get("max_cleared", 0),
+        "memory": mem,
+        "new_shards": new_shards
     })
 
 # ----------------------- Inventory actions -----------------------
@@ -426,6 +747,7 @@ def inventory_sell():
     user = get_user(data.get('username'))
     if not user:
         return jsonify({"error": "Missing username"}), 400
+    mem = ensure_memory_struct(user)
 
     ids = _normalize_ids(data)
     if not ids:
@@ -447,12 +769,14 @@ def inventory_sell():
 
     user["backpack"] = kept
     user["coins"] = int(user.get("coins", 0)) + coins_gained
+    memory_clear_instances(user, target)
     save_db(DB)
 
     return jsonify({
         "coins_gained": coins_gained,
         "coins": user["coins"],
-        "backpack": user.get("backpack", [])
+        "backpack": user.get("backpack", []),
+        "memory": mem
     })
 
 @app.route('/inventory/dismantle', methods=['POST'])
@@ -461,6 +785,7 @@ def inventory_dismantle():
     user = get_user(data.get('username'))
     if not user:
         return jsonify({"error": "Missing username"}), 400
+    mem = ensure_memory_struct(user)
 
     iid = _normalize_id(data)
     if not iid:
@@ -475,11 +800,13 @@ def inventory_dismantle():
 
     add_shards(user, inst["unit_name"], inst["rarity"])
     del user["backpack"][idx]
+    memory_clear_instances(user, [iid])
     save_db(DB)
 
     return jsonify({
         "backpack": user.get("backpack", []),
-        "shards": user.get("shards", {})
+        "shards": user.get("shards", {}),
+        "memory": mem
     })
 
 @app.route('/inventory/dismantle_selected', methods=['POST'])
@@ -488,6 +815,7 @@ def inventory_dismantle_selected():
     user = get_user(data.get('username'))
     if not user:
         return jsonify({"error": "Missing username"}), 400
+    mem = ensure_memory_struct(user)
 
     ids = _normalize_ids(data)
     if not ids:
@@ -506,12 +834,103 @@ def inventory_dismantle_selected():
             new_backpack.append(inst)
 
     user["backpack"] = new_backpack
+    memory_clear_instances(user, idset)
     save_db(DB)
 
     return jsonify({
         "backpack": user.get("backpack", []),
-        "shards": user.get("shards", {})
+        "shards": user.get("shards", {}),
+        "memory": mem
     })
+
+# ----------------------- Memory Shard endpoints -----------------------
+@app.post("/memory/list")
+def memory_list():
+    data = request.get_json(force=True) or {}
+    user = get_user(data.get("username"))
+    if not user:
+        return jsonify({"error": "Missing username"}), 400
+    mem = ensure_memory_struct(user)
+    return jsonify({"memory": mem})
+
+@app.post("/memory/equip")
+def memory_equip():
+    data = request.get_json(force=True) or {}
+    user = get_user(data.get("username"))
+    if not user:
+        return jsonify({"error": "Missing username"}), 400
+    mem = ensure_memory_struct(user)
+
+    iid = _normalize_id(data)
+    shard_id = data.get("shard_id")
+    if not iid or not shard_id:
+        return jsonify({"error": "Provide instance_id and shard_id"}), 400
+
+    idx, inst = _find_instance(user, iid)
+    if idx < 0:
+        return jsonify({"error": "Instance not found"}), 404
+
+    shard = memory_find_shard(mem, shard_id)
+    if not shard:
+        return jsonify({"error": "Shard not found"}), 404
+
+    loadout = mem.setdefault("equipped", {}).setdefault(iid, [])
+    if shard_id in loadout:
+        return jsonify({"ok": True, "memory": mem, "inst": inst})
+    if len(loadout) >= MEMORY_SLOT_LIMIT:
+        return jsonify({"error": f"Loadout full (max {MEMORY_SLOT_LIMIT})"}), 400
+
+    for other_iid, ids in list(mem.get("equipped", {}).items()):
+        if other_iid == iid:
+            continue
+        if shard_id in ids:
+            ids = [sid for sid in ids if sid != shard_id]
+            if ids:
+                mem["equipped"][other_iid] = ids
+            else:
+                del mem["equipped"][other_iid]
+
+    loadout.append(shard_id)
+    save_db(DB)
+    return jsonify({"ok": True, "memory": mem, "inst": inst})
+
+@app.post("/memory/unequip")
+def memory_unequip():
+    data = request.get_json(force=True) or {}
+    user = get_user(data.get("username"))
+    if not user:
+        return jsonify({"error": "Missing username"}), 400
+    mem = ensure_memory_struct(user)
+
+    iid = _normalize_id(data)
+    shard_id = data.get("shard_id")
+    if not iid or not shard_id:
+        return jsonify({"error": "Provide instance_id and shard_id"}), 400
+
+    loadout = mem.get("equipped", {}).get(iid, [])
+    if shard_id in loadout:
+        loadout = [sid for sid in loadout if sid != shard_id]
+        if loadout:
+            mem["equipped"][iid] = loadout
+        else:
+            mem["equipped"].pop(iid, None)
+        save_db(DB)
+    return jsonify({"ok": True, "memory": mem})
+
+@app.post("/memory/fuse")
+def memory_fuse_api():
+    data = request.get_json(force=True) or {}
+    user = get_user(data.get("username"))
+    if not user:
+        return jsonify({"error": "Missing username"}), 400
+    try:
+        shard_ids = data.get("shard_ids") or []
+        fused = memory_fuse(user, shard_ids)
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+    mem = ensure_memory_struct(user)
+    save_db(DB)
+    return jsonify({"ok": True, "memory": mem, "shard": fused})
 
 # ----------------------- Upgrades -----------------------
 LEVEL_MAX = 80
